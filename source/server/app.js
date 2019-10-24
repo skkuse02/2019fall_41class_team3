@@ -12,8 +12,6 @@ const moment = require('moment');
 const history = require('connect-history-api-fallback');
 const ejs = require('ejs');
 const MySQLStore = require('express-mysql-session')(session);
-const sequelize = require('sequelize');
-const models = require('./models');
 const app = express();
 const proxy = require('express-http-proxy');
 
@@ -100,8 +98,9 @@ app.use((err, req, res, next) => {
   });
 });
 
-
-models.sequelize.sync();
-
-
+/*
+const sequelize = require('sequelize');
+const models = require('./models');
+models.sequelize.sync({force: true});
+*/
 module.exports = app;

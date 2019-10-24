@@ -27,14 +27,26 @@ module.exports = (sequelize, DataTypes) => {
     },
     type: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      comment: '멘토 OR 멘티'
+    },
+    rank: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      default: 1,
+      comment: '유저 등급'
+    },
+    points: {
+      type: DataTypes.INTEGER,
+      default: 0
     }
   }, {
     tableName: 'user',
     comment: '유저',
     classMethods: {
       associate(models) {
-
+        user.hasMany(models.field);
+        user.hasMany(models.time);
       }
     }
   });
