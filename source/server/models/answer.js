@@ -4,6 +4,21 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
         comment: '내용'
+      },
+      star: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        default: 0
+      },
+      feedback: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+        comment: '피드백'
+      },
+      arrangement: {
+          type: DataTypes.DATE,
+          allowNull: true,
+          comment: '예약 시간'
       }
     }, {
       tableName: 'answer',
