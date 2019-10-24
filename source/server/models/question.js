@@ -16,6 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         default: 0,
         comment: "보상"
       },
+      star: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        default: 0
+      },
       tag: {
         type: DataTypes.TEXT,
         allowNull: true,
@@ -26,11 +31,10 @@ module.exports = (sequelize, DataTypes) => {
       comment: '질문',
       classMethods: {
         associate(models) {
-          question.hasOne(models.response_type);
-          question.hasOne(models.user);
-          question.hasOne(models.answer);
-          question.hasMany(models.field);
-          question.hasMany(models.time);
+          question.belongsTo(models.response_type, {foreignKey: 'type'});
+          question.belongsTo(models.user, {foreignKey: 'uid'});
+          question.belongsToMany(models.field, {foreignKey: 'fid'});
+          question.belongsToMany(models.time, {foreignKey: 'tid'});
         }
       }
     });

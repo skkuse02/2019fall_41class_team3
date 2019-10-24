@@ -4,20 +4,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
         comment: '내용'
-      },
-      reward: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        default: 0,
-        comment: "답변 보상"
       }
     }, {
       tableName: 'answer',
       comment: '답변',
       classMethods: {
         associate(models) {
-          answer.belongsTo(models.question);
-          answer.hasOne(models.user);
+          answer.belongsTo(models.question, {foreignKey: 'qid'});
+          answer.belongsTo(models.user, {foreignKey: 'mentorId'});
         }
       }
     });

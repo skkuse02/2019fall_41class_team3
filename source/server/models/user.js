@@ -45,8 +45,7 @@ module.exports = (sequelize, DataTypes) => {
     comment: '유저',
     classMethods: {
       associate(models) {
-        user.hasMany(models.field);
-        user.hasMany(models.time);
+        user.belongsToMany(models.time, {foreignKey: 'uid'});
       }
     }
   });

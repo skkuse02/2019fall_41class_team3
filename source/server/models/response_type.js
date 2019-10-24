@@ -3,6 +3,7 @@ module.exports = (sequelize, DataTypes) => {
       type: {
         type: DataTypes.STRING,
         allowNull: false,
+        primaryKey: true,
         comment: '답변 종류'
       },
       minimum_point: {
@@ -16,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
       comment: '답변 종류',
       classMethods: {
         associate(models) {
-          
         }
       }
     });

@@ -10,7 +10,8 @@ module.exports = (sequelize, DataTypes) => {
       comment: '필드',
       classMethods: {
         associate(models) {
-
+            field.belongsToMany(models.user, {foreignKey: 'field'});
+            field.belongsToMany(models.question, {foreignKey: 'field'});
         }
       }
     });
