@@ -1,0 +1,43 @@
+{
+    "development": {
+        "port": 3000,
+        "db": {
+            "host": "db.scg.skku.ac.kr",
+            "username": "",
+            "password": "!",
+            "database": "dev_qahub",
+	        "multipleStatements": true,
+            "timezone": "+09:00",
+            "operatorsAliases": false,
+            "dialect": "mysql",
+            "port": "",
+            "define" : {
+                "charset": "utf8",
+                "collate": "utf8_general_ci"
+            }
+        },
+        "path": {
+            "index": "/../dist_dev",
+            "upload_path": "webdata/uploads/"
+        }
+    },
+    "production": {
+        "port": 8096,
+        "db": {
+            "host": "",
+            "port": "",
+            "user": "",
+            "username": "",
+            "password": "",
+            "database": "",
+            "multipleStatements": true,
+            "timezone": "+09:00",
+            "operatorsAliases": false,
+            "dialect": "mysql"
+        },
+        "path": {
+            "index": "/../dist",
+            "upload_path": "webdata/uploads"
+        }
+    }
+}

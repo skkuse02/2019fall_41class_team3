@@ -1,0 +1,31 @@
+const child_process = require('child_process');
+
+var vue_serv = child_process.exec('npm run serve:vue', {maxBuffer: 1024 * 1000000});
+
+vue_serv.stdout.on('data', function (data) {
+    console.log(data);
+});
+
+vue_serv.stderr.on('data', function (data) {
+    console.log(data);
+});
+
+vue_serv.on('exit', function (code, signal) {
+    console.log('vue_serv exited with code = ' +code+'  signal = '+signal);
+    process.exit(1);
+});
+
+var node_serv = child_process.exec('npm run nodemon', {maxBuffer: 1024 * 1000000});
+
+node_serv.stdout.on('data', function (data) {
+    console.log(data);
+});
+
+node_serv.stderr.on('data', function (data) {
+    console.log(data);
+});
+
+node_serv.on('exit', function (code, signal) {
+    console.log('node_serv exited with code = ' +code+'  signal = '+signal);
+    process.exit(1);
+});

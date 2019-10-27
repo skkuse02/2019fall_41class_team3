@@ -1,0 +1,11 @@
+node_modules/
+.nyc_output
+.sass-cache
+dist_dev
+dist
+package-lock.json
+uploads
+webdata_tmp
+.idea
+.vscode
+.DS_Store
