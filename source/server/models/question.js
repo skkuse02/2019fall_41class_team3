@@ -34,8 +34,8 @@ module.exports = (sequelize, DataTypes) => {
           question.belongsTo(models.response_type, {foreignKey: 'type'});
           question.belongsTo(models.user, {foreignKey: 'uid'});
           question.belongsToMany(models.user, {foreignKey: 'qid'});
-          question.belongsToMany(models.field, {foreignKey: 'fid'});
-          question.belongsToMany(models.time, {foreignKey: 'tid'});
+          question.belongsToMany(models.field, {foreignKey: 'qid'});
+          question.belongsToMany(models.time, {foreignKey: 'qid'});
         }
       }
     });
