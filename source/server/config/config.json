@@ -2,10 +2,10 @@
     "development": {
         "port": 3000,
         "db": {
-            "host": "db.scg.skku.ac.kr",
+            "host": "",
             "username": "",
-            "password": "!",
-            "database": "dev_qahub",
+            "password": "",
+            "database": "",
 	        "multipleStatements": true,
             "timezone": "+09:00",
             "operatorsAliases": false,
