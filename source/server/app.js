@@ -33,8 +33,12 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 
-//app.use('/', express.static(path.join(__dirname, '/../static'))); // static 폴더 static 라우팅
-//app.use('/webdata', express.static(path.join(__dirname, '/../webdata')));
+if (process.env.NODE_ENV === 'production') {
+  app.use('/', express.static(path.join(__dirname, viewPath.index)));
+} else {
+  app.use('/', express.static(path.join(__dirname, viewPath.index)));
+}
+
 
 const sessionStore = new MySQLStore({
   host: config.db.host,
