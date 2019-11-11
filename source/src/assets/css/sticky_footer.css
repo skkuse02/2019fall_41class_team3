@@ -1,0 +1,91 @@
+html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+}
+
+.app {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+  
+.contents {
+    min-height: 50vh;
+    flex: 1 0 auto;
+}
+
+.subMenuCurrent {
+    background-color:rgba(7, 42, 90, 1)
+}
+
+#content {
+    min-height: 30vh;
+}
+
+.subTextCurrent {
+    font-weight:bold; 
+    color:white !important;
+}
+
+.parentMenu:hover {
+    background-color: rgba(7, 42, 90, 1);
+}
+
+table.sitemap{
+    width:725px;
+    border-spacing: 40px;
+    border-collapse: separate;
+    text-align: center;
+}
+tr.site_row{
+    vertical-align: top;
+}
+td.sitemenu{
+    width: 33%;
+}
+div.sitemenu_name{
+    list-style: none;
+    height:30px;
+    border-bottom: 1px solid black;
+    font-size:15px;
+    font-weight: bold;
+}
+ul.sitemenu_list{
+    list-style: none;
+    line-height: 30px;
+    margin-top: 10px;
+    font-size: 15px;
+}
+.sitemenu_list li.text_hover:hover{
+    background-color: rgba(0,0,0,0.1);
+}
+
+
+.fix-board {
+    font-weight : bold;
+}
+.panel-body {
+    padding-top: 0px !important;
+}
+.dataTables_paginate {
+    float: left !important;
+}
+.dataTables_filter {
+    float: right;
+    padding-top: 10px;
+}
+.dataTable tbody tr {
+    cursor: pointer;
+}
+.rotate{
+    -ms-transform:rotate(180deg);
+    -moz-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+    transform:rotate(180deg);
+}
+td:nth-child(5), td:nth-child(6){
+    text-align: center
+}

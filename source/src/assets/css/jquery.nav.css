@@ -1,0 +1,82 @@
+.submenu, .submenu ul, .submenu li {
+  list-style: none;
+}
+
+.submenu ul {
+  padding: 0;
+}
+
+.submenu {
+  margin: 0px;
+}
+
+.submenu>li {
+  border-bottom: 1px #ddd solid;
+}
+
+.submenu>li li a {
+  padding: 2px 10px 2px 18px;
+}
+
+.submenu>li li a:hover {
+  background-color: #aaa;
+}
+
+.submenu>li li li a {
+  padding: 2px 10px 2px 36px;
+}
+
+.submenu a {
+  color: #333;
+  display: block;
+  outline: none;
+  text-decoration: none;
+}
+
+.submenu li>a>span {
+  float: right;
+  font-size: 8px;
+  font-weight: bolder;
+}
+
+.submenu li>a:hover>span {
+  color: #fff;
+}
+
+.submenu li>a>span:after {
+  font-family: FontAwesome;
+  content: "\f0d7";
+  font-size: 12px;
+}
+
+.submenu li.open>a>span:after {
+  font: FontAwesome;
+  content: "\f0d8";
+  font-size: 12px;
+}
+
+.submenu a:hover {
+  /*background-color: #7f0000;*/
+  color: #f5f5f5;
+}
+
+.submenu li.active>a {
+  /*background-color: #7f0000;
+    color: #f5f5f5;*/
+}
+
+.submenu>li.active>a {
+  background-color: #4D90FE;
+}
+
+.submenu li a {
+  font-size: 13px;
+  line-height: 30px;
+  padding: 2px 10px;
+}
+
+.submenu>li>a {
+  font-size: 14px;
+  line-height: 30px;
+  padding: 4px 10px;
+}

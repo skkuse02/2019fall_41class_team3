@@ -1,0 +1,34 @@
+#name,#time,#views,#title,#category {
+    width: 100%;
+    display: inline-block;
+    padding-top: 7px;
+    color: #373e4a;
+}
+#name,#time,#views,#category {
+    text-align: center;
+}
+#text {
+    padding: 15px 0 15px 0;
+    word-break:break-all;
+    line-height: 25px;
+}
+#text img {
+    max-width: 725px !important;
+    height: auto !important;
+}
+.rotate{
+    -ms-transform:rotate(180deg);
+    -moz-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+    transform:rotate(180deg);
+}
+td {
+    padding-left: 10px;
+    font-size: 14px;
+    font-family: "NanumGothic";
+}
+
+img.border-shadow{
+    border:1px solid #888888;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
