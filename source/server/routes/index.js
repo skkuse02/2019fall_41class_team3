@@ -30,8 +30,6 @@ async function login(req, res){
           msg: err.toString()
         });
     };
-    
-
 }
 
 async function checkID(req, res){

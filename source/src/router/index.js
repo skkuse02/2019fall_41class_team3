@@ -42,14 +42,11 @@ export default new Router({
                     component: Main
                 },
                 {
-<<<<<<< HEAD
-=======
                     path: '/login',
                     name: 'Login',
                     component: Login
                 },
                 {
->>>>>>> 1d5e38484555cc8ca5d24f27be7099472c6484f4
                     path: '/findid',
                     name: 'FindId',
                     component:FindId
