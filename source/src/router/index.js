@@ -12,6 +12,10 @@ const Main = () => import('@/main/Main')
 // NotFound
 const NotFound = () => import('@/other/NotFound')
 
+// User Authentication
+const Login = () => import('@/authentication/Login')
+
+
 
 Vue.use(Router)
 
@@ -30,6 +34,11 @@ export default new Router({
                     path: '/',
                     name: '메인',
                     component: Main
+                },
+                {
+                    path: '/login',
+                    name: 'Login',
+                    component: Login
                 }
             ]
         },
