@@ -9,6 +9,10 @@ const DefaultContainer = () => import('@/containers/DefaultContainer')
 // Main
 const Main = () => import('@/main/Main')
 
+// Authentication
+const FindId = () => import('@/authentication/FindId')
+const FindPassword = () => import('@/authentication/FindPassword')
+
 // NotFound
 const NotFound = () => import('@/other/NotFound')
 
@@ -30,6 +34,17 @@ export default new Router({
                     path: '/',
                     name: '메인',
                     component: Main
+                },
+                {
+                    path: '/findid',
+                    name: 'FindId',
+                    component:FindId
+                },
+                {
+                    path: '/findpassword',
+                    name: 'FindPassword',
+                    component:FindPassword
+
                 }
             ]
         },
