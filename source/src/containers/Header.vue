@@ -1,16 +1,8 @@
 <template>
-  <div class="header container">
-    <div class="topMenu row">
-      <div class="top_logo col-md-3 col-sm-5">
-      </div>
-      <div class="rightTop col-md-4 col-md-offset-5 col-sm-5 col-sm-offset-2">
-        <div class="topMenuWrapper">
-          <router-link :to="{ path: '/'}">HOME</router-link>
-          <span>|</span>
-          <router-link :to="{ path: '/login'}">LOGIN</router-link>
-        </div>
-      </div>
-    </div>
+  <div>
+    <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-navbar-brand href="#"><img id="header-logo" src="assets/img/logo_white_typeC.png"></b-navbar-brand>
+    </b-navbar>
   </div>
 </template>
 <script>
