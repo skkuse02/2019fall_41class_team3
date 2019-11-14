@@ -54,7 +54,7 @@ async function findPassword(req, res){
   } else{
     res.status(404).send({
       result: false,
-      msg: "User not found"
+      msg: 'User not found'
     });
   }
 }
