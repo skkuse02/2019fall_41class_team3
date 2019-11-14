@@ -9,10 +9,6 @@ const DefaultContainer = () => import('@/containers/DefaultContainer')
 // Main
 const Main = () => import('@/main/Main')
 
-// Authentication
-const FindId = () => import('@/authentication/FindId')
-const FindPassword = () => import('@/authentication/FindPassword')
-
 // NotFound
 const NotFound = () => import('@/other/NotFound')
 

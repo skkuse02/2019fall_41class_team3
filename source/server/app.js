@@ -59,6 +59,7 @@ app.use(session({
 }));
 
 app.use('/rest', require('./routes'));
+app.use('/rest/user', require('./routes/rest/user'));
 app.use(history());
 
 if (process.env.proxy == 'false') {

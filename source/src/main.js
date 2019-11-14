@@ -10,34 +10,42 @@ import 'core-js/es7/array'
 import Vue from 'vue'
 import VueSession from 'vue-session'
 import VueHead from 'vue-head'
+
 import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 import axios from 'axios'
 import App from './App'
 import router from './router'
 import DatePicker from 'vue2-datepicker'
 import DownloadJS from 'downloadjs'
-import 'expose-loader?$!expose-loader?jQuery!jquery'
-import './assets/js/bootstrap.min.js'
-import './assets/js/jquery.nav.min.js'
+import VueSelect from 'vue-cool-select'
+import VModal from 'vue-js-modal'
 
-//DataTables
-import './assets/datatables/js/jquery.dataTables.min.js'
-import './assets/datatables/dataTables.bootstrap.js'
-import './assets/datatables/tabletools/dataTables.tableTools.min.js'
-import './assets/datatables/fnReloadAjax.js'
+import 'formdata-polyfill'
+import { isMobile } from 'mobile-device-detect';
 
+axios.defaults.headers.common['Pragma'] = 'no-cache';
 Vue.prototype.$http = axios
+window.axios = axios
 Vue.prototype.$download = DownloadJS
 
-// todo
-// cssVars()
-Vue.use(DatePicker)
 Vue.use(BootstrapVue)
-Vue.use(VueSession)
+Vue.use(VueSession, {
+  persist: true
+})
 Vue.use(VueHead)
+Vue.use(VueSelect, { theme: 'bootstrap' })
+Vue.use(VModal, { dynamic: true })
+
+
 
 /* eslint-disable no-new */
 new Vue({
+  created() {
+
+  },
   el: '#app',
   router,
   template: '<App/>',
