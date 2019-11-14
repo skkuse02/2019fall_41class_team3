@@ -16,6 +16,7 @@ const NotFound = () => import('@/other/NotFound')
 const Login = () => import('@/authentication/Login')
 const FindId = () => import('@/authentication/FindId')
 const FindPassword = () => import('@/authentication/FindPassword')
+const QuestionList = () => import('@/authentication/QuestionList')
 
 
 
@@ -51,7 +52,11 @@ export default new Router({
                     path: '/findpassword',
                     name: 'FindPassword',
                     component:FindPassword
-
+                },
+                {
+                    path: '/questionlist',
+                    name: 'QuestionList',
+                    component:QuestionList
                 }
             ]
         },
