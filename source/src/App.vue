@@ -20,6 +20,7 @@ $fa-font-path: "~font-awesome/fonts/";
 /* Custom CSS */
 @import "assets/css/bootstrap.min.css";
 @import "assets/css/style.css";
+@import "assets/css/common/header.css";
 @import "assets/css/sticky_footer.css";
 @import "assets/css/jquery.nav.css";
 @import "assets/datatables/dataTables.bootstrap.css";
