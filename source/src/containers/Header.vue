@@ -7,7 +7,7 @@
           Welcome {{name}}
           </div>
           <div v-else>
-          <router-link :to="{ path: '/'}">Log In</router-link>
+          <router-link :to="{ path: '/login'}">Log In</router-link>
           <span> | </span>
           <router-link :to="{ path: '/'}">Sign Up</router-link>
           </div>
