@@ -23,6 +23,10 @@
     margin-right: 10px;
     padding-top: 20px;
     height: 100%;
+}
+
+#header-link
+{
     font-size: 20px;
     color: white;
 }
