@@ -17,7 +17,7 @@ const Login = () => import('@/authentication/Login')
 const FindId = () => import('@/authentication/FindId')
 const FindPassword = () => import('@/authentication/FindPassword')
 const QuestionList = () => import('@/authentication/QuestionList')
-
+const Register = () => import('@/authentication/Register')
 
 
 Vue.use(Router)
@@ -57,7 +57,12 @@ export default new Router({
                     path: '/questionlist',
                     name: 'QuestionList',
                     component:QuestionList
-                }
+                },
+                {
+                    path: '/register',
+                    name: 'Register',
+                    component: Register
+                },
             ]
         },
         {
