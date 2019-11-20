@@ -6,15 +6,17 @@ const router = express.Router();
 
 async function login(req, res){
     try{
+        console.log(req.body);
         const user = await models.user.findOne({
-            where:{
+            where: {
                 uid: req.body.uid,
                 password: sha256(req.body.password)
-            }
+            },
+            attributes: ['uid','name', 'email', 'nickname','rank', 'type']
         });
 
         if(user){
-            req.session
+            req.session.user = user; 
             res.status(200).send({
                 result: true
             });
