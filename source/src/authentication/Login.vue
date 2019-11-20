@@ -48,21 +48,20 @@ export default {
     }
   },
   methods: {
-    login () {
-      const uid = this.uid;
-      const password = this.password;
-      if (!uid || !password) {
-        alert('아이디와 비밀번호를 입력해주세요!')
+    async login () {
+      try{
+        const uid = this.uid;
+        const password = this.password;
+        if (!uid || !password) {
+          alert('아이디와 비밀번호를 입력해주세요!')
+        }
+        await this.$http.post("http://localhost:3000/rest/login", {uid, password})
+        if (res.status == 200) {
+          alert('환영합니다!' + this.uid + '!')
+        }
+      } catch(err) {
+        alert(err.toString() + '\n아이디나 비밀번호를 다시 한 번 확인해주세요!')
       }
-      this.$http.post("http://localhost:3000/rest/login", {uid, password})
-        .then(res => {
-          if (res.status == 200){
-            alert('환영합니다!' + this.uid + '!')
-          }
-        })
-        .catch(err => {
-          alert('아이디나 비밀번호를 다시 한 번 확인해주세요!')
-        })
     }
   },
 };
