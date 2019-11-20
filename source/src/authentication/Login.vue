@@ -44,18 +44,17 @@ export default {
     return {
       uid: '',
       password: '',
+      msg: ''
     }
   },
   methods: {
     login () {
       const uid = this.uid;
       const password = this.password;
-
       if (!uid || !password) {
         alert('아이디와 비밀번호를 입력해주세요!')
       }
-
-      axios.post("http://localhost:3000/rest/login", {uid, password})
+      this.$http.post("http://localhost:3000/rest/login", {uid, password})
         .then(res => {
           if (res.status == 200){
             alert('환영합니다!' + this.uid + '!')
