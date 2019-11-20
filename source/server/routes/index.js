@@ -1,15 +1,15 @@
 const express = require('express');
 const models = require('../models');
+const sha256 = require('sha256');
 const router = express.Router();
 
 
 async function login(req, res){
     try{
-        console.log(req.body);
         const user = await models.user.findOne({
             where: {
                 uid: req.body.uid,
-                password: req.body.password
+                password: sha256(req.body.password)
             },
             attributes: ['uid','name', 'email', 'nickname','rank', 'type']
         });
