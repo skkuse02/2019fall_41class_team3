@@ -4,17 +4,14 @@
     <form @submit.prevent="login()">
         <div>
             <b-form-group label="아이디">
-              <!-- ID should consists of uppercase + lowercase alphabet + number -->
-              <!-- It's length must be 8 to 20 -->
-              <b-form-input type="text" v-model="uid" placeholder="ID"
-              pattern="^([a-zA-Z0-9_]){8,20}$"></b-form-input>
+              <b-form-input type="text" v-model="uid"
+              placeholder="ID"></b-form-input>
             </b-form-group>
         </div>
         <div>
             <b-form-group label="비밀번호">
-              <!-- For password, same rule with ID -->
-              <b-form-input type="password" v-model="password" placeholder="Password"
-              pattern="^([a-zA-Z0-9_]){8,20}$"></b-form-input>
+              <b-form-input type="password" v-model="password"
+              placeholder="Password"></b-form-input>
             </b-form-group>
         </div>
 
