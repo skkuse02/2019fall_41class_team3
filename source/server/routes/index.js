@@ -1,5 +1,4 @@
 const express = require('express');
-const sha256 = require('sha256');
 const models = require('../models');
 const router = express.Router();
 
@@ -10,7 +9,7 @@ async function login(req, res){
         const user = await models.user.findOne({
             where: {
                 uid: req.body.uid,
-                password: sha256(req.body.password)
+                password: req.body.password
             },
             attributes: ['uid','name', 'email', 'nickname','rank', 'type']
         });
