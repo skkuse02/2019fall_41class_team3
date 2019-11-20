@@ -61,7 +61,17 @@ async function checkID(req, res){
     }
 }
 
+async function logout(req, res){
+    req.session.destroy(() => {
+        req.session;
+    });
+    
+    res.redirect('/');
+  };
+  
+
 router.post('/login', login);
+router.post('/logout', logout);
 router.get('/checkID', checkID);
 
 module.exports = router;
