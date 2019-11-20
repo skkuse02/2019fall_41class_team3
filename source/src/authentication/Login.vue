@@ -1,38 +1,42 @@
 <template>
-  <div class="loginForm">
-    <h2>Login</h2><br>
-    <form @submit.prevent="login()">
-        <div>
-            <b-form-group label="아이디">
-              <b-form-input type="text" v-model="uid"
-              placeholder="ID"></b-form-input>
-            </b-form-group>
+  <div class="loginForm" style="margin:100px 40px 40px 40px">
+    <h2><p>Login</p></h2>
+    <form class="form-horizontal" role="form" @submit.prevent="login()">
+        <div class ="form-group">
+            <label for="inputID" class="col-xs-4 control-label">ID</label>
+            <div class="col-xs-4 center-block">
+                <input type="text" v-model="uid" class="form-control" placeholder="ID">
+            </div>
         </div>
-        <div>
-            <b-form-group label="비밀번호">
-              <b-form-input type="password" v-model="password"
-              placeholder="Password"></b-form-input>
-            </b-form-group>
+        <div class="form-group">
+            <label for="inputPW" class="col-xs-4 control-label">PW</label>
+            <div class="col-xs-4 center-block">
+                <input type="text" v-model="password" class="form-control" placeholder="Password">
+            </div>
         </div>
 
         <!-- Pressing login button will send form's info to server -->
-        <b-button type="submit" variant="success" size="lg">로그인</b-button>
+        <div id="buttonHolder" style="margin:10px">
+            <b-button type="submit" variant="success" size="lg">로그인</b-button>
+        </div>
+    </form>
 
-        <!-- Pressing findid button will redirect user to findid page -->
-        <router-link to='../findid'>
-          <b-button variant="success" size="lg">ID 찾기</b-button>
-        </router-link>
+    <div class="text-center" style="margin:10px 5px 5px 5px">
+        <!-- Pressing Sign In will redirect user to signin page -->
+        <router-link to='../register'> Sign In </router-link>
+        <span>  |  </span>
+        <!-- Pressing Find ID will redirect user to findid page -->
+        <router-link to='../findid'> Find ID </router-link>
+        <span>  |  </span>
+        <!-- Pressing Find PW will redirect user to findpw page -->
+        <router-link to='../findpassword'> Find PW </router-link>
+    </div><p></p>
 
-        <!-- Pressing findpw button will redirect user to findpw page -->
-        <router-link to='../findpassword'>
-          <b-button variant="success" size="lg">PW 찾기</b-button>
-        </router-link>
-      </form>
-      <!-- Sustain login feature is not implemented yet -->
-      <div>
-          <input type="checkbox" id="loginSustain" name="loginSustain">
-          <label for="loginSustain"><span>로그인 상태 유지</span></label>
-      </div>
+    <div class="text-center">
+        <input type="checkbox" id="loginSustain" name="loginSustain">
+        <label for="loginSustain"><span>로그인 상태 유지</span></label>
+    </div><p></p>
+
   </div>
 </template>
 
@@ -76,6 +80,12 @@ export default {
         color: #42b983;
     }
     .btn-lg {
-        width: 33.3%;
+        width: 20%;
     }
+    #buttonHolder {
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
+
 </style>
