@@ -1,7 +1,7 @@
 <template>
   <div class="loginForm">
     <h2>Login</h2><br>
-    <form @submit.prevent="login(uid, password)">
+    <form @submit.prevent="login()">
         <div>
             <b-form-group label="아이디">
               <!-- ID should consists of uppercase + lowercase alphabet + number -->
