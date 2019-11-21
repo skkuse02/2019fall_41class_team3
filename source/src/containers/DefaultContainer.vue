@@ -2,10 +2,7 @@
   <div class="app">
     <!-- Header, Navigation, Footer 사이트 전체 공용 부분임. -->
     <div class="contents">
-      <Header/>
-
-      <Navigation/>
-      
+      <Header/>      
       <!-- 이 부분 내용이 바뀜 -->
       <router-view/>
     </div>
@@ -17,8 +14,6 @@
 <script>
 import Footer from "./Footer";
 import Header from "./Header";
-import Navigation from "./Navigation";
-
 export default {
   name: "DefaultContainer",
   //Test
@@ -32,8 +27,7 @@ export default {
   },
   components: {
     Footer,
-    Header,
-    Navigation
+    Header
   }
 };
 </script>
