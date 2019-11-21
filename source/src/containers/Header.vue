@@ -1,12 +1,12 @@
 <template>
   <div>
     <b-navbar id="header-bar">
-      <b-navbar-brand id="header-brand" href="#"><img id="header-logo" src="assets/img/logo_white_typeC.png"></b-navbar-brand>
+      <b-navbar-brand id="header-brand" href="/"><img id="header-logo" src="assets/img/logo_white_typeC.png"></b-navbar-brand>
       <div>
           <div v-if="sessionExist">
             Welcome {{name}}
           </div>
-          <div id="header-right-bar"v-else>
+          <div id="header-right-bar" v-else>
             <router-link id="header-link" :to="{ path: '/login'}">Log In</router-link>
             <span id="header-link"> | </span>
             <router-link id="header-link" :to="{ path: '/register'}">Sign Up</router-link>
