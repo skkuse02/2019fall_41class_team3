@@ -19,6 +19,10 @@ const FindPassword = () => import('@/authentication/FindPassword')
 const QuestionList = () => import('@/authentication/QuestionList')
 const Register = () => import('@/authentication/Register')
 
+// Register Question/Answer
+const RegisterQuestion = () => import('@/register/RegisterQuestion')
+const RegisterAnswer = () => import('@/register/RegisterAnswer')
+
 
 Vue.use(Router)
 
@@ -63,6 +67,16 @@ export default new Router({
                     name: 'Register',
                     component: Register
                 },
+                {
+                    path: '/registerquestion',
+                    name: 'RegisterQuestion',
+                    component: RegisterQuestion
+                },
+                {
+                    path: '/registeranswer',
+                    name: 'RegisterAnswer',
+                    component: RegisterAnswer
+                }
             ]
         },
         {
