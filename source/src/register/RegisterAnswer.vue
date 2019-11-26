@@ -2,11 +2,10 @@
     <div>
         RegisterAnswer
     </div>
-</template>
-    
+</template>    
 <script>
 export default {
-    name: 'Answer'
+    name: 'RegisterAnswer'
 }
 </script>
 

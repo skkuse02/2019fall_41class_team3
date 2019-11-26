@@ -11,7 +11,7 @@
         <div class="form-group">
             <label for="inputPW" class="col-xs-4 control-label">PW</label>
             <div class="col-xs-4 center-block">
-                <input type="text" v-model="password" class="form-control" placeholder="Password">
+                <input type="password" v-model="password" class="form-control" placeholder="Password">
             </div>
         </div>
 
@@ -58,7 +58,6 @@ export default {
       });
 
     }
-
   },
   methods: {
     async login () {
@@ -68,9 +67,12 @@ export default {
         if (!uid || !password) {
           alert('아이디와 비밀번호를 입력해주세요!')
         }
-        await this.$http.post("http://localhost:3000/rest/login", {uid, password})
-        if (res.status == 200) {
-          alert('환영합니다!' + this.uid + '!')
+        const res = await this.$http.post("http://localhost:3000/rest/login", {uid, password})
+        if (res.data.result == true) {
+          alert('환영합니다! ' + this.uid + '!')
+          this.$router.push({
+            path: '/'
+          });
         }
       } catch(err) {
         alert(err.toString() + '\n아이디나 비밀번호를 다시 한 번 확인해주세요!')
