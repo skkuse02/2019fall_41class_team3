@@ -50,6 +50,14 @@ export default {
             tag: '',
         }
     },
+    created: async function () {
+        if (!this.$session.exists()){
+            alert('접근 권한이 없습니다!\n' + '먼저 로그인해 주세요!')
+            this.$router.push({
+                path: '/'
+            });
+        }
+    },
     methods: {
         checkCredit () {
 
@@ -59,8 +67,15 @@ export default {
                 const title = this.title
                 const content = this.content
                 const reward = this.reward * 100
-                if (checkCredit() == FALSE){
-                    alert('크레딧 필드를 다시 한 번 확인해주세요!')
+                const type = this.type
+                const tag = this.tag
+                const res = await this.$http.post("http://localhost:3000/rest/question",
+                            {title, content, reward, type, tag})
+                if (res.status == 200) {
+                    alert('질문이 등록되었습니다!')
+                    this.$router.push({
+                        path: '/'
+                    });
                 }
             } catch(err) {
                 alert(err.toString() + '\n잠시 후 다시 시도해주세요!')
