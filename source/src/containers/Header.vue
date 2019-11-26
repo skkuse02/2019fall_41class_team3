@@ -3,8 +3,9 @@
     <b-navbar id="header-bar">
       <b-navbar-brand id="header-brand" href="/"><img id="header-logo" src="assets/img/logo_white_typeC.png"></b-navbar-brand>
       <div>
-          <div v-if="sessionExist">
-            Welcome {{name}}
+          <div id="header-right-bar" v-if="sessionExist">
+            <div id="header-link">Welcome {{name}} | </div>
+            <a v-on:click="logout" id="header-link">Log out</a>
           </div>
           <div id="header-right-bar" v-else>
             <router-link id="header-link" :to="{ path: '/login'}">Log In</router-link>
@@ -43,6 +44,18 @@ export default {
         }
       } catch(e){
         this.sessionExist = false;
+      }
+    },
+    async logout (){
+      try{
+        const res = await this.$http.post("http://localhost:3000/rest/logout")
+        //if (res.data.result == true)
+        alert('로그아웃 되었습니다.')
+        this.$router.push({
+          path: '/login'
+        });
+      } catch(e){
+        alert('로그아웃에 실패하였습니다.')
       }
     }
   }
