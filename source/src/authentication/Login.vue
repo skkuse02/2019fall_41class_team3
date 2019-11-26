@@ -51,6 +51,15 @@ export default {
       msg: ''
     }
   },
+  created: async function(){
+    if(this.$session.exists()){
+      this.$router.push({
+        path: '/'
+      });
+
+    }
+
+  },
   methods: {
     async login () {
       try{

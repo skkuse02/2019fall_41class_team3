@@ -36,6 +36,7 @@ export default {
         const session = await this.$http.get('/rest/user/session');
         if(session.data.result == true){
           this.name = session.data.user.name;
+          this.$session.set('user',session.data.user);
           this.sessionExist = true;
         } else{
           this.sessionExist = false;
