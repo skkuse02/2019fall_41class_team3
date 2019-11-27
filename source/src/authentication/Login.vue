@@ -51,9 +51,8 @@ export default {
       msg: ''
     }
   },
-  mounted: async function(){
-    const session = await this.$http.get('/rest/user/session');
-    if(session.exists()){
+  created: async function(){
+    if(this.$session.exists()){
       this.$router.push({
         path: '/'
       });
