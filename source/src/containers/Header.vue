@@ -51,6 +51,7 @@ export default {
         const res = await this.$http.post("http://localhost:3000/rest/logout")
         //if (res.data.result == true)
         alert('로그아웃 되었습니다.')
+        this.$session.destroy();
         this.$router.push({
           path: '/login'
         });
