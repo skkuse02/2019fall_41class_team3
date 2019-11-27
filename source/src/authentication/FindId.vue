@@ -27,7 +27,7 @@ export default {
         email:''
       }
     }
-  }
+  },
 
   methods: {
     //methods error
