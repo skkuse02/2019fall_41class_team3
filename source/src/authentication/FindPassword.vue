@@ -1,15 +1,15 @@
 <template>
   <div class="findpassword">
-    <form @submit.prevent="findpassword(id, name, email)">
+    <form id="infoSubmit" @submit.prevent="findpassword(uid, name, email)">
       <div class="input">
         <b-form-group label="ID">
-        <b-form-input type="text" v-model="uid" placeholder="id"></b-form-input>
+        <b-form-input type="text" v-model="uid" placeholder="Fill in blank."></b-form-input>
         </b-form-group>
         <b-form-group label="Name">
-        <b-form-input type="text" v-model="name" placeholder="name"></b-form-input>
+        <b-form-input type="text" v-model="name" placeholder="Fill in blank"></b-form-input>
         </b-form-group>
         <b-form-group label="E-mail">
-        <b-form-input type="text" v-model="email" placeholder="email"></b-form-input>
+        <b-form-input type="text" v-model="email" placeholder="Fill in blank"></b-form-input>
         </b-form-group>
       </div>
       <div class="find">
@@ -19,15 +19,29 @@
   </div>
 </template>
 
-<script>
 
+<script>
 export default {
   name: "FindPassword",
   data () {
     return {
-      id: '',
-      name: '',
-      email:'',
+      user:{
+        uid: '',
+        name: '',
+        email:''
+      }
+    }
+  }
+  methods: {
+    //methods error
+    submit () {
+      this.$http.post("http://localhost:3000/rest/findpassword",this.user);
+      // fill in url
+      if (res.status == 200){
+        console.log(response);
+      } else if(error){
+        console.log(error);
+      }
     }
   }
 };

@@ -22,13 +22,23 @@ export default {
   name: "FindId",
   data () {
     return {
-      name: '',
-      email:'',
+      user:{
+        name: '',
+        email:''
+      }
     }
   }
-  if (name || == ""){
-    alert("성함을 입력하세요");
-    return;
+  methods: {
+    //methods error
+    submit () {
+      this.$http.post("http://localhost:3000/rest/findid",this.user);
+      //fill in url
+      if (res.status == 200){
+        console.log(response);
+      } else if(error){
+        console.log(error);
+      }
+    }
   }
 };
 
