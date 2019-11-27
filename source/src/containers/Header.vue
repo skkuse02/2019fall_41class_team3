@@ -6,6 +6,8 @@
           <div id="header-right-bar" v-if="sessionExist">
             <div id="header-link">Welcome {{name}} | </div>
             <a v-on:click="logout" id="header-link">Log out</a>
+            <span id="header-link"> | </span>
+            <router-link id="header-link" :to="{ path: '/profile'}">Profile</router-link>
           </div>
           <div id="header-right-bar" v-else>
             <router-link id="header-link" :to="{ path: '/login'}">Log In</router-link>
@@ -52,6 +54,7 @@ export default {
         //if (res.data.result == true)
         //alert('로그아웃 되었습니다.')
         this.sessionExist = false;
+        this.$session.destroy();
         this.$router.push({
           path: '/'
         });
