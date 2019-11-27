@@ -28,6 +28,7 @@ export default {
       }
     }
   }
+
   methods: {
     //methods error
     submit () {
