@@ -37,7 +37,7 @@ export default {
         const session = await this.$http.get('/rest/user/session');
         if(session.data.result == true){
           this.name = session.data.user.name;
-          this.$session.set('user',session.data.user);
+          this.$session.set('user', session.data.user);
           this.sessionExist = true;
         } else{
           this.sessionExist = false;
@@ -49,12 +49,12 @@ export default {
     async logout (){
       try{
         const res = await this.$http.post("http://localhost:3000/rest/logout")
-        //if (res.data.result == true)
-        alert('로그아웃 되었습니다.')
-        this.$session.destroy();
-        this.$router.push({
-          path: '/login'
-        });
+        if (res.data.result == true){
+          this.$session.destroy();
+          this.$router.push({
+            path: '/'
+          });
+        }
       } catch(e){
         alert('로그아웃에 실패하였습니다.')
       }
