@@ -26,12 +26,7 @@ export default {
       email:'',
     }
   }
-  if (name || == ""){
-    alert("성함을 입력하세요");
-    return;
-  }
-};
-
+}
 
 </script>
 
