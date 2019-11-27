@@ -19,6 +19,7 @@ const FindId = () => import('@/authentication/FindId')
 const FindPassword = () => import('@/authentication/FindPassword')
 const QuestionList = () => import('@/authentication/QuestionList')
 const Register = () => import('@/authentication/Register')
+const Profile = () => import('@/authentication/Profile')
 
 // Register Question/Answer
 const RegisterQuestion = () => import('@/register/RegisterQuestion')
@@ -69,6 +70,11 @@ export default new Router({
                     path: '/register',
                     name: 'Register',
                     component: Register
+                },
+                {
+                    path: '/profile',
+                    name: 'Profile',
+                    component: Profile
                 },
                 {
                     path: '/registerquestion',
