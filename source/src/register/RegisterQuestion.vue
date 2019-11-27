@@ -60,7 +60,12 @@ export default {
     },
     methods: {
         checkCredit () {
-
+            const ownCredit = this.$session.get('user').points
+            const betCredit = this.reward * 100
+            if (ownCredit < betCredit){
+                return false
+            }
+            else return true
         },
         async write () {
             try{
@@ -69,6 +74,13 @@ export default {
                 const reward = this.reward * 100
                 const type = this.type
                 const tag = this.tag
+                const isCreditValid = this.checkCredit ()
+                const betCredit = this.$session.get('user').points
+                //if (isCreditValid == false){
+                    alert('소유한 크레딧 : ' + betCredit + '\n'
+                        + '수여할 크레딧 : ' + reward + '\n'
+                        + '보상 크레딧의 양을 확인해 주세요!')
+                //}
                 const res = await this.$http.post("http://localhost:3000/rest/question",
                             {title, content, reward, type, tag})
                 if (res.status == 200) {
