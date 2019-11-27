@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
+import VModal from 'vue-js-modal'
+ 
 //TODO Lazy Loading
 
 // Containers
@@ -25,6 +26,8 @@ const RegisterAnswer = () => import('@/register/RegisterAnswer')
 
 
 Vue.use(Router)
+Vue.use(VModal)
+
 
 export default new Router({
     base: '/',
