@@ -50,12 +50,13 @@ export default {
       try{
         const res = await this.$http.post("http://localhost:3000/rest/logout")
         //if (res.data.result == true)
-        alert('로그아웃 되었습니다.')
+        //alert('로그아웃 되었습니다.')
+        this.sessionExist = false;
         this.$router.push({
-          path: '/login'
+          path: '/'
         });
       } catch(e){
-        alert('로그아웃에 실패하였습니다.')
+        //alert('로그아웃에 실패하였습니다.')
       }
     }
   }
