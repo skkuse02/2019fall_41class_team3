@@ -117,8 +117,31 @@ async function findPassword(req, res){
   }
 }
 
+async function getUserCredit(req, res){
+  try{
+    const user = await models.user.findOne({
+      where: {
+        uid: req.session.user.uid
+      },
+      attributes: ['points']
+    });
+
+    res.status(200).send({
+      result: true,
+      credit: user.points
+    });
+  } catch (err){
+    //bad request
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
+
 module.exports = {
   getSession,
   searchUserId,
-  findPassword
+  findPassword,
+  getUserCredit
 };

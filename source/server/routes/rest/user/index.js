@@ -7,12 +7,13 @@ const router = aa(express.Router());
 const {
     getSession,
     searchUserId,
-    findPassword
+    findPassword,
+    getUserCredit
 } = require('./user');
 
 router.get('/session', getSession);
 router.get('/id', searchUserId);
 router.get('/password', findPassword);
-
+router.get('/credit', getUserCredit);
 
 module.exports = router;
