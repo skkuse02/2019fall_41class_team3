@@ -28,7 +28,7 @@ export default {
         if (!this.$session.exists()){
             alert('접근 권한이 없습니다!\n' + '먼저 로그인해 주세요!')
             this.$router.push({
-                path: '/'
+                path: '/login'
             });
         }
     },
