@@ -52,7 +52,7 @@ export default {
     },
     created: async function () {
         if (!this.$session.exists()){
-            alert('접근 권한이 없습니다!\n' + '먼저 로그인해 주세요!')
+            alert('접근 권한이 없습니다!\n' + '먼저 로그인해 주세요!');
             this.$router.push({
                 path: '/login'
             });
@@ -61,30 +61,33 @@ export default {
     methods: {
         async write () {
             try{
-                const title = this.title
-                const content = this.content
-                const reward = this.reward * 100
-                const type = this.type
-                const tag = this.tag
-                const betCredit = this.$session.get('user').points
-                //if (isCreditValid == false){
+                const title = this.title;
+                const content = this.content;
+                const reward = this.reward * 100;
+                const type = this.type;
+                const tag = this.tag;
+                const creditInfo = await this.$http.get("/rest/user/credit");
+                const betCredit = creditInfo.data.credit;
+                if (betCredit < reward) {
                     alert('소유한 크레딧 : ' + betCredit + '\n'
                         + '수여할 크레딧 : ' + reward + '\n'
-                        + '보상 크레딧의 양을 확인해 주세요!')
-                //}
-                const res = await this.$http.post("/rest/question",
-                            { title, content, reward, type, tag })
-                if (res.data.result == true){
-                    alert('질문이 등록되었습니다!')
-                    this.$router.push({
-                        path: '/'
-                    });
-                    // 추후에 MyQuestion 페이지로 리디렉션하게 수정
+                        + '보상 크레딧의 양을 확인해 주세요!');
                 }
+                else {
+                    const res = await this.$http.post("/rest/question",
+                            { title, content, reward, type, tag });
+                    if (res.data.result == true) {
+                        alert('질문이 등록되었습니다!');
+                        this.$router.push({
+                            path: '/'
+                        });
+                        // 추후에 MyQuestion 페이지로 리디렉션하게 수정
+                    }
+                }        
             } catch(err) {
-                alert(err.toString() + '\n잠시 후 다시 시도해주세요!')
+                alert(err.toString() + '\n잠시 후 다시 시도해주세요!');
             }
-        }
+        },
     }
 }
 </script>
