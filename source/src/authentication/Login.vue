@@ -82,21 +82,6 @@ export default {
 };
 </script>
 
-<!-- Local style for login page -->
-<style scoped>
-    h2 {
-        font-weight: normal;
-    }
-    a {
-        color: #42b983;
-    }
-    .btn-lg {
-        width: 20%;
-    }
-    #buttonHolder {
-        text-align: center;
-        align-items: center;
-        justify-content: center;
-    }
-
+<style lang="scss" scoped>
+@import "../assets/css/common/login.css";
 </style>

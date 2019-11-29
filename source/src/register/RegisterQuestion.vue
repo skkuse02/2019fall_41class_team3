@@ -72,7 +72,7 @@ export default {
                         + '수여할 크레딧 : ' + reward + '\n'
                         + '보상 크레딧의 양을 확인해 주세요!')
                 //}
-                const res = await this.$http.post("http://localhost:3000/rest/question",
+                const res = await this.$http.post("/rest/question",
                             { title, content, reward, type, tag })
                 if (res.data.result == true){
                     alert('질문이 등록되었습니다!')
@@ -89,16 +89,6 @@ export default {
 }
 </script>
 
-<style scoped>
-    h2 {
-        font-weight: normal;
-    }
-    a {
-        color: #42b983;
-    }
-    #buttonHolder {
-        text-align: center;
-        align-items: center;
-        justify-content: flex-end;
-    }
+<style lang="scss" scoped>
+@import "../assets/css/common/login.css";
 </style>
