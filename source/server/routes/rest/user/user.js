@@ -139,9 +139,56 @@ async function getUserCredit(req, res){
   }
 }
 
+async function upsertUser(req, res){
+  try{
+    const user = await models.user.findOne({
+      where: {
+        uid: req.body.uid
+      }
+    });
+    if(!user){
+      await models.user.create({
+        uid: req.body.uid,
+        name: req.body.name,
+        password: sha256(req.body.password),
+        nickname: req.body.nickname,
+        email: req.body.email,
+        type: req.body.type,
+        rank: 1,
+        points: 0
+      }); 
+    }
+
+      //add field
+    await req.body.fields.forEach(async (f) => {
+      try{
+        const now = new Date();
+        await models.sequelize.query(`INSERT INTO fielduser (field, userUid, createdAt, updatedAt) VALUES ('${f}','${req.body.uid}',CURRENT_TIME, CURRENT_TIME)`);
+
+      } catch (err){
+        
+      }
+    });
+
+    
+
+    res.status(200).send({
+      result: true
+    });
+  } catch (err){
+    //bad request
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
+
+
 module.exports = {
   getSession,
   searchUserId,
   findPassword,
-  getUserCredit
+  getUserCredit,
+  upsertUser
 };
