@@ -52,7 +52,9 @@ export default {
     }
   },
   created: async function(){
-    if(this.$session.exists()){
+    if(this.$session.has('user')){
+      console.log(this.$session.get('user'));
+            alert(this.$session.get('user'));
       this.$router.push({
         path: '/'
       });

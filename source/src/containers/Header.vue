@@ -42,19 +42,21 @@ export default {
           this.$session.set('user',session.data.user);
           this.sessionExist = true;
         } else{
+          await this.$session.remove('user');
           this.sessionExist = false;
         }
       } catch(e){
+        await this.$session.remove('user');
         this.sessionExist = false;
       }
     },
     async logout (){
       try{
-        const res = await this.$http.post("http://localhost:3000/rest/logout")
+        const res = await this.$http.post("http://localhost:3000/rest/logout");
         //if (res.data.result == true)
         //alert('로그아웃 되었습니다.')
         this.sessionExist = false;
-        this.$session.destroy();
+        await this.$session.remove('user');
         this.$router.push({
           path: '/'
         });
