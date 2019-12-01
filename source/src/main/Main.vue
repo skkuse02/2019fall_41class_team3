@@ -1,10 +1,4 @@
-<!--When session is detected, show this page -->
-<template v-if="sessionExist">
-  <strong><h1> Welcome, {{ uid }} !</h1><strong>
-</template>
-
-<!-- When session is not detected, show this page -->
-<template v-else>
+<template>
     <div id="procedure">
       <strong><h1>Welcome!</h1></strong>
       <h2><p>What is QAHub?</p></h2>
@@ -34,6 +28,12 @@
           <li>Wait for mentee's evaluation and take your credit!</li>
        </ol>
       </div>
+      <div v-if="this.$session.exists()">
+        <div id="buttonholder" style="margin:10px">
+          <b-button type="submit" @click="moveRegisterQuestion()"
+          variant="success" size="sm">질문 등록하기</b-button>
+        </div>
+      </div>
     </div>
 </template>
 <script>
@@ -46,26 +46,20 @@ export default {
   },
   data() {
     return {
-      sessionExist: false,
-      uid: 'Anonymous'
+      uid: ''
     };
   },
   created: async function() {
-    this.getSession();
+    if (await this.$session.exists()){
+      const session = await this.$http.get('/rest/user/session')
+      this.uid = session.data.user.uid
+    }
   },
   methods: {
-    async getSession () {
-      try{
-        const session = await this.$http.get('/rest/user/session');
-        if(session.data.result == true) {
-          this.sessionExist = true;
-          this.uid = session.data.user.uid
-        } else{
-          this.sessionExist = false;
-        }
-      } catch(err) {
-        this.sessionExist = false;
-      }
+    moveRegisterQuestion () {
+      this.$router.push({
+          path: '/registerquestion'
+      });
     }
   }
 };
