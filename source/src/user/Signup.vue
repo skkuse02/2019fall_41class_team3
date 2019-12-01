@@ -110,7 +110,7 @@ export default {
   },
   validators: {
     uid: function (value) {
-      return  his.$validator.value(value).required().minLength(5).regex('^[A-Za-z0-9]*$', 'Must only contain alphabet letters or numbers.');
+      return  this.$validator.value(value).required().minLength(5).regex('^[A-Za-z0-9]*$', 'Must only contain alphabet letters or numbers.');
     },
     password: function (value) {
       return this.$validator.value(value).required().minLength(8)
