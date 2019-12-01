@@ -62,11 +62,18 @@ async function checkID(req, res){
 }
 
 async function logout(req, res){
-    req.session.destroy(() => {
-        req.session;
-    });
-    
-    res.redirect('/');
+    try{
+        await req.session.destroy(() => {
+            req.session;
+        });
+
+        res.redirect('/');
+    } catch(err){
+        res.status(400).send({
+            result: false,
+            msg: err.toString()
+        });
+    }
   };
   
 
