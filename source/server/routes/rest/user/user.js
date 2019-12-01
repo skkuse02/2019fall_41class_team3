@@ -171,26 +171,30 @@ async function upsertUser(req, res){
       }); 
     }
 
-    await models.sequelize.query(`DELETE FROM fielduser where uid = '${req.body.uid}'`);
+    await models.sequelize.query(`DELETE FROM fielduser where userUid = '${req.body.uid}'`);
     //add field
-    await req.body.fields.forEach(async (f) => {
-      try{
-        await models.sequelize.query(`INSERT INTO fielduser (field, userUid, createdAt, updatedAt) VALUES ('${f}','${req.body.uid}',CURRENT_TIME, CURRENT_TIME)`);
+    if(req.body.fields.length > 0){
+      await req.body.fields.forEach(async (f) => {
+        try{
+          await models.sequelize.query(`INSERT INTO fielduser (field, userUid, createdAt, updatedAt) VALUES ('${f}','${req.body.uid}',CURRENT_TIME, CURRENT_TIME)`);
 
-      } catch (err){
-        
-      }
-    });
+        } catch (err){
+          console.log(err);
+        }
+      });
+    }
 
-    await models.sequelize.query(`DELETE FROM timeuser where uid = '${req.body.uid}'`);
-    //add field
-    await req.body.available_times.forEach(async (t) => {
-      try{
-        await models.sequelize.query(`INSERT INTO timeuser (uid, timeId, createdAt, updatedAt) VALUES ('${req.body.uid}','${t}',CURRENT_TIME, CURRENT_TIME)`);
-      } catch (err){
-        
-      }
-    });
+    if(req.body.type == "Mentor" && req.body.available_times.length > 0){
+      await models.sequelize.query(`DELETE FROM timeuser where uid = '${req.body.uid}'`);
+      //add field
+      await req.body.available_times.forEach(async (t) => {
+        try{
+          await models.sequelize.query(`INSERT INTO timeuser (uid, timeId, createdAt, updatedAt) VALUES ('${req.body.uid}','${t}',CURRENT_TIME, CURRENT_TIME)`);
+        } catch (err){
+          console.log(err);
+        }
+      });
+    }
     
 
     res.status(200).send({
@@ -198,6 +202,7 @@ async function upsertUser(req, res){
     });
   } catch (err){
     //bad request
+    console.log(err);
     res.status(400).send({
       result: false,
       msg: err.toString()
