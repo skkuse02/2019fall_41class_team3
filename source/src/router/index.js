@@ -16,9 +16,11 @@ const NotFound = () => import('@/other/NotFound')
 const Login = () => import('@/authentication/Login')
 const FindId = () => import('@/authentication/FindId')
 const FindPassword = () => import('@/authentication/FindPassword')
-const QuestionList = () => import('@/authentication/QuestionList')
 const Register = () => import('@/authentication/Register')
 const Profile = () => import('@/authentication/Profile')
+
+//has errors
+//const QuestionList = () => import('@/authentication/QuestionList')
 
 // Register Question/Answer
 const RegisterQuestion = () => import('@/register/RegisterQuestion')
@@ -59,11 +61,12 @@ export default new Router({
                     name: 'FindPassword',
                     component:FindPassword
                 },
-                {
-                    path: '/questionlist',
-                    name: 'QuestionList',
-                    component:QuestionList
-                },
+                //has errors
+                // {
+                //     path: '/questionlist',
+                //     name: 'QuestionList',
+                //     component:QuestionList
+                // },
                 {
                     path: '/register',
                     name: 'Register',
