@@ -9,7 +9,8 @@ function auth(req, res, next){
 }
 
 const {
-    getFields
+    getFields,
+    addField
 } = require('./field');
 
 router.get('/list', getFields);
