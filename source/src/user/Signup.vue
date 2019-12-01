@@ -164,23 +164,33 @@ export default {
     },
     showWelcomeModal: function() {
     },
-    register: function(){
-      const _modal = this.$modal;
-      this.$validate()
-        .then(function(success) {
-          if (success) {
-            try
-            {
-              _modal.show('welcome-user');
-            }
-            catch(e) {
-              alert(e);
-            }
+    async register(){
+      const formRes = await this.$validate();
+      if(formRes) {
+        try {
+          const uid = this.uid;
+          const password = this.password;
+          const type = this.type;
+          const name = this.name;
+          const nickname = this.nickname;
+          const email = this.email;
+          const fields = this.fields;
+          const available_times = this.available_times;
+          const reqRes = await this.$http.post("/rest/user", {uid, type, password, name, nickname, email, fields, available_times})
+          if (reqRes.data.result == true) {
+            this.$modal.show('welcome-user');
           }
-          else {
-            alert('안돼 돌아가');
-          }
-        });
+        }
+        catch(e) {
+          //Unable to sign up
+        }
+      }
+      else {
+        alert('안돼 돌아가');
+      }
+    },
+    sendRequest: function() {
+      
     },
     gotoLogin() {
       this.$router.push({
