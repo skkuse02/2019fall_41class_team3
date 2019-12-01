@@ -1,6 +1,7 @@
 <template>
   <div>
-    <form class="layout-form" @submit.prevent="register()">
+  <div>
+    <form class="layout-form" @submit.prevent="register()" autocomplete="nope">
       <h1>Sign Up</h1>
 
       <!-- Step 1: Select user type -->
@@ -20,12 +21,12 @@
       <div v-show="currentStep==1">
         <div class="form-group" :class="{error: validation.hasError('uid')}">
           <div class="label">* ID</div>
-          <div class="content"><input type="id" class="form-control" v-model="uid"/></div>
+          <div class="content"><input type="id" class="form-control" v-model="uid" autocomplete="nope"/></div>
           <div class="message">{{ validation.firstError('uid') }}</div>
         </div>
         <div class="form-group" :class="{error: validation.hasError('password')}">
           <div class="label">* Password</div>
-          <div class="content"><input type="password" class="form-control" v-model="password"/></div>
+          <div class="content"><input type="password" class="form-control" v-model="password" autocomplete="new-password"/></div>
           <div class="message">{{ validation.firstError('password') }}</div>
         </div>
         <div class="form-group" :class="{error: validation.hasError('repeat')}">
@@ -57,7 +58,6 @@
       <!--  -->
       <div class="form-group" v-show="currentStep==3">
           <div class="label">Field</div>
-          <div class="content"><input type="text" v-model="field" placeholder="Field"></div>
       </div>
 
       <div>
@@ -74,21 +74,15 @@
 
         <div style="float:right;">
             <button class="btn btn-primary" v-if="isNextBtnShow" type="button" @click="setStepDiff(1)">Next &gt;</button>
-            <button class="btn btn-primary" v-if="isSubmitBtnShow" type="button" @click="showConfirmModal()">OK</button>
+            <button class="btn btn-primary" v-if="isSubmitBtnShow" type="submit">Submit</button>
         </div>
       </div>
-
-      <modal name="hello-world">
-        <div>uid: {{ uid }}</div>
-        <div>name: {{ name }}</div>
-        <div>password: {{ password }}</div>
-        <div>nickname: {{ nickname }}</div>
-        <div>email: {{ email }}</div>
-        <div>type: {{ type }}</div>
-        <div>field: {{ field }}</div>
-        <button v-if="isSubmitBtnShow" type="submit">Confirm</button>
-      </modal>
     </form>
+    <modal name="welcome-user">
+      <div>Welcome, {{ uid }} !</div>
+      <button type="button" @click="gotoLogin">Go to Login</button>
+    </modal>
+  </div>
   </div>
 </template>
 
@@ -102,14 +96,16 @@ export default {
         isNextBtnShow: true,
         isSubmitBtnShow: false,
 
+        // uid, type, password, name, nickname, email, fields, available_times
         uid: '',
-        name: '',
+        type: '',
         password: '',
-        repeat: '',
+        name: '',
         nickname: '',
         email: '',
-        type: '',
-        field: ''
+        fields: [],
+        available_times: [],
+        repeat: '',
     };
   },
   validators: {
@@ -162,25 +158,31 @@ export default {
         this.isSubmitBtnShow = false;
       }
     },
-    
-    submit: function() {
-      this.$validate()
-        .then(function(success) {
-          if (success) {
-            alert('Validation succeeded!')
-          }
-        });
-    },
     reset: function() {
       this.name = '';
       this.validation.reset();
     },
-    showConfirmModal() {
-      this.$modal.show('hello-world');
+    showWelcomeModal: function() {
     },
-    register() {
-      //TODO: Backend에 가입 요청
-      alert("가입 요청이 제출되었습니다.");
+    register: function(){
+      const _modal = this.$modal;
+      this.$validate()
+        .then(function(success) {
+          if (success) {
+            try
+            {
+              _modal.show('welcome-user');
+            }
+            catch(e) {
+              alert(e);
+            }
+          }
+          else {
+            alert('안돼 돌아가');
+          }
+        });
+    },
+    gotoLogin() {
       this.$router.push({
         path: '/login'
       });
