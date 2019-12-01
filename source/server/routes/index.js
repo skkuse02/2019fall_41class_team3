@@ -61,6 +61,35 @@ async function checkID(req, res){
     }
 }
 
+async function checkPassword(req, res){
+    try{
+        const user = await models.user.findOne({
+            where:{
+                uid: req.body.uid,
+                password: sha256(req.body.password)
+            }
+        });
+
+        if(user){
+            //found
+            res.status(200).send({
+                result: true
+            });
+        } else{
+            //not found
+            res.status(404).send({
+                result: false
+            });
+        }
+    } catch(err){
+        //bad request
+        res.status(400).send({
+            result: false,
+            msg: err.toString()
+        });
+    }
+}
+
 async function logout(req, res){
     try{
         await req.session.destroy(() => {
@@ -115,6 +144,7 @@ async function addTime(req, res){
 router.post('/login', login);
 router.post('/logout', logout);
 router.get('/checkID', checkID);
+router.get('/checkPw',checkPassword);
 
 router.get('/admin/addTime', addTime);
 
