@@ -69,7 +69,6 @@ export default {
         }
         const res = await this.$http.post("http://localhost:3000/rest/login", {uid, password})
         if (res.data.result == true) {
-          alert('환영합니다! ' + this.uid + '!')
           this.$router.push({
             path: '/'
           });
