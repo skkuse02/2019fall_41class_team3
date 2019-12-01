@@ -124,6 +124,9 @@ export default {
         return  this.$validator.value(repeat).required().match(password);
       }
     },
+    type: function(value) {
+      return this.$validator.value(value).required();
+    },
     name: function(value) {
       return this.$validator.value(value).required().regex('^[A-Za-z]*$', 'Must only contain alphabetic characters.');
     },
@@ -135,19 +138,37 @@ export default {
     }
   },
   methods: {
-    setStepDiff(diff) {
-      this.setStep(this.currentStep + diff);
+    async setStepDiff(diff) {
+
+      // 스텝별 validation 확인
+      var res;
+      switch(this.currentStep) {
+        case 0:
+          res = await this.$validate('type');
+          break;
+        case 1:
+          res = await this.$validate('uid', 'password');
+          break;
+        case 2:
+          res = await this.$validate('name', 'nickname', 'email');
+          break;
+        case 3:
+          break;
+      }
+
+      // 유효한 입력이면 다음 스텝으로
+      if(res) {
+        this.setStep(this.currentStep + diff);
+      }
+      else {
+        alert('안돼 돌아가');
+      }
     },
     setStep(step) {
-      // 범위 밖 값에 대한 예외처리
-      if(step < 0) {
-        step = 0;
-      }
-      else if(step > 3) {
-        step = 3;
-      }
       this.currentStep = step;
-
+      this.setButtons(step);
+    },
+    setButtons(step) {
       // 버튼 표시 변수 계산
       if(step == 0) {
         this.isPrevBtnShow = false;
@@ -194,9 +215,7 @@ export default {
         alert('안돼 돌아가');
       }
     },
-    sendRequest: function() {
-      
-    },
+    
     gotoLogin() {
       this.$router.push({
         path: '/login'
