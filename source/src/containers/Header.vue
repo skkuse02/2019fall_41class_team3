@@ -5,7 +5,7 @@
       <div>
           <div id="header-right-bar" v-if="sessionExist">
             <div id="header-link">Welcome {{name}} | </div>
-            <a v-on:click="logout" id="header-link">Log out</a>
+            <a href="" v-on:click="logout" id="header-link">Log out</a>
             <span id="header-link"> | </span>
             <router-link id="header-link" :to="{ path: '/profile'}">Profile</router-link>
           </div>
