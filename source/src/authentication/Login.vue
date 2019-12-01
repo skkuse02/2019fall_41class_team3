@@ -69,7 +69,7 @@ export default {
         if (!uid || !password) {
           alert('아이디와 비밀번호를 입력해주세요!')
         }
-        const res = await this.$http.post("http://localhost:3000/rest/login", {uid, password})
+        const res = await this.$http.post("/rest/login", {uid, password})
         if (res.data.result == true) {
           this.$router.push({
             path: '/'
