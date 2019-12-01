@@ -170,8 +170,8 @@ async function upsertUser(req, res){
         }
       }); 
     }
-    console.log(req.body);
-    await models.sequelize.query(`DELETE FROM fielduser where userUuid = '${req.body.uid}'`);
+
+    await models.sequelize.query(`DELETE FROM fielduser where userUid = '${req.body.uid}'`);
     //add field
     if(req.body.fields.length > 0){
       await req.body.fields.forEach(async (f) => {
@@ -179,19 +179,19 @@ async function upsertUser(req, res){
           await models.sequelize.query(`INSERT INTO fielduser (field, userUid, createdAt, updatedAt) VALUES ('${f}','${req.body.uid}',CURRENT_TIME, CURRENT_TIME)`);
 
         } catch (err){
-
+          console.log(err);
         }
       });
     }
 
-    if(type == "Mentor" && req.body.available_times.length > 0){
+    if(req.body.type == "Mentor" && req.body.available_times.length > 0){
       await models.sequelize.query(`DELETE FROM timeuser where uid = '${req.body.uid}'`);
       //add field
       await req.body.available_times.forEach(async (t) => {
         try{
           await models.sequelize.query(`INSERT INTO timeuser (uid, timeId, createdAt, updatedAt) VALUES ('${req.body.uid}','${t}',CURRENT_TIME, CURRENT_TIME)`);
         } catch (err){
-
+          console.log(err);
         }
       });
     }
@@ -202,6 +202,7 @@ async function upsertUser(req, res){
     });
   } catch (err){
     //bad request
+    console.log(err);
     res.status(400).send({
       result: false,
       msg: err.toString()
