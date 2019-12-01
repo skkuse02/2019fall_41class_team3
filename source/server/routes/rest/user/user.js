@@ -37,7 +37,8 @@ async function searchUserId(req, res){
 
     if(user){
       res.status(200).send({
-        uid: user.uid
+        uid: user.uid,
+        result: true
       });
     } else{
       res.status(404).send({
