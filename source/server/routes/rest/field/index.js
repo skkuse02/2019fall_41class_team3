@@ -13,5 +13,6 @@ const {
 } = require('./field');
 
 router.get('/list', getFields);
+router.post('/', addField);
 
 module.exports = router;

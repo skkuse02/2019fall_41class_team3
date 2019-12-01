@@ -22,9 +22,11 @@ const Profile = () => import('@/user/Profile')
 //has errors
 //const QuestionList = () => import('@/authentication/QuestionList')
 
-// Register Question/Answer
-const RegisterQuestion = () => import('@/register/RegisterQuestion')
-const RegisterAnswer = () => import('@/register/RegisterAnswer')
+// Register Question
+const RegisterQuestion = () => import('@/question/RegisterQuestion')
+
+// Register Answer
+const RegisterAnswer = () => import('@/answer/RegisterAnswer')
 
 
 Vue.use(Router)

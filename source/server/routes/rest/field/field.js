@@ -41,5 +41,6 @@ async function addField(req, res){
 }
 
 module.exports = {
-  getFields
+  getFields,
+  addField
 };
