@@ -3,7 +3,11 @@
     <h1>Sign Up</h1>
     <form class="register-form" @submit.prevent="register()">
         <div v-show="currentStep==0">
-            <p><input type="text" v-model="type" placeholder="Type"></p>
+            <selection>
+              <div>* Type</div>
+              <input type="radio" v-model="type" value="Mentor">Mentor
+              <input type="radio" v-model="type" value="Mentee">Mentee
+            </selection>
         </div>
 
         <div v-show="currentStep==1">
