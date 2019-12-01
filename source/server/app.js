@@ -61,6 +61,7 @@ app.use(session({
 app.use('/rest', require('./routes'));
 app.use('/rest/user', require('./routes/rest/user'));
 app.use('/rest/question', require('./routes/rest/question'));
+app.use('/rest/field', require('./routes/rest/field'));
 
 app.use(history());
 

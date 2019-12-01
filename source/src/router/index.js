@@ -17,7 +17,7 @@ const Login = () => import('@/authentication/Login')
 const FindId = () => import('@/authentication/FindId')
 const FindPassword = () => import('@/authentication/FindPassword')
 const Register = () => import('@/authentication/Register')
-const Profile = () => import('@/authentication/Profile')
+const Profile = () => import('@/user/Profile')
 
 //has errors
 //const QuestionList = () => import('@/authentication/QuestionList')
