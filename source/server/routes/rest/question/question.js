@@ -57,10 +57,19 @@ async function addQuestion(req, res){
 
     const qid = questionId[0].id;
 
-    const now = new Date();
+    await models.sequelize.query(`DELETE FROM fieldquestion where qid = '${qid}'`);
+    //add field
+    await req.body.fields.forEach(async (f) => {
+      try{
+        await models.sequelize.query(`INSERT INTO fieldquestion (field, qid, createdAt, updatedAt) VALUES ('${f}','${qid}',CURRENT_TIME, CURRENT_TIME)`);
+
+      } catch (err){
+        
+      }
+    });
+
     await req.body.available_times.forEach(async (t) => {
       try{
-        const now = new Date();
         await models.sequelize.query(`INSERT INTO questiontime (qid, timeId, createdAt, updatedAt) VALUES ('${qid}','${t}',CURRENT_TIME, CURRENT_TIME)`);
       } catch (err){
         

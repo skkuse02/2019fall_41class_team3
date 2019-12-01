@@ -175,7 +175,6 @@ async function upsertUser(req, res){
     //add field
     await req.body.fields.forEach(async (f) => {
       try{
-        const now = new Date();
         await models.sequelize.query(`INSERT INTO fielduser (field, userUid, createdAt, updatedAt) VALUES ('${f}','${req.body.uid}',CURRENT_TIME, CURRENT_TIME)`);
 
       } catch (err){
@@ -187,7 +186,6 @@ async function upsertUser(req, res){
     //add field
     await req.body.available_times.forEach(async (t) => {
       try{
-        const now = new Date();
         await models.sequelize.query(`INSERT INTO timeuser (uid, timeId, createdAt, updatedAt) VALUES ('${req.body.uid}','${t}',CURRENT_TIME, CURRENT_TIME)`);
       } catch (err){
         
