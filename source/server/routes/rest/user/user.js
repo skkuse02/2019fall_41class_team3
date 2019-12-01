@@ -157,9 +157,21 @@ async function upsertUser(req, res){
         rank: 1,
         points: 0
       }); 
+    } else{
+      await models.user.update({
+        name: req.body.name,
+        password: sha256(req.body.password),
+        nickname: req.body.nickname,
+        email: req.body.email
+      }, {
+        where:{
+          uid: req.body.uid
+        }
+      }); 
     }
 
-      //add field
+    await models.sequelize.query(`DELETE FROM fielduser where uid = '${req.body.uid}'`);
+    //add field
     await req.body.fields.forEach(async (f) => {
       try{
         const now = new Date();
@@ -170,6 +182,16 @@ async function upsertUser(req, res){
       }
     });
 
+    await models.sequelize.query(`DELETE FROM timeuser where uid = '${req.body.uid}'`);
+    //add field
+    await req.body.available_times.forEach(async (t) => {
+      try{
+        const now = new Date();
+        await models.sequelize.query(`INSERT INTO timeuser (uid, timeId, createdAt, updatedAt) VALUES ('${req.body.uid}','${t}',CURRENT_TIME, CURRENT_TIME)`);
+      } catch (err){
+        
+      }
+    });
     
 
     res.status(200).send({
