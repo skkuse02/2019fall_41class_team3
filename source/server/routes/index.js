@@ -74,11 +74,48 @@ async function logout(req, res){
             msg: err.toString()
         });
     }
-  };
-  
+};
+
+async function addTime(req, res){
+    try{
+        await models.time.destroy({
+            where:{
+            }
+        });
+        const t = new Date();
+        await t.setFullYear(2018);
+        await t.setMonth(0);
+        await t.setDate(1);
+        await t.setHours(0);
+        
+        await t.setMinutes(0);
+        await t.setSeconds(0);
+
+        for(var i = 1; i <= 12*24*7; i++){
+            const tmp = new Date(t);
+            await t.setMinutes(t.getMinutes() + 5);
+            await models.time.create({
+                id: i,
+                day_of_week: Math.floor(i/288),
+                start_time: tmp,
+                end_time: t            
+            })
+        }
+        res.send({
+            result: true
+        });
+    } catch(err){
+        res.status(400).send({
+            result: false,
+            msg: err.toString()
+        });
+    }
+} 
 
 router.post('/login', login);
 router.post('/logout', logout);
 router.get('/checkID', checkID);
+
+router.get('/admin/addTime', addTime);
 
 module.exports = router;

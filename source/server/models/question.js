@@ -25,6 +25,12 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true,
         comment: "태그"
+      },
+      uid:{
+        type: DataTypes.STRING
+      },
+      type:{
+        type: DataTypes.STRING
       }
     }, {
       tableName: 'question',
