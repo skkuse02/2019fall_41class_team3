@@ -181,16 +181,17 @@ async function upsertUser(req, res){
         
       }
     });
-
-    await models.sequelize.query(`DELETE FROM timeuser where uid = '${req.body.uid}'`);
-    //add field
-    await req.body.available_times.forEach(async (t) => {
-      try{
-        await models.sequelize.query(`INSERT INTO timeuser (uid, timeId, createdAt, updatedAt) VALUES ('${req.body.uid}','${t}',CURRENT_TIME, CURRENT_TIME)`);
-      } catch (err){
-        
-      }
-    });
+    if(type == "Mentor"){
+      await models.sequelize.query(`DELETE FROM timeuser where uid = '${req.body.uid}'`);
+      //add field
+      await req.body.available_times.forEach(async (t) => {
+        try{
+          await models.sequelize.query(`INSERT INTO timeuser (uid, timeId, createdAt, updatedAt) VALUES ('${req.body.uid}','${t}',CURRENT_TIME, CURRENT_TIME)`);
+        } catch (err){
+          
+        }
+      });
+    }
     
 
     res.status(200).send({
