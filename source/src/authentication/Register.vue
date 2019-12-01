@@ -1,71 +1,68 @@
 <template>
   <div>
-    <h1>Sign Up</h1>
     <form class="layout-form" @submit.prevent="register()">
+      <h1>Sign Up</h1>
 
-        <!-- Step 1: Select user type -->
-        <div class="form-group" v-show="currentStep==0">
-          <div class="label">* Type</div>
-          <div class="content">
-            <label>
-              <input type="radio" v-model="type" value="Mentor"/>Mentor
-            </label>
-            <label>
-              <input type="radio" v-model="type" value="Mentee"/>Mentee
-            </label>
-          </div>
+      <!-- Step 1: Select user type -->
+      <div class="form-group" v-show="currentStep==0">
+        <div class="label">* Type</div>
+        <div class="content">
+          <label>
+            <input type="radio" v-model="type" value="Mentor"/>Mentor
+          </label>
+          <label>
+            <input type="radio" v-model="type" value="Mentee"/>Mentee
+          </label>
         </div>
+      </div>
 
-        <!-- Step 2: Input ID & Password -->
-        <div v-show="currentStep==1">
-          <div class="form-group" :class="{error: validation.hasError('uid')}">
-            <div class="label">* ID</div>
-            <div class="content"><input type="id" class="form-control" v-model="uid"/></div>
-            <div class="message">{{ validation.firstError('uid') }}</div>
-          </div>
-          <div class="form-group" :class="{error: validation.hasError('password')}">
-            <div class="label">* Password</div>
-            <div class="content"><input type="password" class="form-control" v-model="password"/></div>
-            <div class="message">{{ validation.firstError('password') }}</div>
-          </div>
-          <div class="form-group" :class="{error: validation.hasError('repeat')}">
-            <div class="label">* Confirm password</div>
-            <div class="content"><input type="password" class="form-control" v-model="repeat"/></div>
-            <div class="message">{{ validation.firstError('repeat') }}</div>
-          </div>
+      <!-- Step 2: Input ID & Password -->
+      <div v-show="currentStep==1">
+        <div class="form-group" :class="{error: validation.hasError('uid')}">
+          <div class="label">* ID</div>
+          <div class="content"><input type="id" class="form-control" v-model="uid"/></div>
+          <div class="message">{{ validation.firstError('uid') }}</div>
         </div>
-
-        <!-- Step 3:  -->
-        <div v-show="currentStep==2">
-            <div class="form-group" :class="{error: validation.hasError('name')}">
-              <div class="label">* Name</div>
-              <div class="content"><input type="text" class="form-control" v-model="name"/></div>
-              <div class="message">{{ validation.firstError('name') }}</div>
-            </div>
-            <div class="form-group" :class="{error: validation.hasError('nicknname')}">
-              <div class="label">Nickname</div>
-              <div class="content"><input type="text" class="form-control" v-model="nickname"/></div>
-              <div class="message">{{ validation.firstError('nickname') }}</div>
-            </div>
-            <div class="form-group" :class="{error: validation.hasError('email')}">
-              <div class="label">* Email</div>
-              <div class="content"><input type="text" class="form-control" v-model="email"/></div>
-              <div class="message">{{ validation.firstError('email') }}</div>
-            </div>
+        <div class="form-group" :class="{error: validation.hasError('password')}">
+          <div class="label">* Password</div>
+          <div class="content"><input type="password" class="form-control" v-model="password"/></div>
+          <div class="message">{{ validation.firstError('password') }}</div>
         </div>
-
-        <!--  -->
-        <div class="form-group" v-show="currentStep==3">
-            <div class="label">Field</div>
-            <div class="content"><input type="text" v-model="field" placeholder="Field"></div>
+        <div class="form-group" :class="{error: validation.hasError('repeat')}">
+          <div class="label">* Confirm password</div>
+          <div class="content"><input type="password" class="form-control" v-model="repeat"/></div>
+          <div class="message">{{ validation.firstError('repeat') }}</div>
         </div>
+      </div>
 
-        <div>
-          <div style="float:right;">
-              <button class="btn btn-primary" v-if="isPrevBtnShow" type="button" @click="setStepDiff(-1)">&lt; Prev</button>
-              <button class="btn btn-primary" v-if="isNextBtnShow" type="button" @click="setStepDiff(1)">Next &gt;</button>
-              <button class="btn btn-primary" v-if="isSubmitBtnShow" type="button" @click="showConfirmModal()">OK</button>
+      <!-- Step 3:  -->
+      <div v-show="currentStep==2">
+          <div class="form-group" :class="{error: validation.hasError('name')}">
+            <div class="label">* Name</div>
+            <div class="content"><input type="text" class="form-control" v-model="name"/></div>
+            <div class="message">{{ validation.firstError('name') }}</div>
           </div>
+          <div class="form-group" :class="{error: validation.hasError('nicknname')}">
+            <div class="label">Nickname</div>
+            <div class="content"><input type="text" class="form-control" v-model="nickname"/></div>
+            <div class="message">{{ validation.firstError('nickname') }}</div>
+          </div>
+          <div class="form-group" :class="{error: validation.hasError('email')}">
+            <div class="label">* Email</div>
+            <div class="content"><input type="text" class="form-control" v-model="email"/></div>
+            <div class="message">{{ validation.firstError('email') }}</div>
+          </div>
+      </div>
+
+      <!--  -->
+      <div class="form-group" v-show="currentStep==3">
+          <div class="label">Field</div>
+          <div class="content"><input type="text" v-model="field" placeholder="Field"></div>
+      </div>
+
+      <div>
+        <div style="float:left;">
+            <button class="btn btn-primary" v-if="isPrevBtnShow" type="button" @click="setStepDiff(-1)">&lt; Prev</button>
         </div>
 
         <div style="text-align:center;margin-top:40px;">
@@ -75,16 +72,22 @@
             <span class="step"></span>
         </div>
 
-        <modal name="hello-world">
-          <div>uid: {{ uid }}</div>
-          <div>name: {{ name }}</div>
-          <div>password: {{ password }}</div>
-          <div>nickname: {{ nickname }}</div>
-          <div>email: {{ email }}</div>
-          <div>type: {{ type }}</div>
-          <div>field: {{ field }}</div>
-          <button v-if="isSubmitBtnShow" type="submit">Confirm</button>
-        </modal>
+        <div style="float:right;">
+            <button class="btn btn-primary" v-if="isNextBtnShow" type="button" @click="setStepDiff(1)">Next &gt;</button>
+            <button class="btn btn-primary" v-if="isSubmitBtnShow" type="button" @click="showConfirmModal()">OK</button>
+        </div>
+      </div>
+
+      <modal name="hello-world">
+        <div>uid: {{ uid }}</div>
+        <div>name: {{ name }}</div>
+        <div>password: {{ password }}</div>
+        <div>nickname: {{ nickname }}</div>
+        <div>email: {{ email }}</div>
+        <div>type: {{ type }}</div>
+        <div>field: {{ field }}</div>
+        <button v-if="isSubmitBtnShow" type="submit">Confirm</button>
+      </modal>
     </form>
   </div>
 </template>
