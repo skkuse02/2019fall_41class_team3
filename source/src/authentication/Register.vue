@@ -1,33 +1,57 @@
 <template>
   <div>
-    <form id="register-form" @submit.prevent="register()">
-        <h1>Sign Up</h1>
-
+    <h1>Sign Up</h1>
+    <form class="register-form" @submit.prevent="register()">
         <div v-show="currentStep==0">
             <p><input type="text" v-model="type" placeholder="Type"></p>
         </div>
 
         <div v-show="currentStep==1">
-            <p><input type="ID" v-model="uid" placeholder="ID"></p>
-            <p><input type="password" v-model="password" placeholder="Password"></p>
+          <div class="form-group" :class="{error: validation.hasError('uid')}">
+            <div>* ID</div>
+            <div class="content"><input type="id" class="form-control" v-model="uid"/></div>
+            <div class="message">{{ validation.firstError('uid') }}</div>
+          </div>
+          <div class="form-group" :class="{error: validation.hasError('password')}">
+            <div>* Password</div>
+            <div class="content"><input type="password" class="form-control" v-model="password"/></div>
+            <div class="message">{{ validation.firstError('password') }}</div>
+          </div>
+          <div class="form-group" :class="{error: validation.hasError('repeat')}">
+            <div>* Confirm password</div>
+            <div class="content"><input type="password" class="form-control" v-model="repeat"/></div>
+            <div class="message">{{ validation.firstError('repeat') }}</div>
+          </div>
         </div>
 
         <div v-show="currentStep==2">
-            <p><input type="text" v-model="name" placeholder="Name"></p>
-            <p><input type="text" v-model="nickname" placeholder="Nickname"></p>
-            <p><input type="text" v-model="email" placeholder="Email"></p>
+            <div class="form-group" :class="{error: validation.hasError('name')}">
+              <div>* Name</div>
+              <div class="content"><input type="text" class="form-control" v-model="name"/></div>
+              <div class="message">{{ validation.firstError('name') }}</div>
+            </div>
+            <div class="form-group" :class="{error: validation.hasError('nicknname')}">
+              <div>* Nickname</div>
+              <div class="content"><input type="text" class="form-control" v-model="nickname"/></div>
+              <div class="message">{{ validation.firstError('nickname') }}</div>
+            </div>
+            <div class="form-group" :class="{error: validation.hasError('email')}">
+              <div>* Email</div>
+              <div class="content"><input type="text" class="form-control" v-model="email"/></div>
+              <div class="message">{{ validation.firstError('email') }}</div>
+            </div>
         </div>
 
         <div v-show="currentStep==3">
             <p><input type="text" v-model="field" placeholder="Field"></p>
         </div>
 
-        <div style="overflow:auto;">
-            <div style="float:right;">
-                <button v-if="isPrevBtnShow" type="button" @click="setStepDiff(-1)">Previous</button>
-                <button v-if="isNextBtnShow" type="button" @click="setStepDiff(1)">Next</button>
-                <button v-if="isSubmitBtnShow" type="button" @click="showConfirmModal()">OK</button>
-            </div>
+        <div>
+          <div style="float:right;">
+              <button class="btn btn-primary" v-if="isPrevBtnShow" type="button" @click="setStepDiff(-1)">&lt; Prev</button>
+              <button class="btn btn-primary" v-if="isNextBtnShow" type="button" @click="setStepDiff(1)">Next &gt;</button>
+              <button class="btn btn-primary" v-if="isSubmitBtnShow" type="button" @click="showConfirmModal()">OK</button>
+          </div>
         </div>
 
         <div style="text-align:center;margin-top:40px;">
@@ -64,11 +88,34 @@ export default {
         uid: '',
         name: '',
         password: '',
+        repeat: '',
         nickname: '',
         email: '',
         type: '',
         field: ''
     };
+  },
+  validators: {
+    uid: function (value) {
+      return  this.$validator.value(value).required().minLength(5);
+    },
+    password: function (value) {
+      return  this.$validator.value(value).required().minLength(8);
+    },
+    'repeat, password': function (repeat, password) {
+      if (this.submitted || this.validation.isTouched('repeat')) {
+        return  this.$validator.value(repeat).required().match(password);
+      }
+    },
+    name: function(value) {
+      return this.$validator.value(value).required().regex('^[A-Za-z]*$', 'Must only contain alphabetic characters.');
+    },
+    nickname: function(value) {
+      return this.$validator.value(value).required().regex('^[A-Za-z]*$', 'Must only contain alphabetic characters.');
+    },
+    email: function (value) {
+      return this.$validator.value(value).required().email();
+    }
   },
   methods: {
     setStepDiff(diff) {
@@ -97,6 +144,19 @@ export default {
         this.isNextBtnShow = true;
         this.isSubmitBtnShow = false;
       }
+    },
+    
+    submit: function() {
+      this.$validate()
+        .then(function(success) {
+          if (success) {
+            alert('Validation succeeded!')
+          }
+        });
+    },
+    reset: function() {
+      this.name = '';
+      this.validation.reset();
     },
     showConfirmModal() {
       this.$modal.show('hello-world');
