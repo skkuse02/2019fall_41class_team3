@@ -32,7 +32,7 @@ export default {
   methods: {
     //methods error
     submit () {
-      this.$http.post("http://localhost:3000/rest/findid",this.user);
+      this.$http.post("/rest/findid",this.user);
       //fill in url
       if (res.status == 200){
         console.log(response);

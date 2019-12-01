@@ -52,7 +52,7 @@ export default {
     },
     async logout (){
       try{
-        const res = await this.$http.post("http://localhost:3000/rest/logout");
+        const res = await this.$http.post("/rest/logout");
         //if (res.data.result == true)
         //alert('로그아웃 되었습니다.')
         this.sessionExist = false;
