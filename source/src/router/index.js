@@ -16,7 +16,7 @@ const NotFound = () => import('@/other/NotFound')
 const Login = () => import('@/authentication/Login')
 const FindId = () => import('@/authentication/FindId')
 const FindPassword = () => import('@/authentication/FindPassword')
-const Register = () => import('@/authentication/Register')
+const Signup = () => import('@/user/Signup')
 const Profile = () => import('@/user/Profile')
 
 //has errors
@@ -70,9 +70,9 @@ export default new Router({
                 //     component:QuestionList
                 // },
                 {
-                    path: '/register',
-                    name: 'Register',
-                    component: Register
+                    path: '/signup',
+                    name: 'Signup',
+                    component: Signup
                 },
                 {
                     path: '/profile',

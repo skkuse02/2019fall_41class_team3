@@ -12,7 +12,7 @@
           <div id="header-right-bar" v-else>
             <router-link id="header-link" :to="{ path: '/login'}">Log In</router-link>
             <span id="header-link"> | </span>
-            <router-link id="header-link" :to="{ path: '/register'}">Sign Up</router-link>
+            <router-link id="header-link" :to="{ path: '/signup'}">Sign Up</router-link>
           </div>
       </div>
     </b-navbar>

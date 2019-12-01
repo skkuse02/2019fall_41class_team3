@@ -3,10 +3,10 @@
         <h2><p>RegisterQuestion</p></h2>
         <form class="form-horizontal" role="form" @submit.prevent="write()">
             <div class="form-group">
-                <b-form-input type="text" v-model="title" class="form-control" placeholder="제목"/>
+                <b-form-input type="text" id="title" v-model="title" class="form-control" placeholder="제목"/>
             </div>
             <div class="form-group">
-                <b-form-textarea v-model="content" placeholder="내용" rows="10" no-resize/>
+                <b-form-textarea id="content" v-model="content" placeholder="내용" rows="10" no-resize/>
             </div>
             <div class="form-group">
                 <b-form-input type="integer" id="reward" v-model="reward" placeholder="보상"/>
@@ -15,7 +15,7 @@
                 </label>
             </div>
             <div class="form-group">
-                <b-form-select v-model="type" class="mb-3">
+                <b-form-select id="type" v-model="type" class="mb-3">
                     <option disabled value="">원하는 답변의 방식을 선택해주세요.</option>
                     <option> Normal Text </option>
                     <option> Live Chatting </option>
@@ -24,7 +24,7 @@
                 <span> &nbsp; &nbsp; Selected: {{type}}</span>
             </div>
             <div class="form-group">
-                <b-form-input type="text" v-model="field" class="form-control" placeholder="분야"/>
+                <b-form-input type="text" id="tag" v-model="tag" class="form-control" placeholder="분야"/>
             </div>
             <!-- Pressing register button will send form's info to server -->
             <div id="buttonholder" style="margin:10px">
@@ -74,20 +74,49 @@ export default {
                         + '보상 크레딧의 양을 확인해 주세요!');
                 }
                 else {
-                    const res = await this.$http.post("/rest/question",
-                            { title, content, reward, type, tag });
-                    if (res.data.result == true) {
-                        alert('질문이 등록되었습니다!');
-                        this.$router.push({
-                            path: '/'
-                        });
-                        // 추후에 MyQuestion 페이지로 리디렉션하게 수정
+                    if (this.formCheck() == true){
+                        const res = await this.$http.post("/rest/question", { title, content, reward, type, tag });
+                        if (res.data.result == true) {
+                            alert('질문이 등록되었습니다!');
+                            this.$router.push({
+                                path: '/'
+                            });
+                            // 추후에 MyQuestion 페이지로 리디렉션하게 수정
+                        }
                     }
                 }        
             } catch(err) {
                 alert(err.toString() + '\n잠시 후 다시 시도해주세요!');
             }
         },
+        formCheck () {
+            if(this.title == '') {
+                alert("제목을 입력해 주세요.");
+                title.focus();
+                return false;
+            }
+            else if(this.content == '') {
+                alert("내용을 입력해 주세요.");
+                content.focus();
+                return false;
+            }
+            else if(this.reward == '') {
+                alert("보상을 입력해 주세요.");
+                reward.focus();
+                return false;
+            }
+            else if(this.type == '') {
+                alert("원하는 답변 방식을 선택해 주세요.");
+                type.focus();
+                return false;
+            }
+            else if(this.tag == '') {
+                alert("질문의 분야를 입력해 주세요.");
+                tag.focus();
+                return false;
+            }
+            else return true;
+        }
     }
 }
 </script>

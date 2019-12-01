@@ -21,7 +21,7 @@ $fa-font-path: "~font-awesome/fonts/";
 @import "assets/css/bootstrap.min.css";
 @import "assets/css/style.css";
 @import "assets/css/common/header.css";
-@import "assets/css/common/register.css";
+@import "assets/css/common/signup.css";
 @import "assets/css/sticky_footer.css";
 @import "assets/css/jquery.nav.css";
 @import "assets/datatables/dataTables.bootstrap.css";
