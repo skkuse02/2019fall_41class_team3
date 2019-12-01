@@ -94,7 +94,7 @@
 
 <script>
 export default {
-  name: "Register",
+  name: "Signup",
   data () {
     return {
         currentStep: 0,
