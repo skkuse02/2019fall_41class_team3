@@ -113,7 +113,11 @@ export default {
       return  this.$validator.value(value).required().minLength(5).regex('^[A-Za-z0-9]*$', 'Must only contain alphabet letters or numbers.');
     },
     password: function (value) {
-      return  this.$validator.value(value).required().minLength(8).regex('^[A-Za-z0-9]*$', 'Must only contain alphabet letters or numbers.');
+      return this.$validator.value(value).required().minLength(8)
+        .regex('(?=.*?[A-Z])', 'Must contain at least one uppercase letter.')
+        .regex('(?=.*?[a-z])', 'Must contain at least one lowercase letter.')
+        .regex('(?=.*?[0-9])', 'Must contain at least one number.');
+      //return this.$validator.value(value).required().minLength(8).regex('(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])', 'Must contain at least one uppercase letter, one lowercase letter, one number.');
     },
     'repeat, password': function (repeat, password) {
       if (this.submitted || this.validation.isTouched('repeat')) {
@@ -183,6 +187,7 @@ export default {
         }
         catch(e) {
           //Unable to sign up
+          alert
         }
       }
       else {
