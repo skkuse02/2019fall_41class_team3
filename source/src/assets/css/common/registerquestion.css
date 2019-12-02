@@ -6,12 +6,17 @@ a {
 }
 div.form-group {
     width: 80%;
+    margin: 10px;
+    margin-left: 40px;
 }
 #timeStart {
     float: left;
-    justify-content: flex-start;
 }
 #timeEnd {
     float: right;
-    justify-content: flex-end;
+}
+#buttonHolder {
+    text-align: right;
+    align-items: right;
+    justify-content: right;
 }

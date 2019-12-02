@@ -6,7 +6,7 @@
                 <b-form-input type="text" id="title" v-model="title" class="form-control" placeholder="제목"/>
             </div>
             <div class="form-group">
-                <b-form-textarea id="content" v-model="content" placeholder="내용" rows="10" no-resize/>
+                <b-form-textarea id="content" v-model="content" style="width: 100%" placeholder="내용" rows="10" no-resize/>
             </div>
             <div class="form-group">
                 <b-form-input type="integer" id="reward" v-model="reward" placeholder="보상"/>
@@ -28,12 +28,12 @@
             </div>
             <div class="form-vif" v-if="answerType">
                 <div id="timeStart">
-                    <p>Time (start) : {{ timeStart.returnFormat }}</p>
+                    <p>Time (start) : {{ selectStart }} , {{ timeStart }}</p>
                     <b-form-radio-group id="dayStart" v-model="selectStart" :options="option" 
-                    buttons="true" button-variant="success"></b-form-radio-group>
-                    <timeselector v-model="time" displayFormat="  kk : mm" :id="timeStart" :interval="{h:1, m:5}"
+                    buttons button-variant="success"></b-form-radio-group>
+                    <timeselector displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
                     :displaySeconds="false" style="width:434px" :placeholder="'Select available time (start)'"
-                    returnFormat="kk:mm" @formatedTime="formatedTime">
+                    returnFormat="HH:mm" @formatedTime="tStart">
                         <template slot="hours">
                             <span>Hours</span>
                         </template>
@@ -43,12 +43,12 @@
                     </timeselector>
                 </div>
                 <div id="timeEnd">
-                    <p>Time (end) : {{ timeEnd.returnFormat }}</p>
+                    <p>Time (end) : {{ selectEnd }} , {{ timeEnd }}</p>
                     <b-form-radio-group id="dayEnd" v-model="selectEnd" :options="option" 
-                    buttons="true" button-variant="success"></b-form-radio-group>
-                    <timeselector v-model="time" displayFormat="  kk : mm" :id="timeEnd" :interval="{h:1, m:5}"
+                    buttons button-variant="success"></b-form-radio-group>
+                    <timeselector displayFormat=" [To]     HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
                     :displaySeconds="false" style="width:434px" :placeholder="'Select available time (end)'"
-                    returnFormat="kk:mm" @formatedTime="formatedTime">
+                    returnFormat="HH:mm" @formatedTime="tEnd">
                         <template slot="hours">
                             <span>Hours</span>
                         </template>
@@ -58,8 +58,9 @@
                     </timeselector>
                 </div>
             </div>
+            <div style="clear: both"></div>
             <!-- Pressing register button will send form's info to server -->
-            <div id="buttonholder" style="margin:10px">
+            <div id="buttonHolder" style="margin:10px">
                 <b-button type="submit" variant="success" size="sm">등록하기</b-button>
             </div>
         </form>
@@ -86,13 +87,13 @@ export default {
             selectStart: '',
             selectEnd: '',
             option: [
-                { text: 'Mon', value: 0 },
-                { text: 'Tue', value: 288 },
-                { text: 'Wed', value: 576 },
-                { text: 'Thu', value: 864 },
-                { text: 'Fri', value: 1152 },
-                { text: 'Sat', value: 1440 },
-                { text: 'Sun', value: 1728 }                
+                { text: 'Mon', value: 'Monday' }, // val = 0
+                { text: 'Tue', value: 'Tuesday' }, // val = 288
+                { text: 'Wed', value: 'Wednesday' }, // val = 576
+                { text: 'Thu', value: 'Thursday' }, // val = 864
+                { text: 'Fri', value: 'Friday' }, // val = 1152
+                { text: 'Sat', value: 'Saturday' }, // val = 1440
+                { text: 'Sun', value: 'Sunday' } // val = 1728                
             ]
         }
     },
@@ -171,11 +172,17 @@ export default {
                 return false;
             }
             else return true;
+        },
+        tStart (e) {
+            this.timeStart = e;
+        },
+        tEnd (e) {
+            this.timeEnd = e;
         }
     }
 }
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/css/common/login.css";
+@import "../assets/css/common/registerquestion.css";
 </style>
