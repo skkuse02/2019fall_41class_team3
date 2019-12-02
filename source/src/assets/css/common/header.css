@@ -40,3 +40,14 @@
     color: white;
     display: inline;
 }
+
+#header-dd-text
+{
+    text-align: left;
+}
+
+#header-dd-icon
+{
+    float: left;
+    margin-right: 10px;
+}

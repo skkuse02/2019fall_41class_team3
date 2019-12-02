@@ -4,13 +4,13 @@
       <b-navbar-brand id="header-brand" href="/"><img id="header-logo" src="assets/img/logo_white_typeC.png"></b-navbar-brand>
       <div>
         <div id="header-right-bar-dd" class="btn-group" v-if="sessionExist">
-          <a class="btn btn-info" href="#"><i class="fa fa-user fa-fw"></i> {{name}}</a>
-          <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="#">
+          <a class="btn btn-info" style="min-width: 130px;"  data-toggle="dropdown" href=""><i class="fa fa-user fa-fw"></i> {{name}}</a>
+          <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="">
             <span class="fa fa-caret-down" title="Toggle dropdown menu"></span>
           </a>
           <ul class="dropdown-menu">
-            <li><router-link :to="{ path: '/profile'}"><i class="fa fa-pencil fa-fw"></i> Profile</a></router-link>
-            <li><a href="" v-on:click="logout" ><i class="fa fa-unlock"></i> Log Out</a></li>
+            <li><router-link id="header-dd-text" :to="{ path: '/profile'}"><i id="header-dd-icon" class="fa fa-pencil fa-fw"></i> Profile</a></router-link>
+            <li><a id="header-dd-text" href="" v-on:click="logout" ><i id="header-dd-icon"  class="fa fa-unlock"></i> Log Out</a></li>
           </ul>
         </div>
         <div id="header-right-bar" v-else>
