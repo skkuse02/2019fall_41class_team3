@@ -1,10 +1,30 @@
 <template>
   <div>
-    <div>uid: {{user.uid}}</div>
-    <div>name: {{user.name}}</div>
-    <div>nickname: {{user.nickname}}</div>
-    <div>email: {{user.email}}</div>
-    <div>type: {{user.type}}</div>
+    <div v-if="isChecked">
+      <div>uid: {{user.uid}}</div>
+      <div>name: {{user.name}}</div>
+      <div>nickname: {{user.nickname}}</div>
+      <div>email: {{user.email}}</div>
+      <div>type: {{user.type}}</div>
+    </div>
+
+    <div class="loginForm" style="margin:100px 40px 40px 40px" v-else>
+      <h2><p>Check Password</p></h2>
+      <form class="form-horizontal" role="form" @submit.prevent="checkPassword()">
+        <div class="form-group">
+            <label for="inputPW" class="col-xs-4 control-label">PW</label>
+            <div class="col-xs-4 center-block">
+                <input type="password" v-model="inputPassword" class="form-control" placeholder="Password">
+            </div>
+        </div>
+
+        <!-- Pressing login button will send form's info to server -->
+        <div id="buttonHolder" style="margin:10px">
+            <b-button type="submit" variant="success" size="lg">Submit</b-button>
+        </div>
+      </form>
+    </div>
+
   </div>
 </template>
 
@@ -13,7 +33,9 @@ export default {
   name: "Profile",
   data() {
       return {
-          user: null
+          user: null,
+          inputPassword: '',
+          isChecked: false
       };
   },
   created: async function(){
@@ -23,11 +45,31 @@ export default {
       });
     }
     else {
-        this.user = this.$session.get('user');
+      this.user = this.$session.get('user');
     }
   },
   methods: {
-
+    async checkPassword() {
+      try {
+        const uid = this.user.uid;
+        const password = this.inputPassword;
+      alert(uid);
+        const res = await this.$http.post("/rest/checkPw", {uid, password});
+        if (res.data.result == true) {
+          this.isChecked = true;
+        }
+        else {
+          alert("비밀번호가 일치하지 않습니다.");
+        }
+      }
+      catch(e) {
+        alert(e);
+      }
+    }
   }
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../assets/css/common/login.css";
+</style>
