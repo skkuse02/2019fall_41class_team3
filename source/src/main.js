@@ -18,6 +18,10 @@ import router from './router'
 import DatePicker from 'vue2-datepicker'
 import DownloadJS from 'downloadjs'
 import SimpleVueValidation from 'simple-vue-validator';
+import Timeselector from 'vue-timeselector';
+import ButtonPlugin from 'bootstrap-vue';
+import FormRadioPlugin from 'bootstrap-vue';
+
 import 'expose-loader?$!expose-loader?jQuery!jquery'
 import './assets/js/bootstrap.min.js'
 import './assets/js/jquery.nav.min.js'
@@ -41,6 +45,9 @@ Vue.use(VueSession);
 Vue.use(VueHead);
 Vue.use(VueModal)
 Vue.use(SimpleVueValidation);
+Vue.use(Timeselector);
+Vue.use(ButtonPlugin);
+Vue.use(FormRadioPlugin);
 
 /* eslint-disable no-new */
 new Vue({

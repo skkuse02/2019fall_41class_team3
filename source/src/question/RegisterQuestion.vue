@@ -26,6 +26,38 @@
             <div class="form-group">
                 <b-form-input type="text" id="tag" v-model="tag" class="form-control" placeholder="분야"/>
             </div>
+            <div class="form-vif" v-if="answerType">
+                <div id="timeStart">
+                    <p>Time (start) : {{ timeStart.returnFormat }}</p>
+                    <b-form-radio-group id="dayStart" v-model="selectStart" :options="option" 
+                    buttons="true" button-variant="success"></b-form-radio-group>
+                    <timeselector v-model="time" displayFormat="  kk : mm" :id="timeStart" :interval="{h:1, m:5}"
+                    :displaySeconds="false" style="width:434px" :placeholder="'Select available time (start)'"
+                    returnFormat="kk:mm" @formatedTime="formatedTime">
+                        <template slot="hours">
+                            <span>Hours</span>
+                        </template>
+                        <template slot="minutes">
+                            <span>Minutes</span>
+                        </template>
+                    </timeselector>
+                </div>
+                <div id="timeEnd">
+                    <p>Time (end) : {{ timeEnd.returnFormat }}</p>
+                    <b-form-radio-group id="dayEnd" v-model="selectEnd" :options="option" 
+                    buttons="true" button-variant="success"></b-form-radio-group>
+                    <timeselector v-model="time" displayFormat="  kk : mm" :id="timeEnd" :interval="{h:1, m:5}"
+                    :displaySeconds="false" style="width:434px" :placeholder="'Select available time (end)'"
+                    returnFormat="kk:mm" @formatedTime="formatedTime">
+                        <template slot="hours">
+                            <span>Hours</span>
+                        </template>
+                        <template slot="minutes">
+                            <span>Minutes</span>
+                        </template>
+                    </timeselector>
+                </div>
+            </div>
             <!-- Pressing register button will send form's info to server -->
             <div id="buttonholder" style="margin:10px">
                 <b-button type="submit" variant="success" size="sm">등록하기</b-button>
@@ -35,11 +67,12 @@
 </template>
     
 <script>
+import Timeselector from 'vue-timeselector';
 
 export default {
     name: 'RegisterQuestion',
     components: {
-
+        Timeselector
     },
     data () {
         return {
@@ -48,6 +81,28 @@ export default {
             reward: '',
             type: '',
             tag: '',
+            timeStart: '',
+            timeEnd: '',
+            selectStart: '',
+            selectEnd: '',
+            option: [
+                { text: 'Mon', value: 0 },
+                { text: 'Tue', value: 288 },
+                { text: 'Wed', value: 576 },
+                { text: 'Thu', value: 864 },
+                { text: 'Fri', value: 1152 },
+                { text: 'Sat', value: 1440 },
+                { text: 'Sun', value: 1728 }                
+            ]
+        }
+    },
+    computed: {
+        answerType: function () {
+            if (this.type == 'Live Chatting' ||
+            this.type == 'Screen Sharing') {
+                return true;
+            }
+            else return false;
         }
     },
     created: async function () {

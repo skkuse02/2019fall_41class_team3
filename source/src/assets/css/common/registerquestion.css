@@ -1,0 +1,17 @@
+h2 {
+    font-weight: normal;
+}
+a {
+    color: #42b983;
+}
+div.form-group {
+    width: 80%;
+}
+#timeStart {
+    float: left;
+    justify-content: flex-start;
+}
+#timeEnd {
+    float: right;
+    justify-content: flex-end;
+}
