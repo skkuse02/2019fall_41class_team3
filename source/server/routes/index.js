@@ -144,7 +144,7 @@ async function addTime(req, res){
 router.post('/login', login);
 router.post('/logout', logout);
 router.get('/checkID', checkID);
-router.get('/checkPw',checkPassword);
+router.post('/checkPw',checkPassword);
 
 router.get('/admin/addTime', addTime);
 
