@@ -17,7 +17,7 @@
     <div class="loginForm" style="margin:100px 40px 40px 40px" v-else>
       <h2><p>Check Password</p></h2>
       <form class="form-horizontal" role="form" @submit.prevent="checkPassword()">
-        <div class="form-group">
+        <div class="form-group" style="width:100%;">
           <label for="inputPW" class="col-xs-4 control-label">PW</label>
           <div class="col-xs-4 center-block">
             <input type="password" v-model="inputPassword" class="form-control" placeholder="Password">
