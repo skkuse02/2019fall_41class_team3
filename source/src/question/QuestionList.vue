@@ -35,25 +35,22 @@
 
 <script>
 export default {
-  name: "QuestionListBased",
+  name: "QuestionList",
   data () {
     return {
       perPage: 5,
       currentPage: 1,
-      question:null
-    }
-  },
-  created: async function() {
-    if(!this.$session.exists()) {
-      this.$router.push ({
-        path: '/'
-      });
-    }
-    else {
-      this.question = this.$session.get('question');
+      question:{
+        title:'',
+        tag:''
+      }
     }
   },
   methods: {
+    submit: async function() {
+      const res = await this.$http.get("/rest/questionlist");
+      this.question = res.data.questions;
+    },
     computed: {
       rows() {
         return this.items.length
@@ -61,7 +58,7 @@ export default {
     },
     detail() {
       this.$router.push({
-        path: '/qna'
+        path: '/questionview'
       })
     }
   }

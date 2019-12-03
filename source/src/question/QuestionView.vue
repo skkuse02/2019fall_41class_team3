@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: "qna",
+  name: "questionview",
   data () {
     return {
       question:null,
@@ -55,6 +55,7 @@ export default {
       this.user = this.$session.get('user');
     }
   },
+
   methods: {
   }
 };

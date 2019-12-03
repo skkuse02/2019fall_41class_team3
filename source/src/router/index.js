@@ -16,16 +16,13 @@ const NotFound = () => import('@/other/NotFound')
 const Login = () => import('@/authentication/Login')
 const FindId = () => import('@/authentication/FindId')
 const FindPassword = () => import('@/authentication/FindPassword')
-const QuestionList = () => import('@/authentication/QuestionList')
-const Qna = () => import('@/authentication/Qna')
 const Signup = () => import('@/user/Signup')
 const Profile = () => import('@/user/Profile')
 
-//has errors
-//const QuestionList = () => import('@/authentication/QuestionList')
-
 // Register Question
 const RegisterQuestion = () => import('@/question/RegisterQuestion')
+const QuestionList = () => import('@/question/QuestionList')
+const QuestionView = () => import('@/question/QuestionView')
 
 // Register Answer
 const RegisterAnswer = () => import('@/answer/RegisterAnswer')
@@ -71,9 +68,9 @@ export default new Router({
                      component:QuestionList
                 },
                 {
-                     path: '/qna',
-                     name: 'Qna',
-                     component:Qna
+                     path: '/questionview',
+                     name: 'QuestionView',
+                     component:QuestionView
                 },
 
                 {
