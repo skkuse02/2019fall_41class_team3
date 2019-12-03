@@ -9,7 +9,7 @@
             <span class="fa fa-caret-down" title="Toggle dropdown menu"></span>
           </a>
           <ul class="dropdown-menu">
-            <li><router-link id="header-dd-text" :to="{ path: '/profile'}"><i id="header-dd-icon" class="fa fa-pencil fa-fw"></i> Profile</a></router-link>
+            <li><router-link id="header-dd-text" :to="{ path: '/profile'}"><i id="header-dd-icon" class="fa fa-pencil fa-fw"></i> Profile</router-link>
             <li><a id="header-dd-text" href="" v-on:click="logout" ><i id="header-dd-icon"  class="fa fa-unlock"></i> Log Out</a></li>
           </ul>
         </div>
