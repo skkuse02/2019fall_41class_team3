@@ -93,6 +93,11 @@ export default {
         .regex('(?=.*?[a-z])', 'Must contain at least one lowercase letter.')
         .regex('(?=.*?[0-9])', 'Must contain at least one number.');
       },
+    'repeat, password': function (repeat, password) {
+      if (this.submitted || this.validation.isTouched('repeat')) {
+        return  this.$validator.value(repeat).required().match(password);
+      }
+    }
   },
   created: async function(){
     if(!this.$session.exists()){
