@@ -26,52 +26,54 @@
             <div class="form-group">
                 <b-form-input type="text" id="tag" v-model="tag" class="form-control" placeholder="분야"/>
             </div>
-            <div class="form-vif" v-if="answerType">
-                <div id="timeStart">
-                    <p>Time (start) : {{ dayStart }} , {{ timeStart }}</p>
-                    <b-form-radio-group id="dayStart" v-model="dayStart" :options="option" 
-                    buttons button-variant="success"></b-form-radio-group>
-                    <timeselector displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
-                    :displaySeconds="false" style="width:434px" :placeholder="'Select available time (start)'"
-                    returnFormat="HH:mm" @formatedTime="tStart">
-                        <template slot="hours">
-                            <span>Hours</span>
-                        </template>
-                        <template slot="minutes">
-                            <span>Minutes</span>
-                        </template>
-                    </timeselector>
-                </div>
-                <div id="timeEnd">
-                    <p>Time (end) : {{ dayEnd }} , {{ timeEnd }}</p>
-                    <b-form-radio-group id="dayEnd" v-model="dayEnd" :options="option" 
-                    buttons button-variant="success"></b-form-radio-group>
-                    <timeselector displayFormat=" [To]     HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
-                    :displaySeconds="false" style="width:434px" :placeholder="'Select available time (end)'"
-                    returnFormat="HH:mm" @formatedTime="tEnd">
-                        <template slot="hours">
-                            <span>Hours</span>
-                        </template>
-                        <template slot="minutes">
-                            <span>Minutes</span>
-                        </template>
-                    </timeselector>
-                </div>
+        </form>
+        <div class="form-vif" v-if="answerType">
+            <div>
+                <p>Selected Time Range : {{ selectedDay }} / {{ timeStart }} ~ {{ timeEnd }}</p>
                 <div>
-                    <b-button variant="success" size="sm" v-on:click="addTime(timeFormat)">시간대 추가하기</b-button>
+                    <b-button-group size="lg">
+                        <b-button v-for="(day, idx) in days" :key="idx"
+                        :pressed.sync="day.state" variant="success">
+                            {{ day.text }}
+                        </b-button>
+                    </b-button-group>
                 </div>
-                <div id="timeChip">
-                    <ul>
-                         <li class="list-group-item" v-for="time in times" v-bind:key="time"> {{ time.timeFormat }}</li>
-                    </ul>
-                </div>
+                <div style="clear: both"></div>
+                <timeselector displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
+                :displaySeconds="false" style="width:208px; float: left" :placeholder="'[From] HH:MM'"
+                returnFormat="HH:mm" @formatedTime="tStart">
+                    <template slot="hours">
+                        <span>Hours</span>
+                    </template>
+                    <template slot="minutes">
+                        <span>Minutes</span>
+                    </template>
+                </timeselector>
+                <timeselector displayFormat=" [To] HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
+                :displaySeconds="false" style="width:208px; float: left" :placeholder="'[To] HH:MM'"
+                returnFormat="HH:mm" @formatedTime="tEnd">
+                    <template slot="hours">
+                        <span>Hours</span>
+                    </template>
+                    <template slot="minutes">
+                        <span>Minutes</span>
+                    </template>
+                </timeselector>
+                <img src="../assets/datatables/images/add_circle.png"
+                v-on:click="addTime(timeFormat)" style="cursor:pointer">
             </div>
             <div style="clear: both"></div>
-            <!-- Pressing register button will send form's info to server -->
-            <div id="buttonHolder" style="margin:10px">
-                <b-button type="submit" variant="success" size="sm">등록하기</b-button>
+            <div id="timeChip">
+                <vs-chip @click="remove(time)" v-for="time in times" v-bind:key="time" closable>
+                    {{ time }}
+                </vs-chip>
             </div>
-        </form>
+        </div>
+        <div style="clear: both"></div>
+        <!-- Pressing register button will send form's info to server -->
+        <div id="buttonHolder" style="margin:10px">
+            <b-button type="submit" variant="success" size="sm">등록하기</b-button>
+        </div>
     </div>
 </template>
     
@@ -94,16 +96,15 @@ export default {
             timeFormat: '',
             timeStart: '',
             timeEnd: '',
-            dayStart: '',
-            dayEnd: '',
-            option: [
-                { text: 'Mon', value: 'Monday' }, // val = 0
-                { text: 'Tue', value: 'Tuesday' }, // val = 288
-                { text: 'Wed', value: 'Wednesday' }, // val = 576
-                { text: 'Thu', value: 'Thursday' }, // val = 864
-                { text: 'Fri', value: 'Friday' }, // val = 1152
-                { text: 'Sat', value: 'Saturday' }, // val = 1440
-                { text: 'Sun', value: 'Sunday' } // val = 1728                
+            selectedDays: [],
+            days: [
+                { text: 'Mon', state: false, value: 'Monday' }, // val = 0
+                { text: 'Tue', state: false, value: 'Tuesday' }, // val = 288
+                { text: 'Wed', state: false, value: 'Wednesday' }, // val = 576
+                { text: 'Thu', state: false, value: 'Thursday' }, // val = 864
+                { text: 'Fri', state: false, value: 'Friday' }, // val = 1152
+                { text: 'Sat', state: false, value: 'Saturday' }, // val = 1440
+                { text: 'Sun', state: false, value: 'Sunday' } // val = 1728                
             ]
         }
     },
@@ -114,6 +115,15 @@ export default {
                 return true;
             }
             else return false;
+        },
+        selectedDay: function () {
+            this.selectedDays = [];
+            for (var i = 0; i < 7; i++){
+                if (this.days[i].state == true){
+                    this.selectedDays.push(this.days[i].value);
+                }
+            }
+            return this.selectedDays;
         }
     },
     created: async function () {
@@ -190,11 +200,25 @@ export default {
             this.timeEnd = e;
         },
         addTime (timeFormat) {
-            this.timeFormat = this.dayStart + ' ' + this.timeStart + ' ~ ' + this.dayEnd + ' ' + this.timeEnd; 
-            console.log(this.timeFormat);
-            this.times.push ({timeFormat:this.timeFormat})
-            this.time = null;
-            this.timeFormat = null;
+            if (this.timeCheck() == false){
+                alert('요일과 시간을 모두 추가해 주세요!');
+            }
+            else {
+                this.timeFormat = this.selectedDays + ' / ' + this.timeStart + ' ~ '  + this.timeEnd; 
+                console.log(this.timeFormat);
+                this.times.push(this.timeFormat)
+                this.time = null;
+                this.timeFormat = null;
+            }
+        },
+        remove (time) {
+            this.times.splice(this.times.indexOf(time), 1)
+        },
+        timeCheck () {
+            if ((this.selectedDays.length == 0) || (this.timeStart == '') || (this.timeEnd == '')){
+                return false;
+            }
+            else return true;
         }
     }
 }

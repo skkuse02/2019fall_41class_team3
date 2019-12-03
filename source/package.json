@@ -56,6 +56,7 @@
     "is-mobile": "^2.1.0",
     "isomorphic-fetch": "^2.2.1",
     "karma": "^2.0.4",
+    "material-icons": "^0.3.1",
     "mkdirp": "^0.5.1",
     "mobile-device-detect": "^0.2.3",
     "moment": "^2.24.0",
@@ -90,6 +91,7 @@
     "vue-session": "^1.0.0",
     "vue-timeselector": "^1.0.0",
     "vue2-datepicker": "^2.6.4",
+    "vuesax": "^3.11.1",
     "webpack": "^4.29.6",
     "wiredep": "^4.0.0"
   },

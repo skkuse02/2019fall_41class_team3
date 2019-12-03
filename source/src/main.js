@@ -20,13 +20,13 @@ import DownloadJS from 'downloadjs'
 import SimpleVueValidation from 'simple-vue-validator';
 import Timeselector from 'vue-timeselector';
 import ButtonPlugin from 'bootstrap-vue';
-import FormRadioPlugin from 'bootstrap-vue';
-import VChip from 'v-chip';
-import VChipInput from 'v-chip/src/v-chip-input.js';
+import Vuesax from 'vuesax'
 
 import 'expose-loader?$!expose-loader?jQuery!jquery'
 import './assets/js/bootstrap.min.js'
 import './assets/js/jquery.nav.min.js'
+import 'vuesax/dist/vuesax.css'
+import 'material-icons/iconfont/material-icons.css';
 
 //DataTables
 import './assets/datatables/js/jquery.dataTables.min.js'
@@ -49,9 +49,7 @@ Vue.use(VueModal)
 Vue.use(SimpleVueValidation);
 Vue.use(Timeselector);
 Vue.use(ButtonPlugin);
-Vue.use(FormRadioPlugin);
-Vue.use(VChip)
-Vue.use(VChipInput)
+Vue.use(Vuesax)
 
 /* eslint-disable no-new */
 new Vue({
