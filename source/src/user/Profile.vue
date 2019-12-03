@@ -148,7 +148,16 @@ export default {
         try {
           const reqRes = await this.$http.post("/rest/user", {uid, type, password, name, nickname, email, fields, available_times})
           if (reqRes.data.result == true) {
-            this.isEditMode = false;
+            await this.$http.post("/rest/logout");
+            const res = await this.$http.post("/rest/login", {uid, password})
+            if (res.data.result == true) {
+              const session = await this.$http.get('/rest/user/session');
+              if(session.data.result == true){
+                this.user = session.data.user;  
+                this.isEditMode = false;
+                alert('성공적으로 업데이트 되었습니다.');
+              } 
+            }
           }
           else {
             alert('안돼 돌아가. 이건 뭐니');
