@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
- 
+
 //TODO Lazy Loading
 
 // Containers
@@ -16,6 +16,8 @@ const NotFound = () => import('@/other/NotFound')
 const Login = () => import('@/authentication/Login')
 const FindId = () => import('@/authentication/FindId')
 const FindPassword = () => import('@/authentication/FindPassword')
+const QuestionList = () => import('@/authentication/QuestionList')
+const Qna = () => import('@/authentication/Qna')
 const Signup = () => import('@/user/Signup')
 const Profile = () => import('@/user/Profile')
 
@@ -63,12 +65,17 @@ export default new Router({
                     name: 'FindPassword',
                     component:FindPassword
                 },
-                //has errors
-                // {
-                //     path: '/questionlist',
-                //     name: 'QuestionList',
-                //     component:QuestionList
-                // },
+                {
+                     path: '/questionlist',
+                     name: 'QuestionList',
+                     component:QuestionList
+                },
+                {
+                     path: '/qna',
+                     name: 'Qna',
+                     component:Qna
+                },
+
                 {
                     path: '/signup',
                     name: 'Signup',
