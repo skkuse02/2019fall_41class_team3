@@ -208,7 +208,7 @@ export default {
         }
         catch(e) {
           //Unable to sign up
-          alert
+          alert('안돼 돌아가');
         }
       }
       else {
