@@ -126,8 +126,10 @@ export default {
     toEditMode() {
       this.isEditMode = true;
 
-      this.password = this.inputPassword;
-      this.repeat = this.inputPassword;
+      if(this.password == '') {
+        this.password = this.inputPassword;
+      }
+      this.repeat = this.password;
       this.name = this.user.name;
       this.nickname = this.user.nickname;
       this.email = this.user.email;
