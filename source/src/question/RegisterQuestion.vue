@@ -28,8 +28,8 @@
             </div>
             <div class="form-vif" v-if="answerType">
                 <div id="timeStart">
-                    <p>Time (start) : {{ selectStart }} , {{ timeStart }}</p>
-                    <b-form-radio-group id="dayStart" v-model="selectStart" :options="option" 
+                    <p>Time (start) : {{ dayStart }} , {{ timeStart }}</p>
+                    <b-form-radio-group id="dayStart" v-model="dayStart" :options="option" 
                     buttons button-variant="success"></b-form-radio-group>
                     <timeselector displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
                     :displaySeconds="false" style="width:434px" :placeholder="'Select available time (start)'"
@@ -43,8 +43,8 @@
                     </timeselector>
                 </div>
                 <div id="timeEnd">
-                    <p>Time (end) : {{ selectEnd }} , {{ timeEnd }}</p>
-                    <b-form-radio-group id="dayEnd" v-model="selectEnd" :options="option" 
+                    <p>Time (end) : {{ dayEnd }} , {{ timeEnd }}</p>
+                    <b-form-radio-group id="dayEnd" v-model="dayEnd" :options="option" 
                     buttons button-variant="success"></b-form-radio-group>
                     <timeselector displayFormat=" [To]     HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
                     :displaySeconds="false" style="width:434px" :placeholder="'Select available time (end)'"
@@ -56,6 +56,14 @@
                             <span>Minutes</span>
                         </template>
                     </timeselector>
+                </div>
+                <div>
+                    <b-button variant="success" size="sm" v-on:click="addTime(timeFormat)">시간대 추가하기</b-button>
+                </div>
+                <div id="timeChip">
+                    <ul>
+                         <li class="list-group-item" v-for="time in times" v-bind:key="time"> {{ time.timeFormat }}</li>
+                    </ul>
                 </div>
             </div>
             <div style="clear: both"></div>
@@ -82,10 +90,12 @@ export default {
             reward: '',
             type: '',
             tag: '',
+            times: [],
+            timeFormat: '',
             timeStart: '',
             timeEnd: '',
-            selectStart: '',
-            selectEnd: '',
+            dayStart: '',
+            dayEnd: '',
             option: [
                 { text: 'Mon', value: 'Monday' }, // val = 0
                 { text: 'Tue', value: 'Tuesday' }, // val = 288
@@ -178,6 +188,13 @@ export default {
         },
         tEnd (e) {
             this.timeEnd = e;
+        },
+        addTime (timeFormat) {
+            this.timeFormat = this.dayStart + ' ' + this.timeStart + ' ~ ' + this.dayEnd + ' ' + this.timeEnd; 
+            console.log(this.timeFormat);
+            this.times.push ({timeFormat:this.timeFormat})
+            this.time = null;
+            this.timeFormat = null;
         }
     }
 }

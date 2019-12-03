@@ -79,6 +79,7 @@
     "simple-vue-validator": "^0.16.0",
     "striptags": "^3.1.1",
     "terser": "^3.17.0",
+    "v-chip": "^0.2.5",
     "vue": "2.5.22",
     "vue-cool-select": "^2.0.1",
     "vue-head": "^2.1.0",
