@@ -23,7 +23,7 @@
 
     <div class="text-center" style="margin:10px 5px 5px 5px">
         <!-- Pressing Sign In will redirect user to signin page -->
-        <router-link to='../register'> Sign In </router-link>
+        <router-link to='../register'> Sign Up </router-link>
         <span>  |  </span>
         <!-- Pressing Find ID will redirect user to findid page -->
         <router-link to='../findid'> Find ID </router-link>
