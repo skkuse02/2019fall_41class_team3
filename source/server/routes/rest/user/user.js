@@ -140,6 +140,89 @@ async function getUserCredit(req, res){
   }
 }
 
+async function getUserCredit(req, res){
+  try{
+    const user = await models.user.findOne({
+      where: {
+        uid: req.session.user.uid
+      },
+      attributes: ['points']
+    });
+
+    res.status(200).send({
+      result: true,
+      credit: user.points
+    });
+  } catch (err){
+    //bad request
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
+
+async function withdrawUserCredit(req, res){
+  try{
+    const user = await models.user.findOne({
+      where: {
+        uid: req.session.user.uid
+      },
+      attributes: ['points']
+    });
+    if(user.points - req.body.amount < 0){
+      throw new Error(`Not enough credit for user ${req.session.user.uid}`);
+    }
+    await models.user.update({points: user.points - req.body.amount}, {
+      where: {
+        uid: req.session.user.uid
+      }
+    })
+
+    res.status(200).send({
+      result: true,
+      amount: req.body.amount,
+      total: user.points + req.body.amount
+    });
+  } catch (err){
+    //bad request
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
+
+async function addUserCredit(req, res){
+  try{
+    const user = await models.user.findOne({
+      where: {
+        uid: req.session.user.uid
+      },
+      attributes: ['points']
+    });
+
+    await models.user.update({points: user.points + req.body.amount}, {
+      where: {
+        uid: req.session.user.uid
+      }
+    })
+
+    res.status(200).send({
+      result: true,
+      amount: req.body.amount,
+      total: user.points + req.body.amount
+    });
+  } catch (err){
+    //bad request
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
+
+
 async function upsertUser(req, res){
   try{
     const user = await models.user.findOne({
@@ -169,6 +252,11 @@ async function upsertUser(req, res){
         }
       }); 
     }
+
+    req.session.user.name = req.body.name;
+    req.session.user.nickname = req.body.nickname;
+    req.session.user.email = req.body.email;
+
 
     await models.sequelize.query(`DELETE FROM fielduser where userUid = '${req.body.uid}'`);
     //add field
@@ -215,5 +303,7 @@ module.exports = {
   searchUserId,
   findPassword,
   getUserCredit,
+  addUserCredit,
+  withdrawUserCredit,
   upsertUser
 };

@@ -9,7 +9,9 @@ const {
     searchUserId,
     findPassword,
     getUserCredit,
-    upsertUser
+    addUserCredit,
+    upsertUser,
+    withdrawUserCredit
 } = require('./user');
 
 router.get('/session', getSession);
@@ -17,6 +19,8 @@ router.get('/id', searchUserId);
 router.get('/password', findPassword);
 router.get('/credit', getUserCredit);
 
+router.post('/credit', addUserCredit);
+router.post('/withdraw', withdrawUserCredit);
 router.post('/',upsertUser);
 
 module.exports = router;
