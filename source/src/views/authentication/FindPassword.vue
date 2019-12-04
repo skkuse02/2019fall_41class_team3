@@ -33,7 +33,7 @@ export default {
     }
   },
   methods: {
-    submit: async function () {
+    findpassword: async function () {
       const res = await this.$http.post("/rest/password",this.user);
       if (res.data.result == true){
         alert('e-mail로 비밀번호가 전송되었습니다.');
@@ -46,16 +46,5 @@ export default {
 
 </script>
 
-<style scoped>
-    .find {
-        text-align: center;
-    }
-    .label {
-        color: #495057;
-        font-weight: bold;
-
-    }
-    .btn-lg {
-        width: 33.3%;
-    }
+<style>
 </style>
