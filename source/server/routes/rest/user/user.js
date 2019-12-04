@@ -202,7 +202,7 @@ async function addUserCredit(req, res){
       attributes: ['points']
     });
 
-    await models.user.update({points: parseInt(user.points) - parseInt(req.body.amount)}, {
+    await models.user.update({points: parseInt(user.points) + parseInt(req.body.amount)}, {
       where: {
         uid: req.session.user.uid
       }
