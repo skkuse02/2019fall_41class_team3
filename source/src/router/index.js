@@ -65,16 +65,15 @@ export default new Router({
                     component:FindPassword
                 },
                 {
-                     path: '/questionlist',
+                     path: '/question/list',
                      name: 'QuestionList',
-                     component:QuestionList
+                     component: QuestionList
                 },
                 {
-                     path: '/questionview',
-                     name: 'QuestionView',
-                     component:QuestionView
+                    path: '/question/:id',
+                    name: 'QuestionView',
+                    component: QuestionView
                 },
-
                 {
                     path: '/signup',
                     name: 'Signup',
