@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar id="header-bar">
-      <b-navbar-brand id="header-brand" href="/"><img id="header-logo" src="assets/img/logo_white_typeC.png"></b-navbar-brand>
+      <b-navbar-brand id="header-brand" href="/"><img id="header-logo" src="/assets/img/logo_white_typeC.png"></b-navbar-brand>
       <div>
         <div id="header-right-bar-dd" class="btn-group" v-if="sessionExist">
           <a class="btn btn-info" style="min-width: 130px;"  data-toggle="dropdown" href=""><i class="fa fa-user fa-fw"></i> {{name}}</a>
