@@ -28,7 +28,6 @@
         <div>name: {{user.name}}</div>
         <div>nickname: {{user.nickname}}</div>
         <div>email: {{user.email}}</div>
-        <div>credit: {{user.credit}}</div>
       </div>
 
       <!-- Buttons -->
@@ -36,10 +35,6 @@
         <!-- User info edit button -->
         <button @click="changeMode('edit_info')" class="btn btn-primary" type="button" variant="primary" size="lg">
           Edit
-        </button>
-        <!-- Purchase credit button -->
-        <button @click="changeMode('purchase_credit')" class="btn btn-primary" type="button" variant="primary" size="lg">
-          Purchase Credit
         </button>
       </div>
     </div>
@@ -62,23 +57,6 @@
           <div class="content"><input type="text" class="form-control" v-model="email"/></div>
           <div class="message">{{ validation.firstError('email') }}</div>
         </div>
-        <button class="btn btn-primary" type="submit" variant="primary" size="lg">Confirm</button>
-      </form>
-    </div>
-
-    <!-- Mode: Purchase Credit -->
-    <div v-if="mode=='purchase_credit'">
-      <form class="layout-form" @submit.prevent="confirmCredit()" autocomplete="nope">
-        <div class="form-group">
-          <div class="label">Current credit: {{user.credit}}</div>
-        </div>
-        <div class="form-group">
-          <div class="label">Amount</div>
-          <div class="content"><input type="number" class="form-control" v-model="credit" min="1000" step="1000"></div>
-        </div>
-        <button @click="changeMode('view_info')" class="btn btn-primary" type="button" variant="primary" size="lg">
-          Cancel
-        </button>
         <button class="btn btn-primary" type="submit" variant="primary" size="lg">Confirm</button>
       </form>
     </div>
@@ -206,23 +184,6 @@ export default {
       else {
         alert('안돼 돌아가. 잘못 입력했어.');
       }
-    },
-    async confirmCredit() {
-      try {
-        const amount = this.credit;
-        const reqRes = await this.$http.post("/rest/user/credit", {amount});
-        if (reqRes.data.result == true) {
-          this.changeMode('view_info');
-          alert('성공적으로 구매 되었습니다.');
-        } 
-        else {
-          alert('안돼 돌아가. 이건 뭐니');
-        }
-      }
-      catch(e) {
-        alert('안돼 돌아가. 서버가 안된대.');
-      }
-
     }
   }
 };
