@@ -161,7 +161,6 @@ async function upsertUser(req, res){
     } else{
       await models.user.update({
         name: req.body.name,
-        password: sha256(req.body.password),
         nickname: req.body.nickname,
         email: req.body.email
       }, {
