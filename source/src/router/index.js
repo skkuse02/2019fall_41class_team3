@@ -28,6 +28,7 @@ const QuestionView = () => import('@/views/question/QuestionView')
 const RegisterAnswer = () => import('@/views/answer/RegisterAnswer')
 
 const Chat = () => import('@/components/Chat/Chat')
+const ScreenShare = () => import('@/components/ScreenShare/ScreenShare')
 
 Vue.use(Router)
 
@@ -98,6 +99,11 @@ export default new Router({
                     path: '/chat',
                     name: 'Chat',
                     component: Chat 
+                },
+                {
+                    path: '/screenshare',
+                    name: 'ScreenShare',
+                    component: ScreenShare
                 }
             ]
         },

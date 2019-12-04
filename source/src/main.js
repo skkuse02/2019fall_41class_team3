@@ -60,6 +60,7 @@ Vue.use(Timeselector);
 Vue.use(ButtonPlugin);
 Vue.use(Vuesax);
 
+
 Vue.config.productionTip = false;
 Vue.use(Directives);
 

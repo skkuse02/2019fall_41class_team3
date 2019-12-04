@@ -58,10 +58,8 @@ app.use(session({
   cookie: { maxAge: 3 * 60 * 60 * 1000 } // 세션 유지 3시간
 }));
 
-app.use('/rest', require('./routes'));
-app.use('/rest/user', require('./routes/rest/user'));
-app.use('/rest/question', require('./routes/rest/question'));
-app.use('/rest/field', require('./routes/rest/field'));
+app.use('/', require('./routes'));
+
 
 app.use(history());
 
