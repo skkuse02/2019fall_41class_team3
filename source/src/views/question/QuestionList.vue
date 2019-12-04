@@ -13,7 +13,7 @@
           <td>Title</td>
           <td>tag</td>
         </tr>
-        <tr :key="index"v-for="(value,index) in question" @click="detail()">
+        <tr :key="index" v-for="(value,index) in list" @click="detail()">
           <td>{{index}}. {{value.title}}</td>
           <td>{{value.tag}}</td>
         </tr>
@@ -40,26 +40,18 @@ export default {
     return {
       perPage: 5,
       currentPage: 1,
-      title:'',
-      tag:''
+      rows: 0,
+      list : null
     }
   },
+  mounted: async function(){
+      const qlist = await this.$http.get('/rest/question/list');
+      this.list = qlist.data;
+      this.rows = qlist.data.length;
+  },
   methods: {
-    submit: async function() {
-      const res = await this.$http.get("/rest/questionlist");
-      this.title = res.data.questions.title;
-      this.tag = res.data.questions.tag;
-    },
-    computed: {
-      rows() {
-        return this.items.length
-      }
-    },
-    detail() {
-      this.$router.push({
-        path: '/questionview'
-      })
-    }
+
+  
   }
 }
 </script>
