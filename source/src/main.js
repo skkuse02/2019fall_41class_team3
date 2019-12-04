@@ -42,7 +42,6 @@ import './assets/datatables/tabletools/dataTables.tableTools.min.js';
 import './assets/datatables/fnReloadAjax.js';
 
 import './plugins/socketPlugin';
-import './plugins/vuetify';
 
 Vue.prototype.$http = axios;
 Vue.prototype.$download = DownloadJS;
