@@ -62,7 +62,7 @@
                 <div style="clear: both"></div>
                 <div class="timeChip">
                     <vs-chip v-on:click="removeTime(time)" v-for="time in available_times"
-                    v-bind:key="time" closable style="width:40%"> {{ time }} </vs-chip>
+                    v-bind:key="time" style="width:40%; float:left" closable> {{ time }} </vs-chip>
                 </div>
             </div>
             <div style="clear: both"></div>
@@ -156,7 +156,6 @@ export default {
                 const creditInfo = await this.$http.get("/rest/user/credit");
                 const betCredit = creditInfo.data.credit;
                 
-
                 if ((betCredit < reward) || (betCredit < this.minPoint)) {
                     alert('소유한 크레딧 : ' + betCredit + '\n'
                         + '수여할 크레딧 : ' + reward + '\n'
