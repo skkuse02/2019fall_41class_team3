@@ -1,0 +1,149 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui";
+
+
+
+.mx-datepicker-popup {
+    left: 0px !important;
+    max-width: 496px !important;
+}
+
+.mx-calendar {
+    float: left !important;
+    max-width: 496px !important;
+}
+
+.mx-datepicker-popup {
+    bottom: unset !important;
+}
+
+.ql-editor {
+    min-height: 200px;
+}
+
+.mx-current-year {
+    margin-left: -65px;
+}
+
+@media (max-width: 640px) {
+    .mx-calendar {
+        float: none !important;
+    }
+    .mx-calendar-content {
+        width: 100% !important;
+    }
+    .mx-range-wrapper {
+        width: 100% !important;
+    }
+    .breadcrumb {
+        margin-bottom: 7px;
+    }
+    .container-fluid {
+        padding-left: 7px !important;
+        padding-right: 7px !important;
+    }
+    .card {
+        margin-bottom: 7px !important;
+    }
+    .card-body {
+        padding: 12px !important;
+    }
+    th, td {
+        padding: 7px !important;
+        word-break: keep-all;
+    }
+}
+
+.table-custom{
+    height: 100px
+}
+
+.card .card-body table.table tbody tr td button i.mg-top-0{
+    margin-top:0px !important;
+}
+
+.add-notice-button{
+    margin-top:0px !important;
+}
+
+.notice-layout{
+    display: inline !important;
+}
+
+.b-table {
+    margin-bottom: 0px !important;
+}
+
+.login-text {
+    display: inline !important;
+}
+
+.button-space {
+    margin-top : 40px;
+    margin-bottom : 0px;
+}
+
+.button-space-left {
+    margin-left : 5px;
+}
+
+.quiz-button {
+    background-color: #fcfcfc;
+    color: #f86c6b;
+    padding-top : 5px;
+    padding-bottom: 5px;
+    border: 1px solid #c2c2c2;
+    border-radius: 5px;
+}
+
+.quiz-font {
+    font-size: 11.5pt;
+
+}
+
+.card-body-padding {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+
+
+// MainPage CSS
+
+.card-size {
+    width: 549px !important;
+}
+
+.div-padding {
+    padding-top: 40px;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.td-padding {
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+}
+
+.table-margin {
+    margin-bottom: 0px !important;
+}
+
+.tr-size {
+    height: 0px !important;
+}
+
+.tr-cursor {
+    cursor: pointer !important;
+}
+
+#news tr:hover {
+    background-color: #c2c2c2;
+}
+
+tr:hover {
+    cursor: pointer !important;
+}

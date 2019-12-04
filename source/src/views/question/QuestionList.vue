@@ -1,33 +1,27 @@
 <template>
   <div class="container">
-    <h1>Question List</h1>
-
-    <div class="table">
-      <b-table
-        id="my-table"
-        :per-page="perPage"
-        :current-page="currentPage"
-        small
-      >
-        <tr>
-          <td>Title</td>
-          <td>tag</td>
-        </tr>
-        <tr :key="index" v-for="(value,index) in list" @click="detail()">
-          <td>{{index}}. {{value.title}}</td>
-          <td>{{value.tag}}</td>
-        </tr>
-      </b-table>
-
-    </div>
-
-      <p class="mt-3">Current Page: {{ currentPage }}</p>
-      <b-pagination
-        v-model="currentPage"
-        :total-rows="rows"
-        :per-page="perPage"
-        aria-controls="my-table"
-      ></b-pagination>
+    <div class="card">
+      <div class="card-body">
+        <b-row>
+          <b-col lg="12">
+            <b-table class="mb-0 table-outline" style="text-align: center" responsive="lg" hover 
+            :items="questions"
+            :fields="fields"
+            :sort-by.sync="sortBy"
+            :sort-desc.sync="sortDesc"
+            :current-page="currentPage"
+            :per-page="perPage" 
+            head-variant="light"
+            @row-clicked="viewQuestion">
+            </b-table>
+            <br>
+            <div class="notice-layout">
+              <b-pagination style="float: left;" size="md" :per-page="perPage" :total-rows="totalRows" v-model="currentPage">
+              </b-pagination>
+            </div>
+          </b-col>
+        </b-row>
+      </div>
     </div>
   </div>
 </template>
@@ -38,25 +32,37 @@ export default {
   name: "QuestionList",
   data () {
     return {
-      perPage: 5,
+      auth: false,
+      questions: [],
+      sortBy: 'id',
+      sortDesc: true,
       currentPage: 1,
-      rows: 0,
-      list : null
-    }
+      perPage: 5,
+      totalRows: 0,
+      fields: [ 
+        { key: 'id', label: '번호' },
+        { key: 'title', label: '제목' },
+        { key: 'createdAt', label: '등록 날짜'},
+        { key: 'star', label: '추천'}
+      ]
+    };
+
   },
   mounted: async function(){
       const qlist = await this.$http.get('/rest/question/list');
-      this.list = qlist.data;
-      this.rows = qlist.data.length;
+      this.questions = qlist.data.questions;
+      this.totalRows = this.questions.length;
   },
   methods: {
-
+    viewQuestion: async function(item, index){
+        this.$router.push({'path' : '/question/'+item.id});
+    }
   
   }
 }
 </script>
 
 
-<style>
-
+<style lang="scss">
+@import "../../assets/scss/style";
 </style>
