@@ -40,16 +40,15 @@ export default {
     return {
       perPage: 5,
       currentPage: 1,
-      question:{
-        title:'',
-        tag:''
-      }
+      title:'',
+      tag:''
     }
   },
   methods: {
     submit: async function() {
       const res = await this.$http.get("/rest/questionlist");
-      this.question = res.data.questions;
+      this.title = res.data.questions.title;
+      this.tag = res.data.questions.tag;
     },
     computed: {
       rows() {

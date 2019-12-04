@@ -5,13 +5,13 @@
         <img src="">
       </div>
       <div class="q-header-title">
-        <h1>{{question.title}}</h1>
+        <h1>{{questiontitle}}</h1>
       </div>
     </div>
     <div class="qna">
       <div class="question">
-        <p>{{question.content}}</p>
-        <p>TAG:{{question.tag}}</p>
+        <p>{{questioncontent}}</p>
+        <p>TAG:{{questiontag}}</p>
       </div>
       <div class="answer">
         <div class="a-header">
@@ -19,11 +19,11 @@
             <!--user 정보 넣기-->
           </div>
           <div class="a-header">
-            <h3>{{user.nickname}} 님 답변</h3>
+            <h3>{{usernickname}} 님 답변</h3>
           </div>
         </div>
         <div class="a-content">
-          <p>{{answer.content}}</p>
+          <p>{{answercontent}}</p>
         </div>
       </div>
     </div>
@@ -38,25 +38,22 @@ export default {
   name: "questionview",
   data () {
     return {
-      question:null,
-      answer:null,
-      user:null
+      questiontitle:'',
+      questioncontent:'',
+      questiontag:'',
+      usernickname:'',
+      answercontent:''
       }
   },
-  created: async function() {
-    if(!this.$session.exists()) {
-      this.$router.push ({
-        path: '/'
-      });
-    }
-    else {
-      this.question = this.$session.get('question');
-      this.answer = this.$session.get('answer');
-      this.user = this.$session.get('user');
-    }
-  },
-
   methods: {
+    submit: async function() {
+      const res = await this.$http.get("/rest/questionview");
+      this.questiontitle = res.data.questions.title;
+      this.questioncontent = res.data.questions.content;
+      this.questiontag = res.data.questions.tag;
+      this.usernickname = res.data.user.nickname;
+      this.answercontent = res.data.answer.content;
+    }
   }
 };
 </script>
