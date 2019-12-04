@@ -1,13 +1,7 @@
 <template>
-  <v-app>
-    <v-content>
-      <!-- 라우터 -->
-      <v-container fluid fill-height aacontainer>
-        <router-view></router-view>
-      </v-container>
-      <!-- 라우터 -->
-    </v-content>
-  </v-app>
+  <div>
+    <router-view :key="$route.fullPath" style="height:100%;"/>
+  </div>
 </template>
 
 <script>
@@ -22,7 +16,6 @@ $fa-font-path: "~font-awesome/fonts/";
 @import "~font-awesome/scss/font-awesome.scss";
 /* Import Bootstrap Vue Styles */
 @import "~bootstrap-vue/dist/bootstrap-vue.css";
-
 /* Custom CSS */
 @import "assets/css/bootstrap.min.css";
 @import "assets/css/style.css";
