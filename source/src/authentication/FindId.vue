@@ -1,6 +1,6 @@
 <template>
   <div class="findid">
-    <form @submit.prevent="submit(name, email)">
+    <form @submit.prevent="findid(name, email)">
       <div class="input">
         <b-form-group label="Name">
         <b-form-input type="text" v-model="name" placeholder="name"></b-form-input>
