@@ -4,7 +4,7 @@ import Router from 'vue-router'
 //TODO Lazy Loading
 
 // Containers
-const DefaultContainer = () => import('@/containers/DefaultContainer2')
+const DefaultContainer = () => import('@/containers/DefaultContainer')
 
 // Main
 const Main = () => import('@/views/main/Main')
