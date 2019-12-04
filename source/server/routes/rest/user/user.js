@@ -173,7 +173,7 @@ async function withdrawUserCredit(req, res){
     if(user.points - req.body.amount < 0){
       throw new Error(`Not enough credit for user ${req.session.user.uid}`);
     }
-    await models.user.update({points: Integer.parseInt(user.points) - Integer.parseInt(req.body.amount)}, {
+    await models.user.update({points: parseInt(user.points) - parseInt(req.body.amount)}, {
       where: {
         uid: req.session.user.uid
       }
@@ -202,7 +202,7 @@ async function addUserCredit(req, res){
       attributes: ['points']
     });
 
-    await models.user.update({points: Integer.parseInt(user.points) - Integer.parseInt(req.body.amount)}, {
+    await models.user.update({points: parseInt(user.points) - parseInt(req.body.amount)}, {
       where: {
         uid: req.session.user.uid
       }
