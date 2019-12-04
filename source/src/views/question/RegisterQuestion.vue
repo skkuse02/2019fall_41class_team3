@@ -1,7 +1,7 @@
 <template>
     <div class="questionForm" style="margin:100px 40px 40px 40px">
         <h2><p>RegisterQuestion</p></h2>
-        <form class="form-horizontal" role="form" @submit.prevent="write()">
+        <form class="form-horizontal" id="formInfo">
             <div class="form-group">
                 <b-form-input type="text" id="title" v-model="title" class="form-control" placeholder="제목"/>
             </div>
@@ -26,53 +26,53 @@
             <div class="form-group">
                 <b-form-input type="text" id="tag" v-model="tag" class="form-control" placeholder="분야"/>
             </div>
-        </form>
-        <div class="form-vif" v-if="answerType">
-            <div>
-                <p>Selected Time Range : {{ selectedDay }} / {{ timeStart }} ~ {{ timeEnd }}</p>
+            <div class="form-vif" v-if="answerType">
                 <div>
-                    <b-button-group size="lg">
-                        <b-button v-for="(day, idx) in days" :key="idx"
-                        :pressed.sync="day.state" variant="success">
-                            {{ day.text }}
-                        </b-button>
-                    </b-button-group>
+                    <p>Selected Time Range : {{ selectedDay }} / {{ timeStart }} ~ {{ timeEnd }}</p>
+                    <div>
+                        <b-button-group size="lg">
+                            <b-button v-for="(day, idx) in days" :key="idx"
+                            :pressed.sync="day.state" variant="success">
+                                {{ day.text }}
+                            </b-button>
+                        </b-button-group>
+                    </div>
+                    <div style="clear: both"></div>
+                    <timeselector displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
+                    :displaySeconds="false" style="width:208px; float: left" :placeholder="'[From] HH:MM'"
+                    returnFormat="HH:mm" @formatedTime="tStart">
+                        <template slot="hours">
+                            <span>Hours</span>
+                        </template>
+                        <template slot="minutes">
+                            <span>Minutes</span>
+                        </template>
+                    </timeselector>
+                    <timeselector displayFormat=" [To] HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
+                    :displaySeconds="false" style="width:208px; float: left" :placeholder="'[To] HH:MM'"
+                    returnFormat="HH:mm" @formatedTime="tEnd">
+                        <template slot="hours">
+                            <span>Hours</span>
+                        </template>
+                        <template slot="minutes">
+                            <span>Minutes</span>
+                        </template>
+                    </timeselector>
+                    <img src="../../assets/datatables/images/add_circle.png"
+                    type="addTime" v-on:click="addTime(timeFormat)" style="cursor:pointer">
                 </div>
                 <div style="clear: both"></div>
-                <timeselector displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
-                :displaySeconds="false" style="width:208px; float: left" :placeholder="'[From] HH:MM'"
-                returnFormat="HH:mm" @formatedTime="tStart">
-                    <template slot="hours">
-                        <span>Hours</span>
-                    </template>
-                    <template slot="minutes">
-                        <span>Minutes</span>
-                    </template>
-                </timeselector>
-                <timeselector displayFormat=" [To] HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
-                :displaySeconds="false" style="width:208px; float: left" :placeholder="'[To] HH:MM'"
-                returnFormat="HH:mm" @formatedTime="tEnd">
-                    <template slot="hours">
-                        <span>Hours</span>
-                    </template>
-                    <template slot="minutes">
-                        <span>Minutes</span>
-                    </template>
-                </timeselector>
-                <img src="../../assets/datatables/images/add_circle.png"
-                v-on:click="addTime(timeFormat)" style="cursor:pointer">
+                <div class="timeChip">
+                    <vs-chip type="delTime" v-on:click="removeTime(time)" v-for="time in times"
+                    v-bind:key="time" closable style="width:40%"> {{ time }} </vs-chip>
+                </div>
             </div>
             <div style="clear: both"></div>
-            <div id="timeChip">
-                <vs-chip @click="remove(time)" v-for="time in times" v-bind:key="time" closable>
-                    {{ time }}
-                </vs-chip>
-            </div>
-        </div>
-        <div style="clear: both"></div>
-        <!-- Pressing register button will send form's info to server -->
+            <!-- Pressing register button will send form's info to server -->
+        </form>
         <div id="buttonHolder" style="margin:10px">
-            <b-button type="submit" variant="success" size="sm">등록하기</b-button>
+            <b-button type="submit" form="formInfo" variant="success" size="sm"
+            @click.prevent="write()">등록하기</b-button>
         </div>
     </div>
 </template>
@@ -200,8 +200,8 @@ export default {
             this.timeEnd = e;
         },
         addTime (timeFormat) {
-            if (this.timeCheck() == false){
-                alert('요일과 시간을 모두 추가해 주세요!');
+            if (this.timeCheck() == false) {
+                alert('요일과 시간을 다시 한 번 확인해 주세요!');
             }
             else {
                 this.timeFormat = this.selectedDays + ' / ' + this.timeStart + ' ~ '  + this.timeEnd; 
@@ -211,11 +211,14 @@ export default {
                 this.timeFormat = null;
             }
         },
-        remove (time) {
+        removeTime (time) {
             this.times.splice(this.times.indexOf(time), 1)
         },
         timeCheck () {
             if ((this.selectedDays.length == 0) || (this.timeStart == '') || (this.timeEnd == '')){
+                return false;
+            }
+            else if (this.timeStart > this.timeEnd) {
                 return false;
             }
             else return true;
