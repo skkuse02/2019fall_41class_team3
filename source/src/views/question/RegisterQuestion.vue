@@ -15,16 +15,15 @@
                 </label>
             </div>
             <div class="form-group">
-                <b-form-select id="type" v-model="type" class="mb-3">
-                    <option disabled value="">원하는 답변의 방식을 선택해주세요.</option>
-                    <option> Normal Text </option>
-                    <option> Live Chatting </option>
-                    <option> Screen Sharing </option>
+                <b-form-select id="type" v-model="selected" class="mb-3">
+                    <option v-for="option in types" v-bind:key="option.type">
+                        {{ option.type }}
+                    </option>
                 </b-form-select>
-                <span> &nbsp; &nbsp; Selected: {{type}}</span>
+                <span> &nbsp; &nbsp; Selected : {{ selected }} </span>
             </div>
             <div class="form-group">
-                <b-form-input type="text" id="tag" v-model="tag" class="form-control" placeholder="분야"/>
+                <b-form-input type="text" id="field" v-model="field" class="form-control" placeholder="분야"/>
             </div>
             <div class="form-vif" v-if="answerType">
                 <div>
@@ -89,8 +88,10 @@ export default {
             title: '',
             content: '',
             reward: '',
-            type: '',
-            tag: '',
+            minRewards: [],
+            selected: '',
+            types: [],
+            field: '',
             available_times: [],
             timeFormat: '',
             timeStart: '',
@@ -132,6 +133,13 @@ export default {
                 path: '/login'
             });
         }
+        else {
+            const typeInfo = await this.$http.get("/rest/response_type");
+            this.types = typeInfo.data.response_types;
+            this.selected = this.types[2].type;
+            this.minRewards = typeInfo.data.response_types;
+        }
+
     },
     methods: {
         async write () {
@@ -140,17 +148,21 @@ export default {
                 const content = this.content;
                 const reward = this.reward * 100;
                 const type = this.type;
-                const tag = this.tag;
+                const field = this.field;
+                const available_times = this.available_times;
                 const creditInfo = await this.$http.get("/rest/user/credit");
                 const betCredit = creditInfo.data.credit;
-                if (betCredit < reward) {
+                
+
+                if ((betCredit < reward) || (betCredit < minReward)) {
                     alert('소유한 크레딧 : ' + betCredit + '\n'
                         + '수여할 크레딧 : ' + reward + '\n'
+                        + '최소 크레딧 : ' + minReward + '\n'
                         + '보상 크레딧의 양을 확인해 주세요!');
                 }
                 else {
                     if (this.formCheck() == true){
-                        const res = await this.$http.post("/rest/question", { title, content, reward, type, tag });
+                        const res = await this.$http.post("/rest/question", { title, content, reward, type, field, available_times});
                         if (res.data.result == true) {
                             alert('질문이 등록되었습니다!');
                             this.$router.push({
@@ -185,9 +197,9 @@ export default {
                 type.focus();
                 return false;
             }
-            else if(this.tag == '') {
+            else if(this.field == '') {
                 alert("질문의 분야를 입력해 주세요.");
-                tag.focus();
+                field.focus();
                 return false;
             }
             else return true;
