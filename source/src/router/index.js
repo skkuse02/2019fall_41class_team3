@@ -7,26 +7,27 @@ import Router from 'vue-router'
 const DefaultContainer = () => import('@/containers/DefaultContainer')
 
 // Main
-const Main = () => import('@/main/Main')
+const Main = () => import('@/views/main/Main')
 
 // NotFound
-const NotFound = () => import('@/other/NotFound')
+const NotFound = () => import('@/views/other/NotFound')
 
 // User Authentication
-const Login = () => import('@/authentication/Login')
-const FindId = () => import('@/authentication/FindId')
-const FindPassword = () => import('@/authentication/FindPassword')
-const Signup = () => import('@/user/Signup')
-const Profile = () => import('@/user/Profile')
+const Login = () => import('@/views/authentication/Login')
+const FindId = () => import('@/views/authentication/FindId')
+const FindPassword = () => import('@/views/authentication/FindPassword')
+const Signup = () => import('@/views/user/Signup')
+const Profile = () => import('@/views/user/Profile')
 
 // Register Question
-const RegisterQuestion = () => import('@/question/RegisterQuestion')
-const QuestionList = () => import('@/question/QuestionList')
-const QuestionView = () => import('@/question/QuestionView')
+const RegisterQuestion = () => import('@/views/question/RegisterQuestion')
+const QuestionList = () => import('@/views/question/QuestionList')
+const QuestionView = () => import('@/views/question/QuestionView')
 
 // Register Answer
-const RegisterAnswer = () => import('@/answer/RegisterAnswer')
+const RegisterAnswer = () => import('@/views/answer/RegisterAnswer')
 
+const ChatRoom = () => import('@/views/chat/ChatRoom')
 
 Vue.use(Router)
 

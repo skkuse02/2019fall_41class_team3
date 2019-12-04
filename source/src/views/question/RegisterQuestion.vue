@@ -59,7 +59,7 @@
                         <span>Minutes</span>
                     </template>
                 </timeselector>
-                <img src="../assets/datatables/images/add_circle.png"
+                <img src="../../assets/datatables/images/add_circle.png"
                 v-on:click="addTime(timeFormat)" style="cursor:pointer">
             </div>
             <div style="clear: both"></div>
@@ -225,5 +225,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/css/common/registerquestion.css";
+@import "../../assets/css/common/registerquestion.css";
 </style>
