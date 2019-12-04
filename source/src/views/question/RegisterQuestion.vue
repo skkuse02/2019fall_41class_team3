@@ -1,7 +1,7 @@
 <template>
     <div class="questionForm" style="margin:100px 40px 40px 40px">
         <h2><p>RegisterQuestion</p></h2>
-        <form class="form-horizontal" id="formInfo">
+        <form class="form-horizontal" id="formInfo" @submit.prevent>
             <div class="form-group">
                 <b-form-input type="text" id="title" v-model="title" class="form-control" placeholder="제목"/>
             </div>
@@ -58,12 +58,11 @@
                             <span>Minutes</span>
                         </template>
                     </timeselector>
-                    <img src="../../assets/datatables/images/add_circle.png"
-                    type="addTime" v-on:click="addTime(timeFormat)" style="cursor:pointer">
+                    <img src="../../assets/datatables/images/add_circle.png" v-on:click="addTime(timeFormat)" style="cursor:pointer">
                 </div>
                 <div style="clear: both"></div>
                 <div class="timeChip">
-                    <vs-chip type="delTime" v-on:click="removeTime(time)" v-for="time in times"
+                    <vs-chip type="button" v-on:click="removeTime(time)" v-for="time in available_times"
                     v-bind:key="time" closable style="width:40%"> {{ time }} </vs-chip>
                 </div>
             </div>
@@ -92,7 +91,7 @@ export default {
             reward: '',
             type: '',
             tag: '',
-            times: [],
+            available_times: [],
             timeFormat: '',
             timeStart: '',
             timeEnd: '',
@@ -206,13 +205,13 @@ export default {
             else {
                 this.timeFormat = this.selectedDays + ' / ' + this.timeStart + ' ~ '  + this.timeEnd; 
                 console.log(this.timeFormat);
-                this.times.push(this.timeFormat)
+                this.available_times.push(this.timeFormat)
                 this.time = null;
                 this.timeFormat = null;
             }
         },
         removeTime (time) {
-            this.times.splice(this.times.indexOf(time), 1)
+            this.available_times.splice(this.available_times.indexOf(time), 1)
         },
         timeCheck () {
             if ((this.selectedDays.length == 0) || (this.timeStart == '') || (this.timeEnd == '')){
