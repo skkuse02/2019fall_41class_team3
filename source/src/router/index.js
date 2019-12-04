@@ -27,7 +27,7 @@ const QuestionView = () => import('@/views/question/QuestionView')
 // Register Answer
 const RegisterAnswer = () => import('@/views/answer/RegisterAnswer')
 
-const ChatRoom = () => import('@/views/chat/ChatRoom')
+const Chat = () => import('@/components/Chat/Chat')
 
 Vue.use(Router)
 
@@ -93,6 +93,11 @@ export default new Router({
                     path: '/registeranswer',
                     name: 'RegisterAnswer',
                     component: RegisterAnswer
+                },
+                {
+                    path: '/chat',
+                    name: 'Chat',
+                    component: Chat 
                 }
             ]
         },

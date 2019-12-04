@@ -14,27 +14,11 @@ const server = app.listen(app.get('port'), () => {
 });
 
 const io = require('socket.io')(server);
-io.on('connection', function(socket){
-
-  // 클라이언트로부터의 메시지가 수신되면
-  socket.on('chat', function(data) {
-    console.log('Message from %s: %s', data.name, data.msg);
-
-    var msg = {
-      from: {
-        name: data.name,
-      },
-      msg: data.msg
-    };
-
-    // 메시지를 전송한 클라이언트를 제외한 모든 클라이언트에게 메시지를 전송한다
-    socket.broadcast.emit('chat', msg);
+io.on('connection', function(socket) {
+  console.log(socket.id)
+  socket.on('SEND_MESSAGE', function(data) {
+      io.emit('MESSAGE', data)
   });
-
-  socket.on('disconnect', function() {
-    console.log('user disconnected: ' + socket.name);
-  });
-
 });
 
 /**

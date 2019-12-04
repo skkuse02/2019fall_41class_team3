@@ -15,8 +15,6 @@ import VueHead from 'vue-head';
 import VueModal from 'vue-js-modal';
 import BootstrapVue from 'bootstrap-vue';
 import axios from 'axios';
-import App from './App';
-import router from './router';
 import DatePicker from 'vue2-datepicker';
 import DownloadJS from 'downloadjs';
 import SimpleVueValidation from 'simple-vue-validator';
@@ -24,18 +22,27 @@ import Timeselector from 'vue-timeselector';
 import ButtonPlugin from 'bootstrap-vue';
 import Vuesax from 'vuesax';
 
+import App from './App';
+import router from './router';
+import Directives from './plugins/directives';
+
+
 
 import 'expose-loader?$!expose-loader?jQuery!jquery';
 import './assets/js/bootstrap.min.js';
 import './assets/js/jquery.nav.min.js';
 import 'vuesax/dist/vuesax.css';
 import 'material-icons/iconfont/material-icons.css';
+import './assets/_common.scss';
 
 //DataTables
 import './assets/datatables/js/jquery.dataTables.min.js';
 import './assets/datatables/dataTables.bootstrap.js';
 import './assets/datatables/tabletools/dataTables.tableTools.min.js';
 import './assets/datatables/fnReloadAjax.js';
+
+import './plugins/socketPlugin';
+import './plugins/vuetify';
 
 Vue.prototype.$http = axios;
 Vue.prototype.$download = DownloadJS;
@@ -54,6 +61,8 @@ Vue.use(Timeselector);
 Vue.use(ButtonPlugin);
 Vue.use(Vuesax);
 
+Vue.config.productionTip = false;
+Vue.use(Directives);
 
 /* eslint-disable no-new */
 new Vue({
