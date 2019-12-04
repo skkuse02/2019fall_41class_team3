@@ -15,8 +15,8 @@ const {
 } = require('./user');
 
 router.get('/session', getSession);
-router.get('/id', searchUserId);
-router.get('/password', findPassword);
+router.post('/id', searchUserId);
+router.post('/password', findPassword);
 router.get('/credit', getUserCredit);
 
 router.post('/credit', addUserCredit);
