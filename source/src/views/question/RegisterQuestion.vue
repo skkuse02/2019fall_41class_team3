@@ -20,7 +20,7 @@
                         {{ option.type }}
                     </option>
                 </b-form-select>
-                <span> &nbsp; &nbsp; Selected : {{ selected }} </span>
+                <span> &nbsp; &nbsp; Selected : {{ this.selected + ' (Minimum Reward : '  + minPoint + ')'}} </span>
             </div>
             <div class="form-group">
                 <b-form-input type="text" id="field" v-model="field" class="form-control" placeholder="분야"/>
@@ -88,7 +88,6 @@ export default {
             title: '',
             content: '',
             reward: '',
-            minRewards: [],
             selected: '',
             types: [],
             field: '',
@@ -110,8 +109,7 @@ export default {
     },
     computed: {
         answerType: function () {
-            if (this.type == 'Live Chatting' ||
-            this.type == 'Screen Sharing') {
+            if (this.selected == 'Live Chatting' || this.selected == 'Screen Sharing') {
                 return true;
             }
             else return false;
@@ -124,6 +122,13 @@ export default {
                 }
             }
             return this.selectedDays;
+        },
+        minPoint: function () {
+            for (var i = 0; i < 3; i++){
+                if (this.types[i].type == this.selected){
+                    return this.types[i].minimum_point;
+                }
+            }
         }
     },
     created: async function () {
@@ -136,10 +141,8 @@ export default {
         else {
             const typeInfo = await this.$http.get("/rest/response_type");
             this.types = typeInfo.data.response_types;
-            this.selected = this.types[2].type;
-            this.minRewards = typeInfo.data.response_types;
+            this.selected = this.types[2].type;            
         }
-
     },
     methods: {
         async write () {
