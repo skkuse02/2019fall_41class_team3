@@ -26,40 +26,38 @@
                 <b-form-input type="text" id="field" v-model="field" class="form-control" placeholder="분야"/>
             </div>
             <div class="form-vif" v-if="answerType">
+                <p text-align: center>Selected Time Range : {{ selectedDay }} / {{ timeStart }} ~ {{ timeEnd }}</p>
                 <div>
-                    <p>Selected Time Range : {{ selectedDay }} / {{ timeStart }} ~ {{ timeEnd }}</p>
-                    <div>
-                        <b-button-group size="lg">
-                            <b-button v-for="(day, idx) in days" :key="idx"
-                            :pressed.sync="day.state" variant="success">
-                                {{ day.text }}
-                            </b-button>
-                        </b-button-group>
-                    </div>
-                    <div style="clear: both"></div>
-                    <timeselector displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
-                    :displaySeconds="false" style="width:208px; float: left" :placeholder="'[From] HH:MM'"
-                    returnFormat="HH:mm" @formatedTime="tStart">
-                        <template slot="hours">
-                            <span>Hours</span>
-                        </template>
-                        <template slot="minutes">
-                            <span>Minutes</span>
-                        </template>
-                    </timeselector>
-                    <timeselector displayFormat=" [To] HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
-                    :displaySeconds="false" style="width:208px; float: left" :placeholder="'[To] HH:MM'"
-                    returnFormat="HH:mm" @formatedTime="tEnd">
-                        <template slot="hours">
-                            <span>Hours</span>
-                        </template>
-                        <template slot="minutes">
-                            <span>Minutes</span>
-                        </template>
-                    </timeselector>
-                    <img src="../../assets/datatables/images/add_circle.png" v-on:click="addTime(timeFormat)" style="cursor:pointer">
+                    <b-button-group size="lg" style="margin-botton: 10px">
+                        <b-button v-for="(day, idx) in days" :key="idx"
+                        :pressed.sync="day.state" variant="success">
+                            {{ day.text }}
+                        </b-button>
+                    </b-button-group>
                 </div>
-                <div style="clear: both"></div>
+                <div style="clear: both; margin-top: 10px"></div>
+                <timeselector displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
+                :displaySeconds="false" style="width:208px; float: left" :placeholder="'[From] HH:MM'"
+                returnFormat="HH:mm" @formatedTime="tStart">
+                    <template slot="hours">
+                        <span>Hours</span>
+                    </template>
+                    <template slot="minutes">
+                        <span>Minutes</span>
+                    </template>
+                </timeselector>
+                <timeselector displayFormat=" [To] HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
+                :displaySeconds="false" style="width:208px; float: left" :placeholder="'[To] HH:MM'"
+                returnFormat="HH:mm" @formatedTime="tEnd">
+                    <template slot="hours">
+                        <span>Hours</span>
+                    </template>
+                    <template slot="minutes">
+                        <span>Minutes</span>
+                    </template>
+                </timeselector>
+                <img src="../../assets/datatables/images/add_circle.png" v-on:click="addTime(timeFormat)" style="cursor:pointer">
+                <div style="clear: both; margin-top: 10px"></div>
                 <div class="timeChip">
                     <vs-chip v-on:click="removeTime(time)" v-for="time in available_times"
                     v-bind:key="time" style="width:40%; float:left" closable> {{ time }} </vs-chip>
