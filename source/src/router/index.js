@@ -17,7 +17,6 @@ const Login = () => import('@/views/authentication/Login')
 const FindId = () => import('@/views/authentication/FindId')
 const FindPassword = () => import('@/views/authentication/FindPassword')
 const Signup = () => import('@/views/user/Signup')
-const Profile = () => import('@/views/user/Profile')
 
 // Register Question
 const RegisterQuestion = () => import('@/views/question/RegisterQuestion')
@@ -26,6 +25,10 @@ const QuestionView = () => import('@/views/question/QuestionView')
 
 // Register Answer
 const RegisterAnswer = () => import('@/views/answer/RegisterAnswer')
+
+// User
+const Profile = () => import('@/views/user/Profile')
+const Credit = () => import('@/views/user/Credit')
 
 const Chat = () => import('@/components/Chat/Chat')
 const ScreenShare = () => import('@/components/ScreenShare/ScreenShare')
@@ -83,6 +86,11 @@ export default new Router({
                     path: '/profile',
                     name: 'Profile',
                     component: Profile
+                },
+                {
+                    path: '/credit',
+                    name: 'Credit',
+                    component: Credit
                 },
                 {
                     path: '/registerquestion',

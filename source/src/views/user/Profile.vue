@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div v-if="mode=='check'" class="loginForm" style="margin:100px 40px 40px 40px">
+
+    <!-- Mode: Check Password -->
+    <div v-if="mode=='check_pw'" class="loginForm" style="margin:100px 40px 40px 40px">
       <h2><p>Check Password</p></h2>
       <form class="form-horizontal" role="form" @submit.prevent="checkPassword()">
         <div class="form-group" style="width:100%;">
@@ -17,16 +19,32 @@
       </form>
     </div>
 
+    <!-- Mode: View User Info -->
     <div v-if="mode=='view_info'">
-      <div>uid: {{user.uid}}</div>
-      <div>name: {{user.name}}</div>
-      <div>nickname: {{user.nickname}}</div>
-      <div>email: {{user.email}}</div>
-      <div>type: {{user.type}}</div>
-      <button  @click="changeMode('edit_info')" class="btn btn-primary" type="button" variant="primary" size="lg">Edit</button>
-      <button  @click="changeMode('edit_credit')" class="btn btn-primary" type="button" variant="primary" size="lg">Exchange Credit</button>
+      <!-- Show user info -->
+      <div>
+        <div>uid: {{user.uid}}</div>
+        <div>type: {{user.type}}</div>
+        <div>name: {{user.name}}</div>
+        <div>nickname: {{user.nickname}}</div>
+        <div>email: {{user.email}}</div>
+        <div>credit: {{user.credit}}</div>
+      </div>
+
+      <!-- Buttons -->
+      <div>
+        <!-- User info edit button -->
+        <button @click="changeMode('edit_info')" class="btn btn-primary" type="button" variant="primary" size="lg">
+          Edit
+        </button>
+        <!-- Purchase credit button -->
+        <button @click="changeMode('purchase_credit')" class="btn btn-primary" type="button" variant="primary" size="lg">
+          Purchase Credit
+        </button>
+      </div>
     </div>
 
+    <!-- Mode: Edit User Info -->
     <div v-if="mode=='edit_info'">
       <form class="layout-form" @submit.prevent="confirmInfoEdit()" autocomplete="nope">
         <div class="form-group" :class="{error: validation.hasError('name')}">
@@ -48,9 +66,19 @@
       </form>
     </div>
 
-    <div v-if="mode=='edit_credit'">
+    <!-- Mode: Purchase Credit -->
+    <div v-if="mode=='purchase_credit'">
       <form class="layout-form" @submit.prevent="confirmCredit()" autocomplete="nope">
-      
+        <div class="form-group">
+          <div class="label">Current credit: {{user.credit}}</div>
+        </div>
+        <div class="form-group">
+          <div class="label">Amount</div>
+          <div class="content"><input type="number" class="form-control" v-model="credit" min="1000" step="1000"></div>
+        </div>
+        <button @click="changeMode('view_info')" class="btn btn-primary" type="button" variant="primary" size="lg">
+          Cancel
+        </button>
         <button class="btn btn-primary" type="submit" variant="primary" size="lg">Confirm</button>
       </form>
     </div>
@@ -65,12 +93,15 @@ export default {
     return {
       user: null,
       inputPassword: '',
-      mode: 'check',
+      mode: 'check_pw',
 
-      password: '',
       name: '',
       nickname: '',
       email: '',
+
+      credit: 0,
+
+      password: '',
       repeat: ''
     };
   },
@@ -107,16 +138,21 @@ export default {
     }
   },
   methods: {
-    changeMode(mode) {
-      this.mode = mode;
-
+    async changeMode(mode) {
       switch(mode) {
-        case 'view_info': 
+        case 'view_info':
+          const res = await this.$http.get("/rest/user/credit");
+          this.user.credit = res.data.credit;
+          //alert(this.user.credit);
+          break;
+        case 'edit_info': 
           this.name = this.user.name;
           this.nickname = this.user.nickname;
           this.email = this.user.email;
           break;
       }
+
+      this.mode = mode;
     },
     async checkPassword() {
       try {
@@ -172,7 +208,21 @@ export default {
       }
     },
     async confirmCredit() {
-      this.changeMode('view_info');
+      try {
+        const amount = this.credit;
+        const reqRes = await this.$http.post("/rest/user/credit", {amount});
+        if (reqRes.data.result == true) {
+          this.changeMode('view_info');
+          alert('성공적으로 구매 되었습니다.');
+        } 
+        else {
+          alert('안돼 돌아가. 이건 뭐니');
+        }
+      }
+      catch(e) {
+        alert('안돼 돌아가. 서버가 안된대.');
+      }
+
     }
   }
 };

@@ -61,7 +61,7 @@
                 </div>
                 <div style="clear: both"></div>
                 <div class="timeChip">
-                    <vs-chip type="button" v-on:click="removeTime(time)" v-for="time in available_times"
+                    <vs-chip v-on:click="removeTime(time)" v-for="time in available_times"
                     v-bind:key="time" closable style="width:40%"> {{ time }} </vs-chip>
                 </div>
             </div>
@@ -157,10 +157,10 @@ export default {
                 const betCredit = creditInfo.data.credit;
                 
 
-                if ((betCredit < reward) || (betCredit < minReward)) {
+                if ((betCredit < reward) || (betCredit < this.minPoint)) {
                     alert('소유한 크레딧 : ' + betCredit + '\n'
                         + '수여할 크레딧 : ' + reward + '\n'
-                        + '최소 크레딧 : ' + minReward + '\n'
+                        + '최소 크레딧 : ' +  this.minPoint + '\n'
                         + '보상 크레딧의 양을 확인해 주세요!');
                 }
                 else {
