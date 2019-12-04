@@ -1,24 +1,6 @@
 <template>
   <div>
 
-    <!-- Mode: Check Password -->
-    <div v-if="mode=='check_pw'" class="loginForm" style="margin:100px 40px 40px 40px">
-      <h2><p>Check Password</p></h2>
-      <form class="form-horizontal" role="form" @submit.prevent="checkPassword()">
-        <div class="form-group" style="width:100%;">
-          <label for="inputPW" class="col-xs-4 control-label">PW</label>
-          <div class="col-xs-4 center-block">
-            <input type="password" v-model="inputPassword" class="form-control" placeholder="Password">
-          </div>
-        </div>
-
-        <!-- Pressing login button will send form's info to server -->
-        <div id="buttonHolder" style="margin:10px">
-            <b-button type="submit" variant="success" size="lg">Submit</b-button>
-        </div>
-      </form>
-    </div>
-
     <!-- Mode: View Credit Info -->
     <div v-if="mode=='view_credit'">
       <!-- Show user info -->
@@ -49,7 +31,7 @@
           <div class="label">Amount</div>
           <div class="content"><input type="number" class="form-control" v-model="amount" min="1000" step="1000"></div>
         </div>
-        <button @click="changeMode('view_info')" class="btn btn-primary" type="button" variant="primary" size="lg">
+        <button @click="changeMode('view_credit')" class="btn btn-primary" type="button" variant="primary" size="lg">
           Cancel
         </button>
         <button class="btn btn-primary" type="submit" variant="primary" size="lg">Confirm</button>
@@ -66,7 +48,7 @@
           <div class="label">Amount</div>
           <div class="content"><input type="number" class="form-control" v-model="amount" min="1000" step="1000"></div>
         </div>
-        <button @click="changeMode('view_info')" class="btn btn-primary" type="button" variant="primary" size="lg">
+        <button @click="changeMode('view_credit')" class="btn btn-primary" type="button" variant="primary" size="lg">
           Cancel
         </button>
         <button class="btn btn-primary" type="submit" variant="primary" size="lg">Confirm</button>
