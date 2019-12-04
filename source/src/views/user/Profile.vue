@@ -1,47 +1,6 @@
 <template>
   <div>
-    <div v-if="isChecked">
-      <div v-if="isEditMode">
-        <form class="layout-form" @submit.prevent="confirmEdit()" autocomplete="nope">
-          <div class="form-group" :class="{error: validation.hasError('password')}">
-            <div class="label">* Password</div>
-            <div class="content"><input type="password" class="form-control" v-model="password" autocomplete="new-password"/></div>
-            <div class="message">{{ validation.firstError('password') }}</div>
-          </div>
-          <div class="form-group" :class="{error: validation.hasError('repeat')}">
-            <div class="label">* Confirm password</div>
-            <div class="content"><input type="password" class="form-control" v-model="repeat"/></div>
-            <div class="message">{{ validation.firstError('repeat') }}</div>
-          </div>
-          <div class="form-group" :class="{error: validation.hasError('name')}">
-            <div class="label">* Name</div>
-            <div class="content"><input type="text" class="form-control" v-model="name"/></div>
-            <div class="message">{{ validation.firstError('name') }}</div>
-          </div>
-          <div class="form-group" :class="{error: validation.hasError('nicknname')}">
-            <div class="label">Nickname</div>
-            <div class="content"><input type="text" class="form-control" v-model="nickname"/></div>
-            <div class="message">{{ validation.firstError('nickname') }}</div>
-          </div>
-          <div class="form-group" :class="{error: validation.hasError('email')}">
-            <div class="label">* Email</div>
-            <div class="content"><input type="text" class="form-control" v-model="email"/></div>
-            <div class="message">{{ validation.firstError('email') }}</div>
-          </div>
-          <button class="btn btn-primary" type="submit" variant="primary" size="lg">Confirm</button>
-        </form>
-      </div>
-      <div v-else>
-        <div>uid: {{user.uid}}</div>
-        <div>name: {{user.name}}</div>
-        <div>nickname: {{user.nickname}}</div>
-        <div>email: {{user.email}}</div>
-        <div>type: {{user.type}}</div>
-        <button  @click="toEditMode()" class="btn btn-primary" type="button" variant="primary" size="lg">Edit</button>
-      </div>
-    </div>
-
-    <div class="loginForm" style="margin:100px 40px 40px 40px" v-else>
+    <div v-if="mode=='check'" class="loginForm" style="margin:100px 40px 40px 40px">
       <h2><p>Check Password</p></h2>
       <form class="form-horizontal" role="form" @submit.prevent="checkPassword()">
         <div class="form-group" style="width:100%;">
@@ -58,6 +17,44 @@
       </form>
     </div>
 
+    <div v-if="mode=='view_info'">
+      <div>uid: {{user.uid}}</div>
+      <div>name: {{user.name}}</div>
+      <div>nickname: {{user.nickname}}</div>
+      <div>email: {{user.email}}</div>
+      <div>type: {{user.type}}</div>
+      <button  @click="changeMode('edit_info')" class="btn btn-primary" type="button" variant="primary" size="lg">Edit</button>
+      <button  @click="changeMode('edit_credit')" class="btn btn-primary" type="button" variant="primary" size="lg">Exchange Credit</button>
+    </div>
+
+    <div v-if="mode=='edit_info'">
+      <form class="layout-form" @submit.prevent="confirmInfoEdit()" autocomplete="nope">
+        <div class="form-group" :class="{error: validation.hasError('name')}">
+          <div class="label">* Name</div>
+          <div class="content"><input type="text" class="form-control" v-model="name"/></div>
+          <div class="message">{{ validation.firstError('name') }}</div>
+        </div>
+        <div class="form-group" :class="{error: validation.hasError('nicknname')}">
+          <div class="label">Nickname</div>
+          <div class="content"><input type="text" class="form-control" v-model="nickname"/></div>
+          <div class="message">{{ validation.firstError('nickname') }}</div>
+        </div>
+        <div class="form-group" :class="{error: validation.hasError('email')}">
+          <div class="label">* Email</div>
+          <div class="content"><input type="text" class="form-control" v-model="email"/></div>
+          <div class="message">{{ validation.firstError('email') }}</div>
+        </div>
+        <button class="btn btn-primary" type="submit" variant="primary" size="lg">Confirm</button>
+      </form>
+    </div>
+
+    <div v-if="mode=='edit_credit'">
+      <form class="layout-form" @submit.prevent="confirmCredit()" autocomplete="nope">
+      
+        <button class="btn btn-primary" type="submit" variant="primary" size="lg">Confirm</button>
+      </form>
+    </div>
+  
   </div>
 </template>
 
@@ -68,8 +65,8 @@ export default {
     return {
       user: null,
       inputPassword: '',
-      isChecked: false,
-      isEditMode: false,
+      mode: 'check',
+
       password: '',
       name: '',
       nickname: '',
@@ -110,13 +107,24 @@ export default {
     }
   },
   methods: {
+    changeMode(mode) {
+      this.mode = mode;
+
+      switch(mode) {
+        case 'view_info': 
+          this.name = this.user.name;
+          this.nickname = this.user.nickname;
+          this.email = this.user.email;
+          break;
+      }
+    },
     async checkPassword() {
       try {
         const uid = this.user.uid;
         const password = this.inputPassword;
         const res = await this.$http.post("/rest/checkPw", {uid, password});
         if (res.data.result == true) {
-          this.isChecked = true;
+          this.changeMode('view_info');
         }
         else {
           this.inputPassword = '';
@@ -128,22 +136,11 @@ export default {
         alert("비밀번호가 일치하지 않습니다.");
       }
     },
-    toEditMode() {
-      this.isEditMode = true;
-
-      if(this.password == '') {
-        this.password = this.inputPassword;
-      }
-      this.repeat = this.password;
-      this.name = this.user.name;
-      this.nickname = this.user.nickname;
-      this.email = this.user.email;
-    },
-    async confirmEdit() {
-      const formRes = await this.$validate();
+    async confirmInfoEdit() {
+      const formRes = await this.$validate('name', 'nickname', 'email');
       if(formRes) {
         const uid = this.user.uid;
-        const password = this.password;
+        const password = this.inputPassword;
         const type = this.user.type;
         const fields = [];
         const available_times = [];
@@ -155,16 +152,12 @@ export default {
         try {
           const reqRes = await this.$http.post("/rest/user", {uid, type, password, name, nickname, email, fields, available_times})
           if (reqRes.data.result == true) {
-            await this.$http.post("/rest/logout");
-            const res = await this.$http.post("/rest/login", {uid, password})
-            if (res.data.result == true) {
-              const session = await this.$http.get('/rest/user/session');
-              if(session.data.result == true){
-                this.user = session.data.user;  
-                this.isEditMode = false;
-                alert('성공적으로 업데이트 되었습니다.');
-              } 
-            }
+            const session = await this.$http.get('/rest/user/session');
+            if(session.data.result == true){
+              this.user = session.data.user;  
+              this.changeMode('view_info');
+              alert('성공적으로 업데이트 되었습니다.');
+            } 
           }
           else {
             alert('안돼 돌아가. 이건 뭐니');
@@ -177,6 +170,9 @@ export default {
       else {
         alert('안돼 돌아가. 잘못 입력했어.');
       }
+    },
+    async confirmCredit() {
+      this.changeMode('view_info');
     }
   }
 };
