@@ -43,7 +43,6 @@ export default {
         const session = await this.$http.get('/rest/user/session');
         if(session.data.result == true){
           this.name = session.data.user.name;
-          this.$session.set('user',session.data.user);
           this.sessionExist = true;
         } else{
           await this.$session.remove('user');
@@ -54,7 +53,7 @@ export default {
         this.sessionExist = false;
       }
     },
-    async logout (){
+    logout: async function(){
       try{
         const res = await this.$http.post("/rest/logout");
         //if (res.data.result == true)

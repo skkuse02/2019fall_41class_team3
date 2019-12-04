@@ -53,8 +53,6 @@ export default {
   },
   created: async function(){
     if(this.$session.has('user')){
-      console.log(this.$session.get('user'));
-            alert(this.$session.get('user'));
       this.$router.push({
         path: '/'
       });
@@ -62,7 +60,7 @@ export default {
     }
   },
   methods: {
-    async login () {
+    login: async function() {
       try{
         const uid = this.uid;
         const password = this.password;
@@ -71,15 +69,21 @@ export default {
         }
         const res = await this.$http.post("/rest/login", {uid, password})
         if (res.data.result == true) {
-          this.$router.push({
-            path: '/'
-          });
-        }
+          const session = await this.$http.get('/rest/user/session');
+          if(session.data.result == true){
+            this.$session.set('user',session.data.user);
+          } else{
+            this.$session.remove('user');
+          }
+        } 
+        this.$router.go({
+          path: '/'
+        });
       } catch(err) {
         alert(err.toString() + '\n아이디나 비밀번호를 다시 한 번 확인해주세요!')
       }
-    }
-  },
+    },
+  }
 };
 </script>
 
