@@ -16,11 +16,11 @@
             </div>
             <div class="form-group">
                 <b-form-select id="type" v-model="selected" class="mb-3">
-                    <option v-for="option in types" v-bind:key="option.type">
-                        {{ option.type }}
+                    <option v-for="(option, idx) in types" v-bind:key="idx">
+                        {{ types[idx].type }}
                     </option>
                 </b-form-select>
-                <span> &nbsp; &nbsp; Selected : {{ this.selected + ' (Minimum Reward : '  + minPoint + ')'}} </span>
+                <span> &nbsp; &nbsp; Selected : {{ this.types[selected].type + ' (Minimum Reward : '  + this.types[selected].minimum_point + ')'}} </span>
             </div>
             <div class="form-group">
                 <b-form-input type="text" id="field" v-model="field" class="form-control" placeholder="분야"/>
@@ -87,6 +87,7 @@ export default {
             content: '',
             reward: '',
             selected: '',
+            type: '',
             types: [],
             field: '',
             available_times: [],
@@ -107,7 +108,8 @@ export default {
     },
     computed: {
         answerType: function () {
-            if (this.selected == 'Live Chatting' || this.selected == 'Screen Sharing') {
+            if (this.selected == 0 || this.selected == 1) {
+                console.log(selected);
                 return true;
             }
             else return false;
@@ -121,13 +123,6 @@ export default {
             }
             return this.selectedDays;
         },
-        minPoint: function () {
-            for (var i = 0; i < 3; i++){
-                if (this.types[i].type == this.selected){
-                    return this.types[i].minimum_point;
-                }
-            }
-        }
     },
     created: async function () {
         if (!this.$session.exists()){
@@ -139,7 +134,7 @@ export default {
         else {
             const typeInfo = await this.$http.get("/rest/response_type");
             this.types = typeInfo.data.response_types;
-            this.selected = this.types[2].type;            
+            this.selected = 2;            
         }
     },
     methods: {
@@ -148,7 +143,7 @@ export default {
                 const title = this.title;
                 const content = this.content;
                 const reward = this.reward * 100;
-                const type = this.type;
+                const type = this.selected;
                 const field = this.field;
                 const available_times = this.available_times;
                 const creditInfo = await this.$http.get("/rest/user/credit");
