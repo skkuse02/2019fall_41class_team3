@@ -119,7 +119,9 @@ export default {
     async changeMode(mode) {
       switch(mode) {
         case 'view_info':
+          const session = await this.$http.get('/rest/user/session');
           const res = await this.$http.get("/rest/user/credit");
+          this.user = session.data.user;
           this.user.credit = res.data.credit;
           //alert(this.user.credit);
           break;
