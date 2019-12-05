@@ -2,19 +2,17 @@
   <div>
     <b-navbar id="header-bar">
       <b-navbar-brand id="header-brand" href="/"><img id="header-logo" src="/assets/img/logo_white_typeC.png"></b-navbar-brand>
-      <div>
-        <div class="btn-group" v-if="sessionExist" right>
+      <div style="margin-left:auto;">
+        <div class="btn-group" v-if="sessionExist">
           <a class="btn btn-info" style="min-width: 130px;"  data-toggle="dropdown" href=""><i class="fa fa-user fa-fw"></i> {{name}}</a>
-          <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href="">
-            
-          </a>
+          <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href=""></a>
           <ul class="dropdown-menu">
             <li><router-link id="header-dd-text" :to="{ path: '/profile'}"><i id="header-dd-icon" class="fa fa-pencil fa-fw"></i> Profile</router-link></li>
             <li><router-link id="header-dd-text" :to="{ path: '/credit'}"><i id="header-dd-icon" class="fa fa-credit-card"></i> Credit</router-link></li>
             <li><a id="header-dd-text" href="" v-on:click="logout" ><i id="header-dd-icon"  class="fa fa-unlock"></i> Log Out</a></li>
           </ul>
         </div>
-        <div v-else right>
+        <div v-else>
           <router-link id="header-link" :to="{ path: '/login'}">Log In</router-link>
           <span id="header-link"> | </span>
           <router-link id="header-link" :to="{ path: '/signup'}">Sign Up</router-link>

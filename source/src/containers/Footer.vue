@@ -1,7 +1,7 @@
 <template>
   <div class="footer">
     <div class="copyright row">
-      <div class="addr">
+      <div class="addr" style="width:100%;">
         <p>
           <a
             class="footer_popup"
