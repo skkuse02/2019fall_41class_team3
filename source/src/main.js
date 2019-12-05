@@ -20,7 +20,7 @@ import DownloadJS from 'downloadjs'
 import SimpleVueValidation from 'simple-vue-validator';
 import Timeselector from 'vue-timeselector';
 import ButtonPlugin from 'bootstrap-vue';
-import { vsButton, vsSelect, vsPopup, vsChip } from 'vuesax';
+import { vsButton, vsSelect, vsPopup, vsChip, vsIcon } from 'vuesax';
 
 import 'expose-loader?$!expose-loader?jQuery!jquery';
 import './assets/js/bootstrap.min.js';
@@ -54,6 +54,7 @@ Vue.use(vsButton);
 Vue.use(vsSelect);
 Vue.use(vsPopup);
 Vue.use(vsChip);
+Vue.use(vsIcon);
 
 
 /* eslint-disable no-new */

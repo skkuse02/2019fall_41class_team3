@@ -33,6 +33,10 @@
           <b-button type="submit" @click="moveRegisterQuestion()"
           variant="success" size="sm">질문 등록하기</b-button>
         </div>
+        <div id="buttonholder" style="margin:10px">
+          <b-button type="button" @click="moveQuestionList()"
+          variant="success" size="sm">전체 게시물</b-button>
+        </div>
       </div>
     </div>
 </template>
@@ -59,6 +63,11 @@ export default {
     moveRegisterQuestion () {
       this.$router.push({
           path: '/registerquestion'
+      });
+    },
+    moveQuestionList() {
+      this.$router.push({
+          path: '/question/list'
       });
     }
   }

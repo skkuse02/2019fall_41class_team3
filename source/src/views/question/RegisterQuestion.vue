@@ -15,12 +15,13 @@
                 </label>
             </div>
             <div class="form-group">
-                <b-form-select id="type" v-model="selected" class="mb-3">
-                    <option v-for="(option, idx) in types" v-bind:key="idx">
-                        {{ types[idx].type }}
+                <b-form-select id="selectType" v-model="typeIndex" class="mb-3">
+                    <option v-for="(option,index) in types" v-bind:key="index" v-bind:value="index">
+                        {{ option.type }}
                     </option>
                 </b-form-select>
-                <span> &nbsp; &nbsp; Selected : {{ this.types[selected].type + ' (Minimum Reward : '  + this.types[selected].minimum_point + ')'}} </span>
+                <span> &nbsp; &nbsp; Selected : {{ this.types[typeIndex].type +
+                    ' (Minimum Reward : '  + this.types[typeIndex].minimum_point + ')'}} </span>
             </div>
             <div class="form-group">
                 <b-form-input type="text" id="field" v-model="field" class="form-control" placeholder="분야"/>
@@ -64,7 +65,7 @@
                 </div>
             </div>
             <div style="clear: both"></div>
-            <!-- Pressing register button will send form's info to server -->
+             <!-- Pressing register button will send form's info to server -->
         </form>
         <div id="buttonHolder" style="margin:10px">
             <b-button type="submit" form="formInfo" variant="success" size="sm"
@@ -86,8 +87,7 @@ export default {
             title: '',
             content: '',
             reward: '',
-            selected: '',
-            type: '',
+            typeIndex: 2,
             types: [],
             field: '',
             available_times: [],
@@ -108,11 +108,13 @@ export default {
     },
     computed: {
         answerType: function () {
-            if (this.selected == 0 || this.selected == 1) {
-                console.log(selected);
-                return true;
+            if (this.typeIndex == 0) {
+                return false;
             }
-            else return false;
+            else if (this.typeIndex == 1) {
+                return false;
+            }
+            else return true;
         },
         selectedDay: function () {
             this.selectedDays = [];
@@ -131,11 +133,11 @@ export default {
                 path: '/login'
             });
         }
-        else {
-            const typeInfo = await this.$http.get("/rest/response_type");
-            this.types = typeInfo.data.response_types;
-            this.selected = 2;            
-        }
+        const typeInfo = await this.$http.get("/rest/response_type");
+        this.types = typeInfo.data.response_types;
+        console.log(this.types);
+        console.log(this.types[0].type);
+        console.log(this.types[0].minimum_point);
     },
     methods: {
         async write () {
@@ -143,7 +145,7 @@ export default {
                 const title = this.title;
                 const content = this.content;
                 const reward = this.reward * 100;
-                const type = this.selected;
+                const type = this.idx;
                 const field = this.field;
                 const available_times = this.available_times;
                 const creditInfo = await this.$http.get("/rest/user/credit");

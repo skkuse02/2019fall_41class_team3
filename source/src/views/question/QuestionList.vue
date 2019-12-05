@@ -40,10 +40,10 @@ export default {
       perPage: 5,
       totalRows: 0,
       fields: [ 
-        { key: 'id', label: '번호' },
-        { key: 'title', label: '제목' },
-        { key: 'createdAt', label: '등록 날짜'},
-        { key: 'star', label: '추천'}
+        { key: 'id', label: '번호', sortable: true},
+        { key: 'title', label: '제목', sortable: true },
+        { key: 'createdAt', label: '등록 날짜', sortable: true},
+        { key: 'star', label: '추천', sortable: true}
       ]
     };
 
