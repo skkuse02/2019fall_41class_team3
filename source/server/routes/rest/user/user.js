@@ -251,12 +251,11 @@ async function upsertUser(req, res){
           uid: req.body.uid
         }
       }); 
+      req.session.user.name = req.body.name;
+      req.session.user.nickname = req.body.nickname;
+      req.session.user.email = req.body.email;
+
     }
-
-    req.session.user.name = req.body.name;
-    req.session.user.nickname = req.body.nickname;
-    req.session.user.email = req.body.email;
-
 
     await models.sequelize.query(`DELETE FROM fielduser where userUid = '${req.body.uid}'`);
     //add field
