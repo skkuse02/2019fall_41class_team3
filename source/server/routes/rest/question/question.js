@@ -124,10 +124,51 @@ async function getQuestion(req, res){
   } 
 }
 
+async function getQuestionByTime(req, res){
+  try{
+    let mentor_times = await models.timeuser.findAll({
+      where:{
+        uid: req.session.user.uid
+      },
+      attributes: ['timeId']
+    });
+
+    mentor_times = await mentor_times.map(time => time.timeId);
+    if(mentor_times.length > 0){
+      let qids = await models.questiontime.findAll({
+        where:{
+          timeId: mentor_times
+        },
+        attributes: ['qid']
+      });
+      qids = await qids.map(q => q.qid);
+
+      const questions = await models.question.findAll({
+        where:{
+          id: qids
+        }
+      });
+
+      res.status(200).send({
+        result: true,
+        questions: questions
+      });
+    } else{
+      throw new Error("Mentor has no available time");
+    }
+  } catch(err){
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  } 
+}
+
 
 module.exports = {
   getQuestionList,
   addQuestion,
   getResponseType,
-  getQuestion
+  getQuestion,
+  getQuestionByTime
 };

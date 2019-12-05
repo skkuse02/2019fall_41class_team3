@@ -12,12 +12,16 @@ const {
     getQuestionList,
     addQuestion,
     getQuestion,
-    getResponseType
+    getResponseType,
+    getQuestionByTime
 } = require('./question');
 
 router.get('/list', auth, getQuestionList);
 router.get('/responseType', auth, getResponseType);
-router.get('/:id',auth, getQuestion);
+router.get('/listByTime', auth, getQuestionByTime);
+
+router.get('/:id', auth, getQuestion);
 router.post('/', addQuestion);
+
 
 module.exports = router;
