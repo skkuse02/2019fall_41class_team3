@@ -1,6 +1,6 @@
 {
     "development": {
-        "port": 3000,
+        "port": 8096,
         "db": {
             "host": "",
             "username": "",
