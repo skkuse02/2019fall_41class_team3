@@ -3,14 +3,24 @@
     <b-navbar id="header-bar">
       <b-navbar-brand id="header-brand" href="/"><img id="header-logo" src="/assets/img/logo_white_typeC.png"></b-navbar-brand>
       <div style="margin-left:auto;">
-        <div class="btn-group" v-if="sessionExist">
-          <a class="btn btn-info" style="min-width: 130px;"  data-toggle="dropdown" href=""><i class="fa fa-user fa-fw"></i> {{name}}</a>
-          <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href=""></a>
-          <ul class="dropdown-menu">
-            <li><router-link id="header-dd-text" :to="{ path: '/profile'}"><i id="header-dd-icon" class="fa fa-pencil fa-fw"></i> Profile</router-link></li>
-            <li><router-link id="header-dd-text" :to="{ path: '/credit'}"><i id="header-dd-icon" class="fa fa-credit-card"></i> Credit</router-link></li>
-            <li><a id="header-dd-text" href="" v-on:click="logout" ><i id="header-dd-icon"  class="fa fa-unlock"></i> Log Out</a></li>
-          </ul>
+        <div v-if="sessionExist">
+          <div id="header-link" v-if="rank==1"><img src="/assets/img/rank_1.png" style="width: 50px;"></div>
+          <div id="header-link" v-else-if="rank==2"><img src="/assets/img/rank_2.png" style="width: 50px;"></div>
+          <div id="header-link" v-else-if="rank==3"><img src="/assets/img/rank_3.png" style="width: 50px;"></div>
+          <div id="header-link" v-else-if="rank==4"><img src="/assets/img/rank_4.png" style="width: 50px;"></div>
+          <div id="header-link" v-else-if="rank==5"><img src="/assets/img/rank_5.png" style="width: 50px;"></div>
+          <div id="header-link" style="margin-right: 20px;">
+            {{credit}} P
+          </div>
+          <div class="btn-group">
+            <a class="btn btn-info" style="min-width: 130px;" data-toggle="dropdown" href=""><i class="fa fa-user fa-fw"></i> {{name}}</a>
+            <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" href=""></a>
+            <ul class="dropdown-menu">
+              <li><router-link id="header-dd-text" :to="{ path: '/profile'}"><i id="header-dd-icon" class="fa fa-pencil fa-fw"></i> Profile</router-link></li>
+              <li><router-link id="header-dd-text" :to="{ path: '/credit'}"><i id="header-dd-icon" class="fa fa-credit-card"></i> Credit</router-link></li>
+              <li><a id="header-dd-text" href="" v-on:click="logout" ><i id="header-dd-icon"  class="fa fa-unlock"></i> Log Out</a></li>
+            </ul>
+          </div>
         </div>
         <div v-else>
           <router-link id="header-link" :to="{ path: '/login'}">Log In</router-link>
@@ -41,7 +51,9 @@ export default {
   data() {
     return {
       sessionExist: false,
-      name: ""
+      name: "",
+      rank: 0,
+      credit: 0
     };
   },
   created: async function(){
@@ -56,6 +68,9 @@ export default {
         const session = await this.$http.get('/rest/user/session');
         if(session.data.result == true){
           this.name = session.data.user.name;
+          this.rank = session.data.user.rank;
+          const creditRes = await this.$http.get('/rest/user/credit');
+          this.credit = creditRes.data.credit;
           this.sessionExist = true;
         } else{
           await this.$session.remove('user');
