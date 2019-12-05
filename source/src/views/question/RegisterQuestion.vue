@@ -24,9 +24,9 @@
                     ' (Minimum Reward : '  + this.types[typeIndex].minimum_point + ')'}} </span>
             </div>
             <div class="form-group">
-                <b-form-input type="text" id="field" v-model="field" class="form-control" placeholder="분야"/>
+                <b-form-input type="text" id="fields" v-model="fields" class="form-control" placeholder="분야"/>
             </div>
-            <div class="form-vif" v-if="answerType">
+            <div class="form-vif" v-if="!answerType">
                 <p text-align: center>Selected Time Range : {{ selectedDay }} / {{ timeStart }} ~ {{ timeEnd }}</p>
                 <div>
                     <b-button-group size="lg" style="margin-botton: 10px">
@@ -87,9 +87,9 @@ export default {
             title: '',
             content: '',
             reward: '',
+            fields: '',
             typeIndex: 2,
             types: [],
-            field: '',
             available_times: [],
             timeFormat: '',
             timeStart: '',
@@ -145,21 +145,24 @@ export default {
                 const title = this.title;
                 const content = this.content;
                 const reward = this.reward * 100;
-                const type = this.idx;
-                const field = this.field;
+                const index = this.typeIndex
+                const type = this.types[index].type;
+                const fields = [];
+                fields.push(this.fields);
                 const available_times = this.available_times;
                 const creditInfo = await this.$http.get("/rest/user/credit");
                 const betCredit = creditInfo.data.credit;
-                
-                if ((betCredit < reward) || (betCredit < this.minPoint)) {
+                const minPoint = this.types[index].minimum_point;
+                console.log(minPoint);
+                if ((betCredit < reward) || (betCredit < minPoint)) {
                     alert('소유한 크레딧 : ' + betCredit + '\n'
                         + '수여할 크레딧 : ' + reward + '\n'
-                        + '최소 크레딧 : ' +  this.minPoint + '\n'
+                        + '최소 크레딧 : ' +  minPoint + '\n'
                         + '보상 크레딧의 양을 확인해 주세요!');
                 }
                 else {
                     if (this.formCheck() == true){
-                        const res = await this.$http.post("/rest/question", { title, content, reward, type, field, available_times});
+                        const res = await this.$http.post("/rest/question", { title, content, reward, type, fields, available_times});
                         if (res.data.result == true) {
                             alert('질문이 등록되었습니다!');
                             this.$router.push({
@@ -194,9 +197,9 @@ export default {
                 type.focus();
                 return false;
             }
-            else if(this.field == '') {
+            else if(this.fields == '') {
                 alert("질문의 분야를 입력해 주세요.");
-                field.focus();
+                fields.focus();
                 return false;
             }
             else return true;
