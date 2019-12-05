@@ -29,13 +29,14 @@
 
 <script>
 import io from 'socket.io-client';
+
 export default {
     data() {
         return {
             user: '',
             message: '',
             messages: [],
-            socket : io('localhost:3000')
+            socket : io('localhost:8096')
         }
     },
     methods: {
