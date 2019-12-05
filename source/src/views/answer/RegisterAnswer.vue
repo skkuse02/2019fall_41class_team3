@@ -36,7 +36,7 @@ export default {
         async write () {
             try{
                 const content = this.content
-                const res = await this.$http.post("/rest/answer:/qid", {content})
+                const res = await this.$http.post("/rest/answer/:qid", {content})
                 if (res.data.result == true) {
                     alert('답변이 등록되었습니다!')
                     this.$router.push({
@@ -53,5 +53,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/common/login.css";
+@import "../../assets/css/common/registeranswer.css";
 </style>

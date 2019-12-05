@@ -1,62 +1,87 @@
 <template>
-  <div class="container">
-    <div class="qnaheader">
-      <div class="q-header-icon">
-        <img src="">
-      </div>
-      <div class="q-header-title">
-        <h1>{{questiontitle}}</h1>
-      </div>
-    </div>
-    <div class="qna">
-      <div class="question">
-        <p>{{questioncontent}}</p>
-        <p>TAG:{{questiontag}}</p>
-      </div>
-      <div class="answer">
-        <div class="a-header">
-          <div class="a-header-profile">
-            <!--user 정보 넣기-->
-          </div>
-          <div class="a-header">
-            <h3>{{usernickname}} 님 답변</h3>
-          </div>
-        </div>
-        <div class="a-content">
-          <p>{{answercontent}}</p>
-        </div>
-      </div>
-    </div>
+  <div>
+    <b-row>
+      <b-col lg="12">
+        <transition>
+          <b-card>
+            <div slot="header">
+              Question {{question.id}}
+              <small>View Question</small>
+              <div class="card-header-actions">
+              </div>
+            </div>
+            <b-card>
+              <b-card-body>
+                <div>
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <th> Title </th>
+                        <td> {{question.title}} </td>
+                      </tr>
+                      <tr>
+                        <th> Author </th >
+                        <td> {{question.uid}} </td>
+                      </tr>
+                      <tr>
+                        <th> Date </th>
+                        <td> {{question.createdAt}} </td>
+                      </tr>
+                      <tr>
+                        <th></th>
+                        <td></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  {{question.content}}
+                </div>
+                <b-button type="button" variant="success" v-on:click="gomodify()">수정하기</b-button>
+                &nbsp;&nbsp;
+                <b-button type="button" variant="danger" v-on:click="deleteModal = true">삭제하기</b-button>
+                &nbsp;&nbsp;
+                <b-button to="/question/list" type="button" variant="secondary">돌아가기</b-button>
+              </b-card-body>
+            </b-card>
+          </b-card>
+        </transition>
+      </b-col>
+    </b-row>
+    <b-modal v-model="deleteModal" centered hide-header @ok="deleteQuestion()">
+      정말로 삭제하시겠습니까?
+    </b-modal>
   </div>
-
-
 </template>
-
 
 <script>
 export default {
-  name: "questionview",
-  data () {
+  name: "QuestionView",
+  data() {
     return {
-      questiontitle:'',
-      questioncontent:'',
-      questiontag:'',
-      usernickname:'',
-      answercontent:''
+      deleteModal: false,
+      question: {
+        id: 0,
+        title: '',
+        uid: '',
+        createdAt: '',
+        content: ''
       }
+    };
+  },
+  mounted: function () {
+    this.initView();
   },
   methods: {
-    submit: async function() {
-      const res = await this.$http.get("/rest/questionview");
-      this.questiontitle = res.data.questions.title;
-      this.questioncontent = res.data.questions.content;
-      this.questiontag = res.data.questions.tag;
-      this.usernickname = res.data.user.nickname;
-      this.answercontent = res.data.answer.content;
+    async initView() { 
+      const result = await this.$http.get(`/rest/question/`+this.$route.params.id);
+      this.question = result.data.question;
+    },
+    async deleteQuiz() {
+      const result = await this.$http.post(`/rest/question/`+this.$route.params.id);
+      this.$router.go(-1)
+    },
+    gomodify() {
+      this.$router.push({ path: '/rest/question/modify/'+this.$route.params.id });
     }
   }
-};
+}
 </script>
-
-<style>
-</style>
