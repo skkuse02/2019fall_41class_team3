@@ -251,9 +251,13 @@ async function upsertUser(req, res){
           uid: req.body.uid
         }
       }); 
-      req.session.user.name = req.body.name;
-      req.session.user.nickname = req.body.nickname;
-      req.session.user.email = req.body.email;
+
+      req.session.user = await models.user.findOne({
+        where: {
+            uid: req.body.uid
+        },
+        attributes: ['uid','name', 'email', 'nickname','rank', 'type']
+    });
 
     }
 

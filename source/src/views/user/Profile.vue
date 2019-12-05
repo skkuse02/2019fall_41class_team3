@@ -168,9 +168,12 @@ export default {
           if (reqRes.data.result == true) {
             const session = await this.$http.get('/rest/user/session');
             if(session.data.result == true){
-              this.user = session.data.user;  
-              this.changeMode('view_info');
+              this.user = session.data.user; 
+              this.name = this.user.name;
+              this.nickname = this.user.nickname;
+              this.email = this.user.email;
               alert('성공적으로 업데이트 되었습니다.');
+              this.$router.go({path: '/profile'});
             } 
           }
           else {
