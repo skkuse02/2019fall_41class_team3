@@ -36,7 +36,7 @@ export default {
             user: '',
             message: '',
             messages: [],
-            socket : io('127.0.0.1:8096')
+            socket : io('')
         }
     },
     methods: {
