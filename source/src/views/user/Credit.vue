@@ -101,8 +101,8 @@ export default {
         const amount = this.amount;
         const reqRes = await this.$http.post("/rest/user/credit", {amount});
         if (reqRes.data.result == true) {
-          this.changeMode('view_credit');
           alert('성공적으로 구매 되었습니다.');
+          this.$router.go('/credit');
         } 
         else {
           alert('안돼 돌아가. 이건 뭐니');
@@ -121,8 +121,9 @@ export default {
             const amount = this.amount;
             const reqRes = await this.$http.post("/rest/user/withdraw", {amount});
             if (reqRes.data.result == true) {
-                this.changeMode('view_credit');
+              this.$session.get('user').credit =  reqRes.data.total;
                 alert('성공적으로 인출 되었습니다.');
+                this.$router.go('/credit');
             } 
             else {
                 alert('안돼 돌아가. 이건 뭐니');
