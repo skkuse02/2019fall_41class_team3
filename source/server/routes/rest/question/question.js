@@ -4,10 +4,22 @@ const sequelize = require('sequelize');
 async function getQuestionList(req, res){
   try{
     const questions = await models.question.findAll();
+
+    for(let i = 0; i < questions.length; i++){
+      let fields = await models.fieldquestion.findAll({
+        where:{
+          qid: questions[i].id
+        },
+        attributes: ['field']
+      });
+      fields = await fields.map(f => f.field);
+      questions[i].dataValues.fields = fields;
+    };
+
     res.status(200).send({
       result: true,
       questions: questions
-      });
+    });
   } catch(err){
     res.status(400).send({
       result: false,
