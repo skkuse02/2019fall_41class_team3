@@ -90,6 +90,7 @@ export default {
             fields: '',
             typeIndex: 2,
             types: [],
+            tag: '',
             available_times: [],
             timeFormat: '',
             timeStart: '',
@@ -149,11 +150,13 @@ export default {
                 const type = this.types[index].type;
                 const fields = [];
                 fields.push(this.fields);
-                const available_times = this.available_times;
+                var available_times = this.available_times;
                 const creditInfo = await this.$http.get("/rest/user/credit");
                 const betCredit = creditInfo.data.credit;
                 const minPoint = this.types[index].minimum_point;
-                console.log(minPoint);
+                console.log(this.available_times);
+                available_times = this.timeFormatTransform();
+                console.log(available_times);
                 if ((betCredit < reward) || (betCredit < minPoint)) {
                     alert('소유한 크레딧 : ' + betCredit + '\n'
                         + '수여할 크레딧 : ' + reward + '\n'
@@ -215,7 +218,7 @@ export default {
                 alert('요일과 시간을 다시 한 번 확인해 주세요!');
             }
             else {
-                this.timeFormat = this.selectedDays + ' / ' + this.timeStart + ' ~ '  + this.timeEnd; 
+                this.timeFormat = this.selectedDays + '/' + this.timeStart + '~'  + this.timeEnd; 
                 console.log(this.timeFormat);
                 this.available_times.push(this.timeFormat)
                 this.time = null;
@@ -229,10 +232,67 @@ export default {
             if ((this.selectedDays.length == 0) || (this.timeStart == '') || (this.timeEnd == '')){
                 return false;
             }
-            else if (this.timeStart > this.timeEnd) {
+            else if (this.timeStart >= this.timeEnd) {
                 return false;
             }
             else return true;
+        },
+        timeFormatTransform () {
+            const timeArr = this.available_times;
+            var spArr = [];
+            var daArr = [];
+            var tiArr = [];
+            var stime = 0;
+            var etime = 0;
+            var resultArr = [];
+            for (var i = 0; i < timeArr.length; i++) {
+                spArr = timeArr[i].split("/");  // s[0] = "days", s[1] = "times"
+                daArr = spArr[0].split(",");    // d[0] = "day1", d[2] = "day2", ...
+                tiArr = spArr[1].split("~");    // t[0] = "h:m(s)", t[1] = "h:m(e)"
+                stime = this.timeToNum(tiArr[0]);
+                etime = this.timeToNum(tiArr[1]);
+                for (var j = 0; j < daArr.length; j++){
+                    daArr[j] = this.dayToNum(daArr[j]);  // d[0] = Num(day1), ...
+                    for (var k = stime; k < etime; k++){
+                        resultArr.push(daArr[j] + k);
+                    }
+                }   // Transform daArr's content into number type
+                console.log(spArr);
+                console.log(daArr);
+                console.log(tiArr);
+                console.log(stime, etime);
+            }
+            return resultArr.reduce(function(a,b){if(a.indexOf(b)<0)a.push(b);return a;},[]);
+        },
+        dayToNum (day) {
+            if (day == "Monday") {
+                return 0;
+            }
+            else if (day == "Tuesday") {
+                return 288;
+            }
+            else if (day == "Wednesday") {
+                return 576;
+            }
+            else if (day == "Thursday") {
+                return 864;
+            }
+            else if (day == "Friday") {
+                return 1152;
+            }
+            else if (day == "Saturday") {
+                return 1440;
+            }
+            else if (day == "Sunday") {
+                return 1728;
+            }
+            else return -1;
+        },
+        timeToNum(time){
+            var hmArr = time.split(":");
+            hmArr[0] = Number(hmArr[0]);
+            hmArr[1] = Number(hmArr[1]);
+            return ((hmArr[0] * 12) + (hmArr[1] / 5));
         }
     }
 }
