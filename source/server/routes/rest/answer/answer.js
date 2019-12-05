@@ -74,16 +74,16 @@ async function arrangeTime(req, res){
         });
         
         const chatHash = sha256(req.session.user.uid + mentee.uid + time.start_time);
-
+        const url = question.type == 'Live Chatting' ? 'chat' : 'screenshare';
         const mailOptions = {
             from: 'qahub.no.reply@gmail.com',    
             to: mentee.email,       
             subject: '[QAHub] Arrangment for Live Help',   // 제목
-            text: `Hello ${mentee.name},\n\nA mentor has been arranged to help you with your question.
+            text: `Hello ${mentee.name},\n\nA mentor has been arranged to help you with your question via ${question.type}.
             \n\n Question: ${question.title}
             \n\n Arranged time: ${weekdays[time.day_of_week] + ' ' + time.start_time.toLocaleTimeString()}
             \n\n Please join this session at the arranged time by clicking the link below:
-            \n https://qahub.scg.skku.ac.kr/chat?room=${chatHash}
+            \n https://qahub.scg.skku.ac.kr/${url}?room=${chatHash}
             \n\n\n\n Thank you for using QAHub.`
         };
 
@@ -91,11 +91,11 @@ async function arrangeTime(req, res){
             from: 'qahub.no.reply@gmail.com',    
             to: mentor.email,       
             subject: '[QAHub] Arrangment for Live Help',   // 제목
-            text: `Hello ${mentor.name},\n\nYou have arranged to help you with your question.
+            text: `Hello ${mentor.name},\n\nYou have arranged to help you with your question via ${question.type}.
             \n\n Question: ${question.title}
             \n\n Arranged time: ${weekdays[time.day_of_week] + ' ' + time.start_time.toLocaleTimeString()}
             \n\n Please join this session at the arranged time by clicking the link below:
-            \n https://qahub.scg.skku.ac.kr/chat?room=${chatHash}
+            \n https://qahub.scg.skku.ac.kr/${url}?room=${chatHash}
             \n\n\n\n Thank you for using QAHub.`
         };
     
