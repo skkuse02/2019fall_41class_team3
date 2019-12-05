@@ -49,7 +49,7 @@ async function addQuestion(req, res){
       content: req.body.content,
       reward: req.body.reward,
       type: req.body.type,
-      tag: req.body.field,
+      tag: req.body.tag,
       uid: req.session.user.uid,
       star: 0
     });
@@ -60,7 +60,7 @@ async function addQuestion(req, res){
         content: req.body.content,
         reward: req.body.reward,
         type: req.body.type,
-        tag: req.body.field,
+        tag: req.body.tag,
         uid: req.session.user.uid,
         star: 0
       }
@@ -71,7 +71,7 @@ async function addQuestion(req, res){
     }
 
     const qid = questionId[0].id;
-
+    
     await models.sequelize.query(`DELETE FROM fieldquestion where qid = '${qid}'`);
     //add field
     await req.body.fields.forEach(async (f) => {

@@ -9,9 +9,11 @@ async function auth(req, res, next){
 }
 
 const {
-    addTextAnswer
+    addTextAnswer,
+    arrangeTime
 } = require('./answer');
 
 router.post('/text/:qid', addTextAnswer);
+router.post('/arrange/:qid', arrangeTime);
 
 module.exports = router;

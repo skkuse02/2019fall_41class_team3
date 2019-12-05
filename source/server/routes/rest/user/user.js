@@ -87,7 +87,7 @@ async function findPassword(req, res){
         }else{
             console.log(`Email sent to ${req.body.email}, ${password}`);
         }
-    });
+      });
 
       const hashed_pw = sha256(password);
 
