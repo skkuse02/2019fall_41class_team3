@@ -11,11 +11,13 @@ async function auth(req, res, next){
 const {
     getQuestionList,
     addQuestion,
+    getQuestion,
     getResponseType
 } = require('./question');
 
 router.get('/list', auth, getQuestionList);
 router.get('/responseType', auth, getResponseType);
+router.get('/:id',auth, getQuestion);
 router.post('/', addQuestion);
 
 module.exports = router;

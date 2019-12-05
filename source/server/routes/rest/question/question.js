@@ -105,9 +105,29 @@ async function getResponseType(req, res){
   } 
 }
 
+async function getQuestion(req, res){
+  try{
+    const question = await models.question.findOne({
+      where: {
+        id: req.params.id
+      }
+    });
+    res.status(200).send({
+      result: true,
+      question: question
+    });
+  } catch(err){
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  } 
+}
+
 
 module.exports = {
   getQuestionList,
   addQuestion,
-  getResponseType
+  getResponseType,
+  getQuestion
 };

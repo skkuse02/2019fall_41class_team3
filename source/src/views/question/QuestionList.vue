@@ -49,6 +49,7 @@ export default {
 
   },
   mounted: async function(){
+      this.checkSession();
       const qlist = await this.$http.get('/rest/question/list');
       this.questions = qlist.data.questions;
       this.totalRows = this.questions.length;
@@ -56,7 +57,19 @@ export default {
   methods: {
     viewQuestion: async function(item, index){
         this.$router.push({'path' : '/question/'+item.id});
+    },
+    checkSession: async function(){
+      try{
+        const session = await this.$http.get('/rest/user/session');
+        if(session.data.result == false){
+          this.$router.push({'path' : '/'});
+        }
+      } catch(e){
+        this.$router.push({'path' : '/'});
+      }
+
     }
+
   
   }
 }
