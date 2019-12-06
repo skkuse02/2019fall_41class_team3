@@ -25,16 +25,14 @@ export default {
   name: "FindPassword",
   data () {
     return {
-      user:{
-        uid: '',
-        name: '',
-        email:''
-      }
+      uid: '',
+      name: '',
+      email:''
     }
   },
   methods: {
     findpassword: async function () {
-      const res = await this.$http.post("/rest/password",this.user);
+      const res = await this.$http.post("/rest/user/password",{uid,name,email});
       if (res.data.result == true){
         alert('e-mail로 비밀번호가 전송되었습니다.');
       } else if(error){
