@@ -116,7 +116,7 @@ export default new Router({
                     component: ArrangeTime
                 },
                 {
-                    path: 'answer/evaluate/:qid',
+                    path: '/answer/evaluate/:qid',
                     name: 'EvaluateAnswer',
                     component: EvaluateAnswer
                 },

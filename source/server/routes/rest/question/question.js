@@ -207,6 +207,44 @@ async function addStar(req, res){
   } 
 }
 
+async function getArrangement(req, res){
+  try{
+    const answer = await models.answer.findOne({
+      where: {
+        qid: req.params.qid
+      }
+    });
+
+    const question = await models.question.findOne({
+      where: {
+        id: req.params.qid
+      }
+    });
+
+    if(!answer || !answer.arrangement){
+      throw new Error("Not arranged")
+    }
+    if(req.session.user.uid != answer.mentorId && req.session.user.uid != question.uid){
+      throw new Error("Invalid user");
+    }
+
+    const hash = req.query.room;
+
+
+    res.status(200).send({
+      result: true,
+      question: question,
+      arranged: answer.arrangement.toLocaleTimeString().substring(0,5)
+    });
+
+  } catch(err){
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
+
 
 module.exports = {
   getQuestionList,
@@ -214,5 +252,6 @@ module.exports = {
   getResponseType,
   getQuestion,
   getQuestionByTime,
-  addStar
+  addStar,
+  getArrangement
 };
