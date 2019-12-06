@@ -3,28 +3,31 @@
         <h2><p>RegisterQuestion</p></h2>
         <form class="form-horizontal" id="formInfo" @submit.prevent>
             <div class="form-group">
-                <b-form-input type="text" id="title" v-model="title" class="form-control" placeholder="제목"/>
+                <input type="text" id="title" v-model="title" class="form-control" placeholder="제목"/>
             </div>
             <div class="form-group">
-                <b-form-textarea id="content" v-model="content" style="width: 100%" placeholder="내용" rows="10" no-resize/>
+                <textarea id="content" v-model="content" class="form-control" style="width: 100%" placeholder="내용" rows="10"/>
             </div>
             <div class="form-group">
-                <b-form-input type="integer" id="reward" v-model="reward" placeholder="보상"/>
-                <label for="reward" class="control-label">
-                    주의 : 입력하신 숫자에 100을 곱한 만큼이 reward로 할당됩니다. ex) 1 -> 100 credit
-                </label>
+                <input type="integer" id="reward" v-model="reward" class="form-control" placeholder="보상"/>
             </div>
             <div class="form-group">
-                <b-form-select id="selectType" v-model="typeIndex" class="mb-3">
+                <select id="selectType" v-model="typeIndex" class="form-control mb-3">
                     <option v-for="(option,index) in types" v-bind:key="index" v-bind:value="index">
                         {{ option.type }}
                     </option>
-                </b-form-select>
-                <span> &nbsp; &nbsp; Selected : {{ this.types[typeIndex].type +
+                </select>
+                <span> Selected Answer Type : {{ this.types[typeIndex].type +
                     ' (Minimum Reward : '  + this.types[typeIndex].minimum_point + ')'}} </span>
             </div>
             <div class="form-group">
-                <b-form-input type="text" id="fields" v-model="fields" class="form-control" placeholder="분야"/>
+                <select id="selectField" v-model="fieldIndex" class="form-control mb-3">
+                    <option v-for="(option,index) in flist" v-bind:key="index" v-bind:value="index">
+                        {{ option.name }}
+                    </option>
+                </select>
+                <span> Selected Question Field : {{ this.flist[fieldIndex].name }} </span>
+                <!-- <input type="text" id="fields" v-model="fields" class="form-control" placeholder="분야"/> -->
             </div>
             <div class="form-vif" v-if="!answerType">
                 <p text-align: center>Selected Time Range : {{ selectedDay }} / {{ timeStart }} ~ {{ timeEnd }}</p>
@@ -37,7 +40,7 @@
                     </b-button-group>
                 </div>
                 <div style="clear: both; margin-top: 10px"></div>
-                <timeselector displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
+                <timeselector class="form-control" displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
                 :displaySeconds="false" style="width:208px; float: left" :placeholder="'[From] HH:MM'"
                 returnFormat="HH:mm" @formatedTime="tStart">
                     <template slot="hours">
@@ -47,7 +50,7 @@
                         <span>Minutes</span>
                     </template>
                 </timeselector>
-                <timeselector displayFormat=" [To] HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
+                <timeselector class="form-control" displayFormat=" [To] HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
                 :displaySeconds="false" style="width:208px; float: left" :placeholder="'[To] HH:MM'"
                 returnFormat="HH:mm" @formatedTime="tEnd">
                     <template slot="hours">
@@ -88,6 +91,8 @@ export default {
             content: '',
             reward: '',
             fields: '',
+            fieldIndex: 0,
+            flist: [],
             typeIndex: 2,
             types: [],
             tag: '',
@@ -136,20 +141,25 @@ export default {
         }
         const typeInfo = await this.$http.get("/rest/response_type");
         this.types = typeInfo.data.response_types;
+        const fieldInfo = await this.$http.get("/rest/field/list");
+        this.flist = fieldInfo.data
         console.log(this.types);
         console.log(this.types[0].type);
         console.log(this.types[0].minimum_point);
+        console.log(this.flist[0].name);
+        console.log(this.flist[1].name);
     },
     methods: {
         async write () {
             try{
                 const title = this.title;
                 const content = this.content;
-                const reward = this.reward * 100;
-                const index = this.typeIndex
-                const type = this.types[index].type;
+                const reward = this.reward;
+                const tIdx = this.typeIndex;
+                const type = this.types[tIdx].type;
+                const fIdx = this.fieldIndex;
                 const fields = [];
-                fields.push(this.fields);
+                fields.push(this.flist[fIdx].name);
                 var available_times = this.available_times;
                 const creditInfo = await this.$http.get("/rest/user/credit");
                 const betCredit = creditInfo.data.credit;
