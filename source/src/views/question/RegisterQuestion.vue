@@ -32,7 +32,7 @@
             <div class="form-vif" v-if="!answerType">
                 <p text-align: center>Selected Time Range : {{ selectedDay }} / {{ timeStart }} ~ {{ timeEnd }}</p>
                 <div>
-                    <b-button-group size="lg" style="margin-botton: 10px">
+                    <b-button-group size="lg" style="margin-bottom: 10px">
                         <b-button v-for="(day, idx) in days" :key="idx"
                         :pressed.sync="day.state" variant="success">
                             {{ day.text }}
@@ -232,7 +232,6 @@ export default {
                 this.timeFormat = this.selectedDays + '/' + this.timeStart + '~'  + this.timeEnd; 
                 console.log(this.timeFormat);
                 this.available_times.push(this.timeFormat)
-                this.time = null;
                 this.timeFormat = null;
             }
         },
