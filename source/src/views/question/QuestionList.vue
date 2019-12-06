@@ -11,14 +11,12 @@
             :sort-desc.sync="recomendedTable.sortDesc"
             :current-page="recomendedTable.currentPage"
             :per-page="recomendedTable.perPage" 
-            :filter="recomendedTable.filter"
-            :filterIncludedFields="recomendedTable.filterOn"
             head-variant="light"
             @row-clicked="viewQuestion"
             </b-table>
             <br>
             <div class="notice-layout">
-              <b-pagination style="float: left;" size="md" :per-page="perPage" :total-rows="totalRows" v-model="currentPage">
+              <b-pagination style="float: left;" size="md" :per-page="recomendedTable.perPage" :total-rows="recomendedTable.totalRows" v-model="recomendedTable.currentPage">
               </b-pagination>
             </div>
           </b-col>
@@ -66,7 +64,7 @@
             </b-table>
             <br>
             <div class="notice-layout">
-              <b-pagination style="float: left;" size="md" :per-page="perPage" :total-rows="totalRows" v-model="currentPage">
+              <b-pagination style="float: left;" size="md" :per-page="questionTable.perPage" :total-rows="questionTable.totalRows" v-model="questionTable.currentPage">
               </b-pagination>
             </div>
           </b-col>
@@ -116,8 +114,6 @@ export default {
         currentPage: 1,
         perPage: 5,
         totalRows: 0,
-        filter: null,
-        filterOn: ['title'],
       }
     };
 
@@ -127,11 +123,17 @@ export default {
       const qlist = await this.$http.get('/rest/question/list');
       this.questionTable.questions = qlist.data.questions;
       this.questionTable.totalRows = this.questionTable.questions.length;
-      if(isMentor)
+      if(this.isMentor)
       {
-        const rlist = await this.$http.get('/rest/question/listByTime');
-        this.recomendedTable.questions = rlist.data.questions;
-        this.recomendedTable.totalRows = this.recomendedTable.questions.length;
+        try {
+          const rlist = await this.$http.get('/rest/question/listByTime');
+          this.recomendedTable.questions = rlist.data.questions;
+          this.recomendedTable.totalRows = this.recomendedTable.questions.length;
+          alert(this.recomendedTable.totalRows);
+        }
+        catch(e) {
+          alert(e);
+        }
       }
   },
   methods: {
