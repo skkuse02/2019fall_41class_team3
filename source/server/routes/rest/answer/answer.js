@@ -112,7 +112,7 @@ async function arrangeTime(req, res){
         const mailOptions = {
             from: 'qahub.no.reply@gmail.com',    
             to: mentee.email,       
-            subject: '[QAHub] Arrangment for Live Help',   // 제목
+            subject: '[QAHub] Arrangement for Live Help',   // 제목
             text: `Hello ${mentee.name},\n\nA mentor has been arranged to help you with your question via ${question.type}.
             \n\nTitle: ${question.title}
             \n\nQuestion: ${question.content}
@@ -125,7 +125,7 @@ async function arrangeTime(req, res){
         const mailOptions2 = {
             from: 'qahub.no.reply@gmail.com',    
             to: mentor.email,       
-            subject: '[QAHub] Arrangment for Live Help',   // 제목
+            subject: '[QAHub] Arrangement for Live Help',   // 제목
             text: `Hello ${mentor.name},\n\nYou have arranged to help you with your question via ${question.type}.
             \n\nTitle: ${question.title}
             \n\nQuestion: ${question.content}
