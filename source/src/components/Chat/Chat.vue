@@ -74,6 +74,15 @@ export default {
                 this.messages.push(data)
                }
             });
+            this.socket.on('ENTER', (data) => {
+               if(data.room == this.$route.query.room){
+                this.messages.push(data.user + 'has entered the room');
+               }
+            });
+            this.socket.emit('CONNECTION', {
+                user: this.user,
+                room: this.$route.query.room
+            });
         } catch(e){
             this.$router.go(-1);
         }
