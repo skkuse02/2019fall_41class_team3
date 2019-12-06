@@ -13,17 +13,18 @@
             <b-card>
               <b-card-body>
                 <div>
+                  <div>
+                    <b-button type="button" variant="success" v-on:click="gomodify()">수정하기</b-button>
+                    &nbsp;&nbsp;
+                    <b-button type="button" variant="danger" v-on:click="deleteModal = true">삭제하기</b-button>
+                    &nbsp;&nbsp;
+                    <b-button to="/question/list" type="button" variant="secondary">돌아가기</b-button>
+                  </div>
                   <table class="table">
                     <tbody>
                       <tr>
-                        <th> Title </th>
-                        <td> {{question.title}}
-                          <div style="float:right;">
-                            <b-button type="button" variant="warning" v-on:click="star()">
-                              <i class="fa fa-star" aria-hidden="true"></i> Star {{question.star}}
-                            </b-button>
-                          </div>
-                        </td>
+                        <th style="width:200px;"> Title </th>
+                        <td> {{question.title}} </td>
                       </tr>
                       <tr>
                         <th> Author </th >
@@ -34,6 +35,10 @@
                         <td> {{question.createdAt}} </td>
                       </tr>
                       <tr>
+                        <th> Reward </th>
+                        <td> {{question.reward}} </td>
+                      </tr>
+                      <tr>
                         <th></th>
                         <td></td>
                       </tr>
@@ -41,11 +46,11 @@
                   </table>
                   {{question.content}}
                 </div>
-                <b-button type="button" variant="success" v-on:click="gomodify()">수정하기</b-button>
-                &nbsp;&nbsp;
-                <b-button type="button" variant="danger" v-on:click="deleteModal = true">삭제하기</b-button>
-                &nbsp;&nbsp;
-                <b-button to="/question/list" type="button" variant="secondary">돌아가기</b-button>
+                <p>
+                  <b-button type="button" variant="warning" v-on:click="star()">
+                    <i class="fa fa-star" aria-hidden="true"></i> Star {{question.star}}
+                  </b-button>
+                </p>
               </b-card-body>
             </b-card>
             
