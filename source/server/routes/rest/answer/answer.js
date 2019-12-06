@@ -118,7 +118,7 @@ async function arrangeTime(req, res){
             \n\nQuestion: ${question.content}
             \n\nArranged time: This ${weekdays[time.day_of_week] + ' ' + time.start_time.toLocaleTimeString()}
             \n\nPlease join this session at the arranged time by clicking the link below:
-            \nhttps://qahub.scg.skku.ac.kr/${url}?room=${chatHash}
+            \nhttps://qahub.scg.skku.ac.kr/${url}?qid=${req.params.qid}&room=${chatHash}
             \n\n Thank you for using QAHub.`
         };
 
@@ -131,7 +131,7 @@ async function arrangeTime(req, res){
             \n\nQuestion: ${question.content}
             \n\nArranged time: This ${weekdays[time.day_of_week] + ' ' + time.start_time.toLocaleTimeString()}
             \n\nPlease join this session at the arranged time by clicking the link below:
-            \n https://qahub.scg.skku.ac.kr/${url}?room=${chatHash}
+            \nhttps://qahub.scg.skku.ac.kr/${url}?qid=${req.params.qid}&room=${chatHash}
             \n\nThank you for using QAHub.`
         };
     
@@ -192,7 +192,9 @@ async function getAnswer(req, res){
                 answer: answer
             });
         } else{
-            throw new Error("No permission to view answer");
+            res.status(200).send({
+                result: false
+            });
         }
 
     } catch(err){
