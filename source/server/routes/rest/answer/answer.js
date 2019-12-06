@@ -192,7 +192,9 @@ async function getAnswer(req, res){
                 answer: answer
             });
         } else{
-            throw new Error("No permission to view answer");
+            res.status(200).send({
+                result: false
+            });
         }
 
     } catch(err){
