@@ -18,6 +18,7 @@
             <ul class="dropdown-menu">
               <li><router-link id="header-dd-text" :to="{ path: '/profile'}"><i id="header-dd-icon" class="fa fa-pencil fa-fw"></i> Profile</router-link></li>
               <li><router-link id="header-dd-text" :to="{ path: '/credit'}"><i id="header-dd-icon" class="fa fa-credit-card"></i> Credit</router-link></li>
+              <li><router-link id="header-dd-text" :to="{ path: '/myquestion'}"><i id="header-dd-icon" class="fa fa-history"></i> My Questions</router-link></li>
               <li><a id="header-dd-text" href="" v-on:click="logout" ><i id="header-dd-icon"  class="fa fa-unlock"></i> Log Out</a></li>
             </ul>
           </div>

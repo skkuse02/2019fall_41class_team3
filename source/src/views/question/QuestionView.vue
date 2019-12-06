@@ -89,17 +89,11 @@ export default {
     gomodify() {
       this.$router.push({ path: '/rest/question/modify/'+this.$route.params.id });
     },
-    star() {
-      /*
-      const reqRes = await this.$http.post('/rest/question/star/'+this.$route.params.id);
+    async star() {
+      const reqRes = await this.$http.post('/rest/question/star/' + this.$route.params.id);
       if(reqRes.data.result) {
-        const starRes = await this.$http.get('/rest/question/star/'+this.$route.params.id);
-        if(starRes.data.result) {
-          this.question.star = starRes.data.star;
-        }
+        this.question.star = reqRes.data.stars;
       }
-      */
-      this.question.star += 1;
     }
   }
 }
