@@ -12,11 +12,13 @@ const {
     addTextAnswer,
     arrangeTime,
     getAnswer,
-    evaluateAnswer
+    evaluateAnswer,
+    purchaseAnswer
 } = require('./answer');
 
 router.get('/text/:qid', auth, getAnswer);
 
+router.post('/purchase/:qid', auth, purchaseAnswer);
 router.post('/evaluate/:qid', auth, evaluateAnswer);
 router.post('/text/:qid', auth, addTextAnswer);
 router.post('/arrange/:qid', auth, arrangeTime);

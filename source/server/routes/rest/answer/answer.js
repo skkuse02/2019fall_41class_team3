@@ -293,9 +293,51 @@ async function evaluateAnswer(req, res){
     }
 }
 
+async function purchaseAnswer(req, res){
+    try{
+        const question = await models.question.findOne({
+            where: {
+                id: req.params.qid
+            },
+            attributes: ['reward']
+        });
+
+        const user = await models.user.findOne({
+            where:{
+                uid: req.session.user.uid
+            },
+            attributes: ['points']
+        });
+
+        if(user.points - Math.floor(question.reward * 0.2) < 0){
+            throw new Error("Not enough credits");
+        }
+
+        await models.user.update({
+            points: user.points - Math.floor(question.reward * 0.2)
+        })
+
+        await models.questionuser.create({
+            qid: req.params.qid,
+            userUid: req.session.user.uid
+        });
+
+        res.status(200).send({
+            result: true
+        });
+    } catch(err){
+        res.status(400).send({
+            result: false,
+            msg: err.toString()
+        });
+    }
+
+}
+
 module.exports = {
     addTextAnswer,
     arrangeTime,
     getAnswer,
-    evaluateAnswer
+    evaluateAnswer,
+    purchaseAnswer
 };
