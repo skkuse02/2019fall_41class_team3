@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <h1 style="font-size:20px;margin:30px;">
+      <b>Recommend Questions</b>
+    </h1>
     <div class="card" v-if="isMentor&&(recomendedTable.totalRows>0)">
       <div class="card-body">
         <b-row>
@@ -12,13 +15,9 @@
             :current-page="recomendedTable.currentPage"
             :per-page="recomendedTable.perPage" 
             head-variant="light"
-            @row-clicked="viewQuestion"
+            @row-clicked="viewQuestion">
             </b-table>
             <br>
-            <div class="notice-layout">
-              <b-pagination style="float: left;" size="md" :per-page="recomendedTable.perPage" :total-rows="recomendedTable.totalRows" v-model="recomendedTable.currentPage">
-              </b-pagination>
-            </div>
           </b-col>
         </b-row>
       </div>
@@ -129,7 +128,7 @@ export default {
           const rlist = await this.$http.get('/rest/question/listByTime');
           this.recomendedTable.questions = rlist.data.questions;
           this.recomendedTable.totalRows = this.recomendedTable.questions.length;
-          alert(this.recomendedTable.totalRows);
+          alert(this.recomendedTable.questions[0].id);
         }
         catch(e) {
           alert(e);
