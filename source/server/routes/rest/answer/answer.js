@@ -23,6 +23,40 @@ async function addTextAnswer(req, res){
             qid: req.params.qid,
             mentorId: req.session.user.uid
         });
+
+        const question = await models.question.findOne({
+            where: {
+                id: req.params.qid
+            }
+        });
+
+        const mentee = await models.user.findOne({
+            where:{
+                uid: question.uid
+            }
+        });
+        
+        const mailOptions = {
+            from: 'qahub.no.reply@gmail.com',    
+            to: mentee.email,       
+            subject: '[QAHub] Your question has been answered',   // 제목
+            text: `Hello ${mentee.name},
+            \n\n Your question titled "${question.title}" has been answered by a mentor.
+            \n\n Question: "${question.content}"
+            \n\n Your Answer: "${req.body.content}"
+            \n\n Please check and evaluate the answer by following the link below:
+            \n https://qahub.scg.skku.ac.kr/myquestion
+            \n\nThank you for using QAHub.`
+        };
+    
+        transporter.sendMail(mailOptions, (error, response) => {
+            if(error){
+                console.log(error);
+            }else{
+                console.log(`Email sent to ${req.body.email}`);
+            }
+        });
+
         res.status(200).send({
             result: true
         });
@@ -105,7 +139,7 @@ async function arrangeTime(req, res){
             if(error){
                 console.log(error);
             }else{
-                console.log(`Email sent to ${req.body.email}, ${password}`);
+                console.log(`Email sent to ${req.body.email}`);
             }
         });
     
@@ -113,7 +147,7 @@ async function arrangeTime(req, res){
             if(error){
                 console.log(error);
             }else{
-                console.log(`Email sent to ${req.body.email}, ${password}`);
+                console.log(`Email sent to ${req.body.email}`);
             }
         });
 
@@ -169,8 +203,88 @@ async function getAnswer(req, res){
     }
 }
 
+async function evaluateAnswer(req, res){
+    try{
+        const answer = await models.answer.findOne({
+            where:{
+                qid: req.params.qid
+            },
+            attributes: ['mentorId', 'content']
+        });
+
+        const mentor = await models.user.findOne({
+            where: {
+                uid: answer.mentorId
+            }
+        });
+
+        const mentee = await models.user.findOne({
+            where: {
+                uid: req.session.user.uid
+            }
+        });
+
+        if(answer.feedback == null){
+            if(mentee.points - req.body.reward < 0) throw new Error("Mentee does not have enough points");
+
+            await models.user.update({
+                points: mentee.points - req.body.reward
+            }, {
+                where: {
+                    uid: mentee.uid
+                }
+            });
+
+            await models.user.update({
+                points: mentor.points + req.body.reward
+            }, {
+                where: {
+                    uid: mentor.uid
+                }
+            });
+
+        }
+
+        await models.answer.update({
+            star: req.body.star,
+            feedback: req.body.feedback
+        });
+
+
+        const mailOptions = {
+            from: 'qahub.no.reply@gmail.com',    
+            to: mentor.email,       
+            subject: '[QAHub] Your answer has been evaluated.',   // 제목
+            text: `Hello ${mentor.name},
+            \n\n Your response for the question titled "${question.title}" has been evaluated by the mentee.
+            \n\n Question: "${question.content}"
+            \n\n Your Answer: "${answer.content}"
+            \n\n Rewarded points: ${req.body.reward}
+            \n\nThank you for using QAHub.`
+        };
+    
+        transporter.sendMail(mailOptions, (error, response) => {
+            if(error){
+                console.log(error);
+            }else{
+                console.log(`Email sent to ${req.body.email}`);
+            }
+        });
+
+        res.status(200).send({
+            result: true
+        });
+    } catch(err){
+        res.status(400).send({
+            result: false,
+            msg: err.toString()
+        });
+    }
+}
+
 module.exports = {
     addTextAnswer,
     arrangeTime,
-    getAnswer
+    getAnswer,
+    evaluateAnswer
 };

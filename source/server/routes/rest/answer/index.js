@@ -11,11 +11,13 @@ async function auth(req, res, next){
 const {
     addTextAnswer,
     arrangeTime,
-    getAnswer
+    getAnswer,
+    evaluateAnswer
 } = require('./answer');
 
 router.get('/text/:qid', auth, getAnswer);
 
+router.post('/evaluate/:qid', evaluateAnswer);
 router.post('/text/:qid', auth, addTextAnswer);
 router.post('/arrange/:qid', auth, arrangeTime);
 
