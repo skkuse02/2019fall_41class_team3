@@ -133,6 +133,15 @@ export default {
           alert(e);
         }
       }
+       // alert(this.$route.query.search);
+      if(this.$route.query.search) {
+        this.questionTable.filter = this.$route.query.search;
+        //alert(this.$route.query.search);
+      }
+
+      if(this.route.query.field) {
+
+      }
   },
   methods: {
     viewQuestion: async function(item, index){
