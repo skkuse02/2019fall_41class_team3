@@ -87,7 +87,6 @@ export default {
         }catch(e){
             this.$router.push('/login');
         }
-       =
     }
 }
 </script>
