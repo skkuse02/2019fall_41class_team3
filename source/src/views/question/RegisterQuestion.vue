@@ -139,10 +139,12 @@ export default {
                 path: '/login'
             });
         }
+    },
+    mounted: async function () {
         const typeInfo = await this.$http.get("/rest/response_type");
         this.types = typeInfo.data.response_types;
         const fieldInfo = await this.$http.get("/rest/field/list");
-        this.flist = fieldInfo.data
+        this.flist = fieldInfo.data;
         console.log(this.types);
         console.log(this.types[0].type);
         console.log(this.types[0].minimum_point);
@@ -152,24 +154,33 @@ export default {
     methods: {
         async write () {
             try{
-                const title = this.title;
-                const content = this.content;
-                const reward = this.reward;
-                const tIdx = this.typeIndex;
-                const type = this.types[tIdx].type;
-                const fIdx = this.fieldIndex;
-                const fields = [];
+                var title = this.title;
+                var content = this.content;
+                var reward = this.reward;
+                var tIdx = this.typeIndex;
+                var type = this.types[tIdx].type;
+                var fIdx = this.fieldIndex;
+                var fields = [];
                 fields.push(this.flist[fIdx].name);
                 var available_times = this.available_times;
-                const creditInfo = await this.$http.get("/rest/user/credit");
-                const betCredit = creditInfo.data.credit;
-                const minPoint = this.types[index].minimum_point;
-                console.log(this.available_times);
+                var creditInfo = await this.$http.get("/rest/user/credit");
+                var betCredit = creditInfo.data.credit;
+                var minPoint = this.types[tIdx].minimum_point;
+                console.log(minPoint);
                 available_times = this.timeFormatTransform();
                 console.log(available_times);
-                if ((betCredit < reward) || (betCredit < minPoint)) {
+                if ((reward % 100) != 0) {
+                    alert('수여할 크레딧 : ' + reward + '\n'
+                        + 'Reward는 100의 배수여야 합니다!');
+                }
+                else if (betCredit < reward) {
                     alert('소유한 크레딧 : ' + betCredit + '\n'
                         + '수여할 크레딧 : ' + reward + '\n'
+                        + '최소 크레딧 : ' +  minPoint + '\n'
+                        + '보상 크레딧의 양을 확인해 주세요!');
+                }
+                else if (reward < minPoint) {
+                    alert('수여할 크레딧 : ' + reward + '\n'
                         + '최소 크레딧 : ' +  minPoint + '\n'
                         + '보상 크레딧의 양을 확인해 주세요!');
                 }
@@ -200,19 +211,9 @@ export default {
                 content.focus();
                 return false;
             }
-            else if(this.reward == '') {
-                alert("보상을 입력해 주세요.");
-                reward.focus();
-                return false;
-            }
             else if(this.type == '') {
                 alert("원하는 답변 방식을 선택해 주세요.");
                 type.focus();
-                return false;
-            }
-            else if(this.fields == '') {
-                alert("질문의 분야를 입력해 주세요.");
-                fields.focus();
                 return false;
             }
             else return true;
