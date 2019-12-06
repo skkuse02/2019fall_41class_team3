@@ -286,6 +286,7 @@ async function evaluateAnswer(req, res){
             result: true
         });
     } catch(err){
+        console.log(err);
         res.status(400).send({
             result: false,
             msg: err.toString()
