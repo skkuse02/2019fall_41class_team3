@@ -193,7 +193,7 @@ async function getAnswer(req, res){
         } else{
             users = await users.map((u) => u.userUid);
 
-            if(question.uid == req.session.user.uid || users.includes(req.session.user.uid)){
+            if(question.uid == req.session.user.uid || users.includes(req.session.user.uid) || req.session.user.uid == answer.mentorId){
                 res.status(200).send({
                     result: true,
                     answer: answer
