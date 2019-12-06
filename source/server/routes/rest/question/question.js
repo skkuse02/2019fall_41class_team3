@@ -30,6 +30,7 @@ async function getQuestionList(req, res){
 
 async function addQuestion(req, res){
   try{
+    console.log(req.body);
     if(!req.session.user){
       throw new Error("Session expired");
     }
@@ -49,7 +50,7 @@ async function addQuestion(req, res){
       content: req.body.content,
       reward: req.body.reward,
       type: req.body.type,
-      tag: req.body.tag,
+      tag: req.body.tag ? req.body.tag : '' ,
       uid: req.session.user.uid,
       star: 0
     });
@@ -60,7 +61,7 @@ async function addQuestion(req, res){
         content: req.body.content,
         reward: req.body.reward,
         type: req.body.type,
-        tag: req.body.tag,
+        tag: req.body.tag ? req.body.tag : '',
         uid: req.session.user.uid,
         star: 0
       }
@@ -79,7 +80,7 @@ async function addQuestion(req, res){
         await models.sequelize.query(`INSERT INTO fieldquestion (field, qid, createdAt, updatedAt) VALUES ('${f}','${qid}',CURRENT_TIME, CURRENT_TIME)`);
 
       } catch (err){
-        
+        console.log(err);
       }
     });
 
@@ -87,7 +88,7 @@ async function addQuestion(req, res){
       try{
         await models.sequelize.query(`INSERT INTO questiontime (qid, timeId, createdAt, updatedAt) VALUES ('${qid}','${t}',CURRENT_TIME, CURRENT_TIME)`);
       } catch (err){
-        
+        console.log(err);
       }
     });
 
@@ -95,6 +96,7 @@ async function addQuestion(req, res){
       result: true
     });
   } catch(err){
+    console.log(err);
     res.status(400).send({
       result: false,
       msg: err.toString()
