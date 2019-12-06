@@ -13,7 +13,7 @@ const {
     arrangeTime
 } = require('./answer');
 
-router.post('/text/:qid', addTextAnswer);
-router.post('/arrange/:qid', arrangeTime);
+router.post('/text/:qid', auth, addTextAnswer);
+router.post('/arrange/:qid', auth, arrangeTime);
 
 module.exports = router;
