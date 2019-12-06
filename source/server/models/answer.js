@@ -19,6 +19,12 @@ module.exports = (sequelize, DataTypes) => {
           type: DataTypes.DATE,
           allowNull: true,
           comment: '예약 시간'
+      },
+      qid:{
+        type: DataTypes.INTEGER
+      },
+      mentorId: {
+        type: DataTypes.STRING
       }
     }, {
       tableName: 'answer',

@@ -20,10 +20,11 @@ const {
 router.get('/list', auth, getQuestionList);
 router.get('/responseType', auth, getResponseType);
 router.get('/listByTime', auth, getQuestionByTime);
-
 router.get('/:id', auth, getQuestion);
+
 router.post('/star/:qid', auth, addStar);
 router.post('/', auth, addQuestion);
+
 
 
 module.exports = router;
