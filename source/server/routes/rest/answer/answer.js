@@ -245,7 +245,7 @@ async function evaluateAnswer(req, res){
             if(mentee.points - req.body.reward < 0) throw new Error("Mentee does not have enough points");
 
             await models.user.update({
-                points: mentee.points - req.body.reward
+                points: parseInt(mentee.points) - parseInt(req.body.reward)
             }, {
                 where: {
                     uid: mentee.uid
@@ -253,7 +253,7 @@ async function evaluateAnswer(req, res){
             });
 
             await models.user.update({
-                points: mentor.points + req.body.reward
+                points: parseInt(mentor.points) + parseInt(req.body.reward)
             }, {
                 where: {
                     uid: mentor.uid
@@ -325,7 +325,7 @@ async function purchaseAnswer(req, res){
         }
 
         await models.user.update({
-            points: user.points - Math.floor(question.reward * 0.2)
+            points: parseInt(user.points) - Math.floor(question.reward * 0.2)
         }, {
             where:{
                 uid: req.session.user.uid
