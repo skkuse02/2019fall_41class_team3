@@ -41,11 +41,11 @@ async function addTextAnswer(req, res){
             to: mentee.email,       
             subject: '[QAHub] Your question has been answered',   // 제목
             text: `Hello ${mentee.name},
-            \n\n Your question titled "${question.title}" has been answered by a mentor.
-            \n\n Question: "${question.content}"
-            \n\n Your Answer: "${req.body.content}"
-            \n\n Please check and evaluate the answer by following the link below:
-            \n https://qahub.scg.skku.ac.kr/myquestion
+            \n\nYour question titled "${question.title}" has been answered by a mentor.
+            \n\nQuestion: "${question.content}"
+            \n\nYour Answer: "${req.body.content}"
+            \n\nPlease check and evaluate the answer by following the link below:
+            \nhttps://qahub.scg.skku.ac.kr/myquestion
             \n\nThank you for using QAHub.`
         };
     
