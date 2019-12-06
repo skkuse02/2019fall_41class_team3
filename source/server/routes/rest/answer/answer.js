@@ -320,6 +320,10 @@ async function purchaseAnswer(req, res){
 
         await models.user.update({
             points: user.points - Math.floor(question.reward * 0.2)
+        }, {
+            where:{
+                uid: req.session.user.uid
+            }
         })
 
         await models.questionuser.create({
