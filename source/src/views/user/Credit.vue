@@ -64,9 +64,8 @@ export default {
   data() {
     return {
       mode: 'view_credit',
-
       currentCredit: 0,
-      amonut: 0
+      amount: 0
     };
   },
   created: async function(){
@@ -113,7 +112,7 @@ export default {
       }
     },
     async confirmWithdraw() {
-      if (this.currentCredit < this.amonut) {
+      if (this.currentCredit < this.amount) {
         alert('인출 금액이 보유한 크레딧을 초과합니다.');
       }
       else {
