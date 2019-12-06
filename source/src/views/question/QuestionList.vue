@@ -2,6 +2,19 @@
   <div class="container">
     <div class="card">
       <div class="card-body">
+        <div style="width:200px;">
+          <b-input-group size="sm">
+            <b-form-input
+              v-model="filter"
+              type="search"
+              id="filterInput"
+              placeholder="Type to Search"
+            ></b-form-input>
+            <b-input-group-append>
+              <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+            </b-input-group-append>
+          </b-input-group>
+        </div>
         <b-row>
           <b-col lg="12">
             <b-table class="mb-0 table-outline" style="text-align: center" responsive="lg" hover 
@@ -11,8 +24,11 @@
             :sort-desc.sync="sortDesc"
             :current-page="currentPage"
             :per-page="perPage" 
+            :filter="filter"
+            :filterIncludedFields="filterOn"
             head-variant="light"
-            @row-clicked="viewQuestion">
+            @row-clicked="viewQuestion"
+            @filtered="onFiltered">
             </b-table>
             <br>
             <div class="notice-layout">
@@ -39,9 +55,12 @@ export default {
       currentPage: 1,
       perPage: 5,
       totalRows: 0,
+      filter: null,
+      filterOn: ['title'],
       fields: [ 
         { key: 'id', label: '번호', sortable: true},
         { key: 'title', label: '제목', sortable: true },
+        { key: 'uid', label: '등록자', sortable: true},
         { key: 'createdAt', label: '등록 날짜', sortable: true},
         { key: 'star', label: '추천', sortable: true}
       ]
@@ -68,9 +87,12 @@ export default {
         this.$router.push({'path' : '/'});
       }
 
+    },
+    onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
     }
-
-  
   }
 }
 </script>
