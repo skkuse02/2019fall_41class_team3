@@ -178,11 +178,41 @@ async function getQuestionByTime(req, res){
   } 
 }
 
+async function addStar(req, res){
+  try{
+    const question = await models.question.findOne({
+      where: {
+        id: req.params.qid
+      },
+      attributes: ['star']
+    });
+
+    await models.question.update({
+      star: question.star + 1
+    },{
+      where: {
+        id: req.params.qid
+      }
+    });
+
+    res.status(200).send({
+      result: true,
+      stars: question.star + 1
+    });
+  } catch(err){
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  } 
+}
+
 
 module.exports = {
   getQuestionList,
   addQuestion,
   getResponseType,
   getQuestion,
-  getQuestionByTime
+  getQuestionByTime,
+  addStar
 };
