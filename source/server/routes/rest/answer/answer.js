@@ -223,6 +223,12 @@ async function evaluateAnswer(req, res){
             attributes: ['id', 'mentorId', 'content']
         });
 
+        const question = await models.question.findOne({
+            where:{
+                id: req.params.qid
+            }
+        });
+
         const mentor = await models.user.findOne({
             where: {
                 uid: answer.mentorId
