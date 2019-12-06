@@ -179,22 +179,31 @@ async function getAnswer(req, res){
             }
         });
 
-        users = await users.map((u) => u.userUid);
+        const answer = await models.answer.findOne({
+            where:{
+                qid: req.params.qid
+            }
+        });
 
-        if(question.uid == req.session.user.uid || users.includes(req.session.user.uid)){
-            const answer = await models.answer.findOne({
-                where:{
-                    qid: req.params.qid
-                }
-            });
-            res.status(200).send({
-                result: true,
-                answer: answer
+        if(!answer){
+            res.status(404).send({
+                result: false,
+                msg: "No answer"
             });
         } else{
-            res.status(200).send({
-                result: false
-            });
+            users = await users.map((u) => u.userUid);
+
+            if(question.uid == req.session.user.uid || users.includes(req.session.user.uid)){
+                res.status(200).send({
+                    result: true,
+                    answer: answer
+                });
+            } else{
+                res.status(200).send({
+                    result: false,
+                    msg: "No permission"
+                });
+            }
         }
 
     } catch(err){
