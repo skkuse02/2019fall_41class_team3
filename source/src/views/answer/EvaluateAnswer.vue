@@ -1,30 +1,27 @@
 <template>
     <div class="evaluateForm" style="margin:100px 40px 40px 40px">
         <h2><p>EvaluateAnswer</p></h2>
-        <div>
-            <b-button v-b-modal.modal-1>Launch demo modal</b-button>
-
-            <b-modal id="modal-1" title="BootstrapVue">
-                <p class="my-4">Hello from modal!</p>
-            </b-modal>
-        </div>
-        <!-- <div class="answerContent">
+        <div class="answerContent">
             <label for="answerContent"> Answer Content </label><br>
             {{ aContent }}
-            </div> 
-        <b-button v-b-modal.modal-prevent-closing>Open Modal</b-button>
-        <div class="mt-3">
-            <b-modal id="modal-prevent-closing" ref="modal" title="Submit Your Feedback"
-            @show="resetModal" @hidden="resetModal" @ok="handleOk">
-                <form ref="form" @submit.stop.prevent="handleSubmit">
-                    <b-form-group :state="feedbackState" label="feedback"
-                    label-for="feedback-input" invalid-feedback="Feedback is required">
-                        <b-form-input id="feedback-input" v-model="feedback"
-                            :state="feedbackState" required></b-form-input>
-                    </b-form-group>
-                </form>
-            </b-modal>
-        </div> -->
+        </div>
+        <form class="form-horizontal" role="form" @submit.prevent="write()">
+            <div style="margin-top: 20px">
+                <h5><p>이 답변이 얼마나 유용했나요?</p></h5>
+                <star-rating :border-width="3" v-model="starValue"></star-rating>
+            </div>
+            <div style="margin-top: 20px">
+                <h5>멘토에게 피드백을 남겨주세요!</h5>
+                <input type="text" id="feedback" v-model="feedback" class="form-control" placeholder="피드백"/>
+            </div>
+            <div style="margin-top: 20px">
+                <h5>답변이 정말로 유용했다면, 멘토에게 추가로 크레딧을 줄 수 있습니다!</h5>
+                <input type="integer" id="reward" v-model="reward" class="form-control" placeholder="추가 보상"/>
+            </div>
+            <div id="buttonHolder" style="margin:10px">
+                <b-button type="submit" variant="success" size="sm">평가 등록하기</b-button>
+            </div>
+        </form>
     </div>
 </template>
 
@@ -54,17 +51,20 @@ export default {
             });
         }
         this.qid = this.$route.params.qid;
-        // const answerInfo = await this.$http.get("/rest/answer/text/" + this.$route.params.qid);
-        // console.log(answerInfo.data.question);
-        // this.aContent = answerInfo.data.question.content;
+        const answerInfo = await this.$http.get("/rest/answer/text/" + this.$route.params.qid);
+        console.log(answerInfo.data.answer);
+        this.aContent = answerInfo.data.answer.content;
     },
     methods: {
         async write () {
             try{
-                var starValue = this.starValue;
+                var star = Number(this.starValue);
                 var feedback = this.feedback;
                 var reward = this.reward;
-                const res = await this.$http.post("/rest/answer/evaluate/" + this.$route.params.qid, { starValue, feedback, reward });
+                console.log(star);
+                console.log(feedback);
+                console.log(reward);
+                const res = await this.$http.post("/rest/answer/evaluate/" + this.$route.params.qid, { star, feedback, reward });
                 if (res.data.result == true) {
                     alert('평가가 등록되었습니다!');
                     this.$router.push({
