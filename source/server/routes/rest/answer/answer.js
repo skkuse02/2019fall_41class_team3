@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
 async function addTextAnswer(req, res){
     try{
@@ -80,11 +80,12 @@ async function arrangeTime(req, res){
             to: mentee.email,       
             subject: '[QAHub] Arrangment for Live Help',   // 제목
             text: `Hello ${mentee.name},\n\nA mentor has been arranged to help you with your question via ${question.type}.
-            \n\n Question: ${question.title}
-            \n\n Arranged time: ${weekdays[time.day_of_week] + ' ' + time.start_time.toLocaleTimeString()}
+            \n\n Title: ${question.title}
+            \n\n Question: ${question.content}
+            \n\n Arranged time: This ${weekdays[time.day_of_week] + ' ' + time.start_time.toLocaleTimeString()}
             \n\n Please join this session at the arranged time by clicking the link below:
             \n https://qahub.scg.skku.ac.kr/${url}?room=${chatHash}
-            \n\n\n\n Thank you for using QAHub.`
+            \n\n Thank you for using QAHub.`
         };
 
         const mailOptions2 = {
@@ -92,11 +93,12 @@ async function arrangeTime(req, res){
             to: mentor.email,       
             subject: '[QAHub] Arrangment for Live Help',   // 제목
             text: `Hello ${mentor.name},\n\nYou have arranged to help you with your question via ${question.type}.
-            \n\n Question: ${question.title}
-            \n\n Arranged time: ${weekdays[time.day_of_week] + ' ' + time.start_time.toLocaleTimeString()}
+            \n\n Title: ${question.title}
+            \n\n Question: ${question.content}
+            \n\n Arranged time: This ${weekdays[time.day_of_week] + ' ' + time.start_time.toLocaleTimeString()}
             \n\n Please join this session at the arranged time by clicking the link below:
             \n https://qahub.scg.skku.ac.kr/${url}?room=${chatHash}
-            \n\n\n\n Thank you for using QAHub.`
+            \n\nThank you for using QAHub.`
         };
     
         transporter.sendMail(mailOptions, (error, response) => {
