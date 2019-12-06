@@ -104,7 +104,7 @@ export default new Router({
                     component: RegisterAnswer
                 },
                 {
-                    path: '/arrangetime',
+                    path: '/question/arrangetime/:qid',
                     name: 'ArrangeTime',
                     component: ArrangeTime
                 },
