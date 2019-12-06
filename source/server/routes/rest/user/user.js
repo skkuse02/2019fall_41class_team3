@@ -310,7 +310,7 @@ async function getMyQuestions(req, res){
 
     res.status(200).send({
       result: true,
-      questio0ns: questions
+      questions: questions
     });
   } catch (err){
     //bad request
