@@ -80,7 +80,10 @@
                   </b-card-body>
                 </div>
                 <div v-else>
-                  Answered but not permission
+                  This question has answered! See the answer using credit. 
+                  <b-button type="button" variant="warning" v-on:click="purchase()">
+                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Purchase {{question.reward/5}}
+                  </b-button>
                 </div>
               </b-card>
             </div>
@@ -91,6 +94,11 @@
     <b-modal v-model="deleteModal" centered hide-header @ok="deleteQuestion()">
       정말로 삭제하시겠습니까?
     </b-modal>
+    
+    <modal name="not-enough-credit">
+      <div>Not enough credits.</div>
+      <button type="button" @click="gotoCredit">Go to Credit Page</button>
+    </modal>
   </div>
 </template>
 
@@ -110,11 +118,23 @@ export default {
       },
       hasPermission: false,
       isAnswered: false,
-      answer: null
+      answer: null,
+      user: null
     };
   },
-  mounted: function () {
+  mounted: async function () {
     this.initView();
+    try{
+      const session = await this.$http.get('/rest/user/session');
+      if(session.data.result == false){
+        this.$router.push({'path' : '/'});
+      }
+      else {
+        this.user = session.data.user;
+      }
+    } catch(e){
+      this.$router.push({'path' : '/'});
+    }
   },
   methods: {
     async initView() { 
@@ -143,6 +163,32 @@ export default {
       if(reqRes.data.result) {
         this.question.star = reqRes.data.stars;
       }
+    },
+    async purchase() {
+      const res = await this.$http.get("/rest/user/credit");
+      const currentCredit = res.data.credit;
+      if(currentCredit < (this.question.reward/5)) {
+        this.$modal.show('not-enough-credit');
+      }
+      else {
+        try {
+          const reqRes = await this.$http.post('/rest/answer/purchase/' + this.$route.params.id);
+          if(reqRes.data.result) {
+            alert("Purchase success.");
+            this.refresh();
+          }
+        }
+        catch(e) {
+          alert(e);
+          this.$modal.show('not-enough-credit');
+        }
+      }
+    },
+    gotoCredit() {
+      this.$router.push({ path: '/credit' });
+    },
+    refresh() {
+      this.$router.go({path: '/question/'+this.$route.params.id});
     }
   }
 }
