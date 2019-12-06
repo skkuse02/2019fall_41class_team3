@@ -220,7 +220,7 @@ async function evaluateAnswer(req, res){
             where:{
                 qid: req.params.qid
             },
-            attributes: ['mentorId', 'content']
+            attributes: ['id', 'mentorId', 'content']
         });
 
         const mentor = await models.user.findOne({
@@ -259,6 +259,10 @@ async function evaluateAnswer(req, res){
         await models.answer.update({
             star: req.body.star,
             feedback: req.body.feedback
+        }, {
+            where: {
+                id: answer.id
+            }
         });
 
 
