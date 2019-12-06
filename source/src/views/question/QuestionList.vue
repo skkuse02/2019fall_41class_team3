@@ -1,9 +1,9 @@
 <template>
   <div class="container">
-    <h1 style="font-size:20px;margin:30px;">
-      <b>Recommend Questions</b>
-    </h1>
     <div class="card" v-if="isMentor&&(recomendedTable.totalRows>0)">
+      <h1 style="font-size:20px;margin:30px;">
+        <b>Recommend Questions</b>
+      </h1>
       <div class="card-body">
         <b-row>
           <b-col lg="12">
@@ -93,7 +93,7 @@ export default {
         sortBy: 'id',
         sortDesc: true,
         currentPage: 1,
-        perPage: 5,
+        perPage: 10,
         totalRows: 0,
         filter: null,
         filterOn: ['title'],

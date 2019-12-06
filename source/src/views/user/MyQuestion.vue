@@ -57,6 +57,7 @@ export default {
     name: "MyQuestion",
     data() {
         return {
+            isMentor: false,
             questionTable: {
                 questions: [],
                 fields: [ 
@@ -69,7 +70,7 @@ export default {
                 sortBy: 'id',
                 sortDesc: true,
                 currentPage: 1,
-                perPage: 5,
+                perPage: 10,
                 totalRows: 0,
                 filter: null,
                 filterOn: ['title'],
@@ -79,9 +80,18 @@ export default {
     },
     mounted: async function(){
         // TO-DO: Re-routing needed
-        const qlist = await this.$http.get('/rest/question/list');
-        this.questionTable.questions = qlist.data.questions;
-        this.questionTable.totalRows = this.questionTable.questions.length;
+        const session = await this.$http.get('/rest/user/session');
+        if(session.data.result == true){
+            var isMentor = (session.data.user.type == "Mentor");
+            if(isMentor) {
+                const res = await this.$http.get('/rest/user/myAnswers');
+                this.questionTable.questions = res.data.questions;
+            }
+            else {
+                const res = await this.$http.get('/rest/user/myQuestions');
+                this.questionTable.questions = res.data.questions;
+            }
+        }
     },
     methods: {
         viewQuestion: async function(item, index){
