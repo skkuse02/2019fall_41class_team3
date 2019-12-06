@@ -25,6 +25,7 @@ const QuestionView = () => import('@/views/question/QuestionView')
 
 // Register Answer
 const RegisterAnswer = () => import('@/views/answer/RegisterAnswer')
+const ArrangeTime = () => import('@/views/answer/ArrangeTime')
 
 // User
 const Profile = () => import('@/views/user/Profile')
@@ -101,6 +102,11 @@ export default new Router({
                     path: '/registeranswer',
                     name: 'RegisterAnswer',
                     component: RegisterAnswer
+                },
+                {
+                    path: '/arrangetime',
+                    name: 'ArrangeTime',
+                    component: ArrangeTime
                 },
                 {
                     path: '/chat',
