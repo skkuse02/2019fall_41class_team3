@@ -48,6 +48,32 @@
                 <b-button to="/question/list" type="button" variant="secondary">돌아가기</b-button>
               </b-card-body>
             </b-card>
+            
+            <div v-if="answer">
+              <b-card>
+                <b-card-body>
+                  <div>
+                    <table class="table">
+                      <tbody>
+                        <tr>
+                          <th> Author </th >
+                          <td> {{answer.mentorId}} </td>
+                        </tr>
+                        <tr>
+                          <th> Date </th>
+                          <td> {{answer.createdAt}} </td>
+                        </tr>
+                        <tr>
+                          <th></th>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    {{answer.content}}
+                  </div>
+                </b-card-body>
+              </b-card>
+            </div>
           </b-card>
         </transition>
       </b-col>
@@ -71,7 +97,8 @@ export default {
         createdAt: '',
         content: '',
         star: 0
-      }
+      },
+      answer: null
     };
   },
   mounted: function () {
@@ -81,6 +108,9 @@ export default {
     async initView() { 
       const result = await this.$http.get(`/rest/question/`+this.$route.params.id);
       this.question = result.data.question;
+      const ansRes = await this.$http.get('/rest/answer/text/'+this.$route.params.id);
+      this.answer = ansRes.data.answer;
+      //TODO: 답변 구매 등
     },
     async deleteQuiz() {
       const result = await this.$http.post(`/rest/question/`+this.$route.params.id);
