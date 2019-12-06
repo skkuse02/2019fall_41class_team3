@@ -334,10 +334,61 @@ async function purchaseAnswer(req, res){
 
 }
 
+async function getURL(req, res){
+    try{
+      const answer = await models.answer.findOne({
+        where: {
+          qid: req.params.qid
+        }
+      });
+  
+      if(!answer || !answer.arrangement){
+        throw new Error("Not arranged")
+      }
+
+      const question = await models.question.findOne({
+          where: {
+              id: req.params.qid
+          },
+          attributes: ['uid', 'type']
+      });
+
+      const mentor = await models.user.findOne({
+          where:{
+              uid: answer.mentorId
+          },
+          attributes: ['uid']
+      });
+      const mentee = await models.user.findOne({
+        where:{
+            uid: question.uid
+        },
+        attributes: ['uid']
+      });
+     
+      const chatHash = sha256(mentor.uid + mentee.uid + answer.arrangement);
+      if(question.type == 'Text Response'){
+        throw new Error("Question type is Text Response");
+      }
+      const url = question.type == 'Live Chatting' ? 'chat' : 'screenshare';
+
+      res.status(200).send({
+          result: true,
+          url: `https://qahub.scg.skku.ac.kr/${url}?qid=${req.params.qid}&room=${chatHash}`
+      })
+    } catch(err){
+        res.status(400).send({
+            result: false,
+            msg: err.toString()
+        });
+    }
+}
+
 module.exports = {
     addTextAnswer,
     arrangeTime,
     getAnswer,
     evaluateAnswer,
-    purchaseAnswer
+    purchaseAnswer,
+    getURL
 };
