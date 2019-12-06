@@ -300,6 +300,58 @@ async function upsertUser(req, res){
   }
 }
 
+async function getMyQuestions(req, res){
+  try{
+    const questions = await models.question.findAll({
+      where:{
+        uid: req.session.user.uid
+      }
+    });
+
+    res.status(200).send({
+      result: true,
+      questio0ns: questions
+    });
+  } catch (err){
+    //bad request
+    console.log(err);
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
+
+async function getMyAnswers(req, res){
+  try{
+    const answers = await models.answer.findAll({
+      where:{
+        mentorId: req.session.user.uid
+      }
+    });
+
+    const qids = await answers.map(a => a.qid);
+
+    const questions = await models.question.findAll({
+      where:{
+        id: qids
+      }
+    });
+
+    res.status(200).send({
+      result: true,
+      questions: questions
+    });
+  } catch (err){
+    //bad request
+    console.log(err);
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
+
 
 module.exports = {
   getSession,
@@ -308,5 +360,7 @@ module.exports = {
   getUserCredit,
   addUserCredit,
   withdrawUserCredit,
-  upsertUser
+  upsertUser,
+  getMyQuestions,
+  getMyAnswers
 };
