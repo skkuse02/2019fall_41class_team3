@@ -234,7 +234,7 @@ async function getArrangement(req, res){
     res.status(200).send({
       result: true,
       question: question,
-      arranged: answer.arrangement.toLocaleTimeString().substring(0,5)
+      arranged: answer.arrangement.toLocaleTimeString()
     });
 
   } catch(err){
