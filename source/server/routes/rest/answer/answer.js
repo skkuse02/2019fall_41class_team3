@@ -114,11 +114,11 @@ async function arrangeTime(req, res){
             to: mentee.email,       
             subject: '[QAHub] Arrangment for Live Help',   // 제목
             text: `Hello ${mentee.name},\n\nA mentor has been arranged to help you with your question via ${question.type}.
-            \n\n Title: ${question.title}
-            \n\n Question: ${question.content}
-            \n\n Arranged time: This ${weekdays[time.day_of_week] + ' ' + time.start_time.toLocaleTimeString()}
-            \n\n Please join this session at the arranged time by clicking the link below:
-            \n https://qahub.scg.skku.ac.kr/${url}?room=${chatHash}
+            \n\nTitle: ${question.title}
+            \n\nQuestion: ${question.content}
+            \n\nArranged time: This ${weekdays[time.day_of_week] + ' ' + time.start_time.toLocaleTimeString()}
+            \n\nPlease join this session at the arranged time by clicking the link below:
+            \nhttps://qahub.scg.skku.ac.kr/${url}?room=${chatHash}
             \n\n Thank you for using QAHub.`
         };
 
@@ -127,10 +127,10 @@ async function arrangeTime(req, res){
             to: mentor.email,       
             subject: '[QAHub] Arrangment for Live Help',   // 제목
             text: `Hello ${mentor.name},\n\nYou have arranged to help you with your question via ${question.type}.
-            \n\n Title: ${question.title}
-            \n\n Question: ${question.content}
-            \n\n Arranged time: This ${weekdays[time.day_of_week] + ' ' + time.start_time.toLocaleTimeString()}
-            \n\n Please join this session at the arranged time by clicking the link below:
+            \n\nTitle: ${question.title}
+            \n\nQuestion: ${question.content}
+            \n\nArranged time: This ${weekdays[time.day_of_week] + ' ' + time.start_time.toLocaleTimeString()}
+            \n\nPlease join this session at the arranged time by clicking the link below:
             \n https://qahub.scg.skku.ac.kr/${url}?room=${chatHash}
             \n\nThank you for using QAHub.`
         };
@@ -256,10 +256,10 @@ async function evaluateAnswer(req, res){
             to: mentor.email,       
             subject: '[QAHub] Your answer has been evaluated.',   // 제목
             text: `Hello ${mentor.name},
-            \n\n Your response for the question titled "${question.title}" has been evaluated by the mentee.
-            \n\n Question: "${question.content}"
-            \n\n Your Answer: "${answer.content}"
-            \n\n Rewarded points: ${req.body.reward}
+            \n\nYour response for the question titled "${question.title}" has been evaluated by the mentee.
+            \n\nQuestion: "${question.content}"
+            \n\nYour Answer: "${answer.content}"
+            \n\nRewarded points: ${req.body.reward}
             \n\nThank you for using QAHub.`
         };
     
