@@ -81,6 +81,7 @@ export default {
             });
             this.socket.emit('CONNECTION', {
                 user: this.user,
+                message: `${this.user} has entered the chat room.`,
                 room: this.$route.query.room
             });
         } catch(e){
