@@ -17,7 +17,13 @@
                     <tbody>
                       <tr>
                         <th> Title </th>
-                        <td> {{question.title}} </td>
+                        <td> {{question.title}}
+                          <div style="float:right;">
+                            <b-button type="button" variant="warning" v-on:click="star()">
+                              <i class="fa fa-star" aria-hidden="true"></i> Star {{question.star}}
+                            </b-button>
+                          </div>
+                        </td>
                       </tr>
                       <tr>
                         <th> Author </th >
@@ -63,7 +69,8 @@ export default {
         title: '',
         uid: '',
         createdAt: '',
-        content: ''
+        content: '',
+        star: 0
       }
     };
   },
@@ -81,6 +88,18 @@ export default {
     },
     gomodify() {
       this.$router.push({ path: '/rest/question/modify/'+this.$route.params.id });
+    },
+    star() {
+      /*
+      const reqRes = await this.$http.post('/rest/question/star/'+this.$route.params.id);
+      if(reqRes.data.result) {
+        const starRes = await this.$http.get('/rest/question/star/'+this.$route.params.id);
+        if(starRes.data.result) {
+          this.question.star = starRes.data.star;
+        }
+      }
+      */
+      this.question.star += 1;
     }
   }
 }

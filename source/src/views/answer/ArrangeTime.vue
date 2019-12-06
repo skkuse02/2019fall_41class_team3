@@ -25,6 +25,9 @@
             <div style="clear: both; margin-top: 10px"></div>
         </div>
         <div style="clear: both"></div>
+        <div id="buttonHolder" style="margin:10px">
+            <b-button type="submit" variant="success" size="sm" @click.prevent="submitTime()">시간 제출하기</b-button>
+        </div>
     </div>
 </template>
 
@@ -38,7 +41,7 @@ export default {
     },
     data () {
         return {
-            qid: '',
+            qid: 0,
             available_times: [],
             timeFormat: '',
             selectedDay: '',
@@ -63,6 +66,20 @@ export default {
 
     // },
     methods: {
+        async submitTime () {
+            try{
+                var time = this.timeFormatTransform();
+                const res = await this.$http.post("/rest/answer/arrange/" + this.$route.params.qid, { time });
+                if (res.data.result == true) {
+                    alert('시간이 제출되었습니다!');
+                    this.$router.push({
+                        path: '/'
+                    });
+                }        
+            } catch(err) {
+                alert(err.toString() + '\n잠시 후 다시 시도해주세요!');
+            }
+        },
         tSelected (e) {
             this.selectedTime = e;
         },

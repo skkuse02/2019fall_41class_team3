@@ -4,6 +4,9 @@ h2 {
 a {
     color: #42b983;
 }
+textarea {
+    resize: none;
+}
 div.form-group {
     width: 80%;
     margin: 10px;
