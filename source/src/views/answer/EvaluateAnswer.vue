@@ -60,17 +60,23 @@ export default {
             try{
                 var star = Number(this.starValue);
                 var feedback = this.feedback;
-                var reward = this.reward;
+                var reward = Number(this.reward);
                 console.log(star);
                 console.log(feedback);
                 console.log(reward);
-                const res = await this.$http.post("/rest/answer/evaluate/" + this.$route.params.qid, { star, feedback, reward });
-                if (res.data.result == true) {
-                    alert('평가가 등록되었습니다!');
-                    this.$router.push({
-                        path: '/'
-                    });
-                }        
+                if ((reward % 100) != 0) {
+                    alert('수여할 크레딧 : ' + reward + '\n'
+                        + 'Reward는 100의 배수여야 합니다!');
+                }
+                else{
+                    const res = await this.$http.post("/rest/answer/evaluate/" + this.$route.params.qid, { star, feedback, reward });
+                    if (res.data.result == true) {
+                        alert('평가가 등록되었습니다!');
+                        this.$router.push({
+                            path: '/'
+                        });
+                    }       
+                } 
             } catch(err) {
                 alert(err.toString() + '\n잠시 후 다시 시도해주세요!');
             }
