@@ -1,0 +1,20 @@
+h2 {
+    font-weight: normal;
+}
+a {
+    color: #42b983;
+}
+.modal-backdrop
+{
+    display: none;
+}
+div.form-group {
+    width: 80%;
+    margin: 10px;
+    margin-left: 40px;
+}
+#buttonHolder {
+    text-align: right;
+    align-items: right;
+    justify-content: right;
+}

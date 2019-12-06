@@ -99,6 +99,7 @@
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1",
     "vue-session": "^1.0.0",
+    "vue-star-rating": "^1.6.1",
     "vue-timeselector": "^1.0.0",
     "vue-webrtc": "^1.2.0",
     "vue2-datepicker": "^2.6.4",

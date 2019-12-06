@@ -19,9 +19,9 @@ import DatePicker from 'vue2-datepicker'
 import DownloadJS from 'downloadjs'
 import SimpleVueValidation from 'simple-vue-validator';
 import Timeselector from 'vue-timeselector';
-import ButtonPlugin from 'bootstrap-vue';
-import { ButtonGroupPlugin } from 'bootstrap-vue'
+import { ButtonPlugin, ButtonGroupPlugin, ModalPlugin } from 'bootstrap-vue';
 import { vsButton, vsSelect, vsPopup, vsChip, vsIcon } from 'vuesax';
+import StarRating from 'vue-star-rating';
 
 import 'expose-loader?$!expose-loader?jQuery!jquery';
 import './assets/js/bootstrap.min.js';
@@ -57,6 +57,8 @@ Vue.use(vsPopup);
 Vue.use(vsChip);
 Vue.use(vsIcon);
 Vue.use(ButtonGroupPlugin);
+Vue.use(StarRating);
+Vue.use(ModalPlugin);
 
 
 /* eslint-disable no-new */
