@@ -42,8 +42,10 @@
   import { WebRTC } from 'vue-webrtc';
   import { find, head } from 'lodash';
   import * as io from 'socket.io-client';
+
   window.io = io;
   Vue.component(WebRTC.name, WebRTC);
+
   export default {
     name: 'app',
     components: {
@@ -54,7 +56,7 @@
         roomId: '',
         socketURL: 'https://rtcmulticonnection.herokuapp.com:443/',
         enableAudio: true,
-        enableVideo: false,
+        enableVideo: true,
         question: {
                 title: '',
                 content: ''
@@ -72,8 +74,6 @@
           this.question.content = question.data.question.content;
           this.time = question.data.arranged;
           this.roomId = this.$route.query.room;
-          this.$refs.webrtc.join();
-          this.img = this.$refs.webrtc.shareScreen();
         } catch(e){
               this.$router.go(-1);
         }
@@ -87,6 +87,7 @@
       },
       onJoin() {
         this.$refs.webrtc.join();
+        this.$refs.webrtc.leave();
       },
       onLeave() {
         this.$refs.webrtc.leave();
