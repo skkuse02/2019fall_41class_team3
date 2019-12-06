@@ -1,10 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
     const time = sequelize.define('questionuser', {
       qid:{
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        primaryKey: true
       },
       userUid:{
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        primaryKey: true
       }
     }, {
       tableName: 'questionuser',

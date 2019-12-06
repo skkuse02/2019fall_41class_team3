@@ -1,10 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
     const time = sequelize.define('timeuser', {
       uid:{
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
+        primaryKey: true
       },
       timeId:{
-        type: DataTypes.INTEGER
+        type: DataTypes.INTEGER,
+        primaryKey: true
       }
     }, {
       tableName: 'timeuser',
