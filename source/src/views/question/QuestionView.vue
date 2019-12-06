@@ -54,29 +54,34 @@
               </b-card-body>
             </b-card>
             
-            <div v-if="answer">
+            <div v-if="isAnswered">
               <b-card>
-                <b-card-body>
-                  <div>
-                    <table class="table">
-                      <tbody>
-                        <tr>
-                          <th> Author </th >
-                          <td> {{answer.mentorId}} </td>
-                        </tr>
-                        <tr>
-                          <th> Date </th>
-                          <td> {{answer.createdAt}} </td>
-                        </tr>
-                        <tr>
-                          <th></th>
-                          <td></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                    {{answer.content}}
-                  </div>
-                </b-card-body>
+                <div v-if="hasPermission">
+                  <b-card-body>
+                    <div>
+                      <table class="table">
+                        <tbody>
+                          <tr>
+                            <th> Author </th >
+                            <td> {{answer.mentorId}} </td>
+                          </tr>
+                          <tr>
+                            <th> Date </th>
+                            <td> {{answer.createdAt}} </td>
+                          </tr>
+                          <tr>
+                            <th></th>
+                            <td></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      {{answer.content}}
+                    </div>
+                  </b-card-body>
+                </div>
+                <div v-else>
+                  Answered but not permission
+                </div>
               </b-card>
             </div>
           </b-card>
@@ -103,6 +108,8 @@ export default {
         content: '',
         star: 0
       },
+      hasPermission: false,
+      isAnswered: false,
       answer: null
     };
   },
@@ -113,9 +120,17 @@ export default {
     async initView() { 
       const result = await this.$http.get(`/rest/question/`+this.$route.params.id);
       this.question = result.data.question;
-      const ansRes = await this.$http.get('/rest/answer/text/'+this.$route.params.id);
-      this.answer = ansRes.data.answer;
-      //TODO: 답변 구매 등
+
+      try {
+        const ansRes = await this.$http.get('/rest/answer/text/'+this.$route.params.id);
+        this.hasPermission = ansRes.data.result;
+        if(this.hasPermission) this.answer = ansRes.data.answer;
+        this.isAnswered = true;
+        alert(this.hasPermission);
+      }
+      catch(e) {
+        this.isAnswered = false;
+      }
     },
     async deleteQuiz() {
       const result = await this.$http.post(`/rest/question/`+this.$route.params.id);
