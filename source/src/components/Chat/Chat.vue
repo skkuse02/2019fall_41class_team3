@@ -76,7 +76,7 @@ export default {
             });
             this.socket.on('ENTER', (data) => {
                if(data.room == this.$route.query.room){
-                this.messages.push(data.user + 'has entered the room');
+                this.messages.push(data);
                }
             });
             this.socket.emit('CONNECTION', {
