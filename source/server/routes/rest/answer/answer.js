@@ -130,7 +130,47 @@ async function arrangeTime(req, res){
 
 }
 
+async function getAnswer(req, res){
+    try{
+        let users = await models.questionuser.findAll({
+            where: {
+                qid: req.params.qid
+            },
+            attributes: ['userUid']
+        });
+
+        const question = await models.question.findOne({
+            where:{
+                id: req.params.qid
+            }
+        });
+
+        users = await users.map((u) => u.userUid);
+
+        if(question.uid == req.session.user.uid || users.includes(req.session.user.uid)){
+            const answer = await models.answer.findOne({
+                where:{
+                    qid: req.params.qid
+                }
+            });
+            res.status(200).send({
+                result: true,
+                answer: answer
+            });
+        } else{
+            throw new Error("No permission to view answer");
+        }
+
+    } catch(err){
+        res.status(400).send({
+            result: false,
+            msg: err.toString()
+        });
+    }
+}
+
 module.exports = {
     addTextAnswer,
-    arrangeTime
+    arrangeTime,
+    getAnswer
 };
