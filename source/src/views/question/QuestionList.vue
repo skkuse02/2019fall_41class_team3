@@ -157,7 +157,7 @@ export default {
           this.isMentor = (session.data.user.type == "Mentor");
         }
       } catch(e){
-        alert(e);
+        //alert(e);
         this.$router.push({'path' : '/'});
       }
 
