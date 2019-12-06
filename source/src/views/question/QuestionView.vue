@@ -126,7 +126,6 @@ export default {
         this.hasPermission = ansRes.data.result;
         if(this.hasPermission) this.answer = ansRes.data.answer;
         this.isAnswered = true;
-        alert(this.hasPermission);
       }
       catch(e) {
         this.isAnswered = false;
