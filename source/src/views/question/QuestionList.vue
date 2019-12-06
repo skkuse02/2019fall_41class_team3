@@ -128,7 +128,6 @@ export default {
           const rlist = await this.$http.get('/rest/question/listByTime');
           this.recomendedTable.questions = rlist.data.questions;
           this.recomendedTable.totalRows = this.recomendedTable.questions.length;
-          alert(this.recomendedTable.questions[0].id);
         }
         catch(e) {
           alert(e);
