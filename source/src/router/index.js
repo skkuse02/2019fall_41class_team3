@@ -99,7 +99,7 @@ export default new Router({
                     component: RegisterQuestion
                 },
                 {
-                    path: '/registeranswer',
+                    path: '/answer/text/:qid',
                     name: 'RegisterAnswer',
                     component: RegisterAnswer
                 },
