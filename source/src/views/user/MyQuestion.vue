@@ -88,8 +88,8 @@ export default {
             this.$router.push({'path' : '/question/'+item.id});
         },
         onFiltered(filteredItems) {
-            this.questionTable.totalRows = filteredItems.length
-            this.questionTable.currentPage = 1
+            this.questionTable.totalRows = filteredItems.length;
+            this.questionTable.currentPage = 1;
         }
     }
 }
