@@ -17,7 +17,7 @@ const {
 
 router.get('/text/:qid', auth, getAnswer);
 
-router.post('/evaluate/:qid', evaluateAnswer);
+router.post('/evaluate/:qid', auth, evaluateAnswer);
 router.post('/text/:qid', auth, addTextAnswer);
 router.post('/arrange/:qid', auth, arrangeTime);
 
