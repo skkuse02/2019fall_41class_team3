@@ -93,7 +93,7 @@ export default {
         sortBy: 'id',
         sortDesc: true,
         currentPage: 1,
-        perPage: 5,
+        perPage: 10,
         totalRows: 0,
         filter: null,
         filterOn: ['title'],
