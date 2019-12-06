@@ -13,7 +13,7 @@
             <b-card>
               <b-card-body>
                 <div>
-                  <div>
+                  <div style="margin:30px;">
                     <b-button type="button" variant="success" v-on:click="gomodify()">수정하기</b-button>
                     &nbsp;&nbsp;
                     <b-button type="button" variant="danger" v-on:click="deleteModal = true">삭제하기</b-button>
@@ -56,35 +56,43 @@
             
             <div v-if="isAnswered">
               <b-card>
-                <div v-if="hasPermission">
-                  <b-card-body>
-                    <div>
-                      <table class="table">
-                        <tbody>
-                          <tr>
-                            <th> Author </th >
-                            <td> {{answer.mentorId}} </td>
-                          </tr>
-                          <tr>
-                            <th> Date </th>
-                            <td> {{answer.createdAt}} </td>
-                          </tr>
-                          <tr>
-                            <th></th>
-                            <td></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      {{answer.content}}
-                    </div>
-                  </b-card-body>
-                </div>
-                <div v-else>
-                  This question has answered! See the answer using credit. 
-                  <b-button type="button" variant="warning" v-on:click="purchase()">
-                    <i class="fa fa-shopping-cart" aria-hidden="true"></i> Purchase {{question.reward/5}}
-                  </b-button>
-                </div>
+                  <div v-if="hasPermission">
+                    <b-card-body>
+                      <div>
+                        <table class="table">
+                          <tbody>
+                            <tr>
+                              <th> Author </th >
+                              <td> {{answer.mentorId}} </td>
+                            </tr>
+                            <tr>
+                              <th> Date </th>
+                              <td> {{answer.createdAt}} </td>
+                            </tr>
+                            <tr>
+                              <th></th>
+                              <td></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        {{answer.content}}
+                      </div>
+                    </b-card-body>
+                  </div>
+                  <div v-else>
+                    This question has answered! See the answer using credit. 
+                    <b-button type="button" variant="warning" v-on:click="purchase()">
+                      <i class="fa fa-shopping-cart" aria-hidden="true"></i> Purchase {{question.reward/5}}
+                    </b-button>
+                  </div>
+              </b-card>
+            </div>
+            <div v-else-if="user.type=='Mentor'">
+              <b-card>
+                This question is not answered yet.
+                <b-button type="button" variant="danger" v-on:click="gotoAnswer()">
+                  <i class="fa fa-pencil" aria-hidden="true"></i> Add Answer
+                </b-button>
               </b-card>
             </div>
           </b-card>
@@ -189,6 +197,9 @@ export default {
     },
     refresh() {
       this.$router.go({path: '/question/'+this.$route.params.id});
+    },
+    gotoAnswer() {
+      this.$router.push({path: '/answer/text/'+this.$route.params.id});
     }
   }
 }
