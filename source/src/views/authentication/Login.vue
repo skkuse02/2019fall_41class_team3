@@ -76,9 +76,7 @@ export default {
             this.$session.remove('user');
           }
         } 
-        this.$router.go({
-          path: '/'
-        });
+        this.$router.go(-1);
       } catch(err) {
         alert(err.toString() + '\n아이디나 비밀번호를 다시 한 번 확인해주세요!')
       }
