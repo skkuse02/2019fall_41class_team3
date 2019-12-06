@@ -128,7 +128,7 @@ export default {
       return this.$validator.value(value).required();
     },
     name: function(value) {
-      return this.$validator.value(value).required().regex('^[A-Za-z]*$', 'Must only contain alphabetic characters.');
+      return this.$validator.value(value).required().regex('^[a-zA-Z]+(([ ][a-zA-Z ])?[a-zA-Z]*)*$', 'Must only contain alphabetic characters.');
     },
     nickname: function(value) {
       return this.$validator.value(value);
