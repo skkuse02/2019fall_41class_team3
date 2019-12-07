@@ -114,7 +114,7 @@ export default {
             var time = this.timeToNum(spArr[1]);
             console.log(spArr);
             console.log(day, time);
-            return (day + time);
+            return (day + time + 1);
         },
         dayToNum (day) {
             if (day == "Monday") {

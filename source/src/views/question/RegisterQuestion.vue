@@ -264,7 +264,7 @@ export default {
                 for (var j = 0; j < daArr.length; j++){
                     daArr[j] = this.dayToNum(daArr[j]);  // d[0] = Num(day1), ...
                     for (var k = stime; k < etime; k++){
-                        resultArr.push(daArr[j] + k);
+                        resultArr.push(daArr[j] + k + 1);
                     }
                 }   // Transform daArr's content into number type
                 console.log(spArr);
