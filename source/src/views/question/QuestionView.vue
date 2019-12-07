@@ -13,21 +13,20 @@
             <b-card>
               <b-card-body>
                 <div>
-                  <div style="margin:30px;">
-                    <b-button type="button" variant="success" v-on:click="gomodify()">수정하기</b-button>
-                    &nbsp;&nbsp;
-                    <b-button type="button" variant="danger" v-on:click="deleteModal = true">삭제하기</b-button>
-                    &nbsp;&nbsp;
-                    <b-button to="/question/list" type="button" variant="secondary">돌아가기</b-button>
+                  <div style="margin-bottom:20px;">
+                    <div style="font-size:20px;margin:10px;display:inline;">
+                      <b>{{question.title}}</b>
+                    </div>
+                    <div style="display:inline;float:right;">
+                      <b-button type="button" variant="warning" v-on:click="star()">
+                        <i class="fa fa-star" aria-hidden="true"></i> Star {{question.star}}
+                      </b-button>
+                    </div>
                   </div>
                   <table class="table">
                     <tbody>
                       <tr>
-                        <th style="width:200px;"> Title </th>
-                        <td> {{question.title}} </td>
-                      </tr>
-                      <tr>
-                        <th> Author </th >
+                        <th style="width:200px;"> Author </th >
                         <td> {{question.uid}} </td>
                       </tr>
                       <tr>
@@ -46,11 +45,14 @@
                   </table>
                   {{question.content}}
                 </div>
-                <p>
-                  <b-button type="button" variant="warning" v-on:click="star()">
-                    <i class="fa fa-star" aria-hidden="true"></i> Star {{question.star}}
+                <div style="float:right;">
+                  <b-button type="button" variant="danger" v-on:click="deleteModal = true" style="margin:5px;">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
                   </b-button>
-                </p>
+                  <b-button to="/question/list" type="button" variant="secondary" style="margin:5px;">
+                    <i class="fa fa-undo" aria-hidden="true"></i> Back
+                  </b-button>
+                </div>
               </b-card-body>
             </b-card>
             
