@@ -28,11 +28,16 @@ export default {
   },
   methods: {
     findid: async function () {
-      const res = await this.$http.post("/rest/user/id", {name,email});
-      if (res.data.result == true){
-        alert(res.data.user.nickname + 'id : ' + res.data.user.uid);
-      } else if(error){
-        alert('ID가 일치하지 않습니다.');
+      try{
+        const res = await this.$http.post("/rest/user/id", {
+          name: this.name,
+          email: this.email
+        });
+        if (res.data.result == true){
+          alert('Your id is ' + res.data.user.uid);
+        } 
+      } catch(err){
+        alert("Not found");
       }
     }
   }

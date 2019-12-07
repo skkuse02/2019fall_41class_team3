@@ -32,7 +32,11 @@ export default {
   },
   methods: {
     findpassword: async function () {
-      const res = await this.$http.post("/rest/user/password",{uid,name,email});
+      const res = await this.$http.post("/rest/user/password",{
+        uid: this.uid,
+        name: this.name,
+        email: this.email
+      });
       if (res.data.result == true){
         alert('e-mail로 비밀번호가 전송되었습니다.');
       } else if(error){
