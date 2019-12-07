@@ -255,7 +255,7 @@ async function deleteQuestion(req, res){
     if(req.session.user.uid == question.uid){
       await models.question.destroy({
         where: {
-          qid: req.params.qid
+          id: req.params.qid
         }
       });
       res.status(200).send({
