@@ -1,16 +1,15 @@
 <template>
-    <div class="questionForm" style="margin-top:100px">
-        <h2><p style="margin-left:50px; margin-bottom:10px">RegisterQuestion</p></h2>
+    <div class="questionForm" style="margin-top:30">
         <form class="form-horizontal" id="formInfo" @submit.prevent>
             <div class="qFormGroup center-block">
-                <input type="text" id="title" v-model="title" class="form-control" placeholder="제목"/>
+                <input type="text" id="title" v-model="title" class="form-control" placeholder="Title"/>
             </div>
             <div class="qFormGroup center-block">
-                <textarea id="content" v-model="content" class="form-control" style="width: 100%" placeholder="내용" rows="10"/>
+                <textarea id="content" v-model="content" class="form-control" style="width: 100%" placeholder="Content" rows="10"/>
             </div>
             <div class="qFormGroup center-block">
                 <input type="integer" id="reward" v-model="reward" class="form-control"
-                :placeholder='"보상 (Minimum reward : " + this.types[typeIndex].minimum_point + " )"'/>
+                :placeholder='"Reward (Minimum reward : " + this.types[typeIndex].minimum_point + " )"'/>
             </div>
             <div class="qFormGroup center-block">
                 <select id="selectType" v-model="typeIndex" class="form-control mb-3">
@@ -32,7 +31,7 @@
             </div>
             <div class="form-vif" v-if="!answerType">
                 <!-- <p text-align: center>Selected Time Range : {{ selectedDay }} / {{ timeStart }} ~ {{ timeEnd }}</p> -->
-                <p text-align: center>답변을 원하는 시간대를 선택해 주세요</p>
+                <p text-align: center>Please select the available times</p>
                 <div class="formElement">
                     <b-button-group size="lg" style="margin-bottom: 10px">
                         <b-button v-for="(day, idx) in days" :key="idx"
@@ -71,13 +70,15 @@
                     <vs-chip v-on:click="removeTime(time)" v-for="time in available_times"
                     v-bind:key="time" closable> {{ time }} </vs-chip>
                 </vs-chips>
+                
             </div>
+    
             <div style="clear: both"></div>
+            <div id="buttonHolder" style="margin-top:20px;margin-bottom:20px; width:80%;margin-left:auto; margin-right:auto;">
+                <b-button type="submit" form="formInfo" variant="success" size="sm"
+                @click.prevent="write()">등록하기</b-button>
+            </div>
         </form>
-        <div id="buttonHolder" style="margin:10px">
-            <b-button type="submit" form="formInfo" variant="success" size="sm"
-            @click.prevent="write()">등록하기</b-button>
-        </div>
     </div>
 </template>
     
