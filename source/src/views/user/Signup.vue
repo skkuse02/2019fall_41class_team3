@@ -1,7 +1,7 @@
 <template>
   <div>
   <div>
-    <form class="layout-form" @submit.prevent="register()" autocomplete="nope">
+    <div class="layout-form" autocomplete="nope">
       <h1>Sign Up</h1>
 
       <!-- Step 1: Select user type -->
@@ -57,7 +57,15 @@
 
       <!--  -->
       <div class="form-group" v-show="currentStep==3">
-          <div class="label">Field</div>
+        <div class="label">Field</div>
+        <div>
+          <input type="checkbox" id="math" value="Math" v-model="fields" />
+          <label for="math">Math</label>
+          <input type="checkbox" id="cs" value="Computer Science" v-model="fields" />
+          <label for="cs">Computer Science</label>
+          <input type="checkbox" id="science" value="Science" v-model="fields" />
+          <label for="science">Science</label>
+        </div>
       </div>
 
       <div>
@@ -65,19 +73,12 @@
             <button class="btn btn-primary" v-if="isPrevBtnShow" type="button" @click="setStepDiff(-1)">&lt; Prev</button>
         </div>
 
-        <div style="text-align:center;margin-top:40px;">
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-            <span class="step"></span>
-        </div>
-
         <div style="float:right;">
             <button class="btn btn-primary" v-if="isNextBtnShow" type="button" @click="setStepDiff(1)">Next &gt;</button>
-            <button class="btn btn-primary" v-if="isSubmitBtnShow" type="submit">Submit</button>
+            <button class="btn btn-primary" v-if="isSubmitBtnShow" type="button" @click="register()">Submit</button>
         </div>
       </div>
-    </form>
+    </div>
     <modal name="welcome-user">
       <div>Welcome, {{ uid }} !</div>
       <button type="button" @click="gotoLogin">Go to Login</button>
@@ -187,7 +188,8 @@ export default {
       this.name = '';
       this.validation.reset();
     },
-    showWelcomeModal: function() {
+    removeField(item) {
+      this.fields.splice(this.fields.indexOf(item), 1)
     },
     async register(){
       const formRes = await this.$validate();
