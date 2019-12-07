@@ -58,10 +58,9 @@ export default {
     };
   },
   created: async function(){
-    this.getSession();
   },
   mounted: async function(){
-
+    this.getSession();
   },
   methods: {
     getSession: async function(){
@@ -86,7 +85,7 @@ export default {
         //if (res.data.result == true)
         //alert('로그아웃 되었습니다.')
         this.sessionExist = false;
-        this.$router.push({
+        this.$router.go({
           path: '/'
         });
       } catch(e){

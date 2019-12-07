@@ -76,11 +76,6 @@ export default new Router({
                      component: QuestionList
                 },
                 {
-                    path: '/question/:id',
-                    name: 'QuestionView',
-                    component: QuestionView
-                },
-                {
                     path: '/signup',
                     name: 'Signup',
                     component: Signup
@@ -114,6 +109,11 @@ export default new Router({
                     path: '/question/arrangetime/:qid',
                     name: 'ArrangeTime',
                     component: ArrangeTime
+                },
+                {
+                    path: '/question/:id',
+                    name: 'QuestionView',
+                    component: QuestionView
                 },
                 {
                     path: '/answer/evaluate/:qid',

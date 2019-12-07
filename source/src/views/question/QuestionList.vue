@@ -155,7 +155,7 @@ export default {
     },
     moveRegisterQuestion () {
       this.$router.push({
-          path: '/registerquestion'
+          path: '/question/register'
       });
     },
     checkSession: async function(){
