@@ -156,10 +156,10 @@ async function getQuestionByTime(req, res){
         attributes: ['qid']
       });
       qids = await qids.map(q => q.qid);
-
+      let unique = [...new Set(qids)];
       let ans = await models.answer.findAll({
         where: {
-          qid: qids
+          qid: unique
         },
         attributes: ['qid']
       });
