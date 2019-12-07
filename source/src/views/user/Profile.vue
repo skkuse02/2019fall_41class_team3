@@ -90,6 +90,7 @@
           <div class="content"><input type="text" class="form-control" v-model="email"/></div>
           <div class="message">{{ validation.firstError('email') }}</div>
         </div>
+        <button @click="changeMode('view_info')" class="btn btn-primary" type="reset" style="margin-right: 10px;" variant="warning" size="lg">Cancel</button>
         <button class="btn btn-primary" type="submit" variant="primary" size="lg">Confirm</button>
       </form>
     </div>
