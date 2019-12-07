@@ -1,17 +1,21 @@
 <template>
     <div class="answerForm" style="margin:100px 40px 40px 40px">
         <h2><p>RegisterAnswer</p></h2>
-        <div class="questionTitle">
-            <label for="questionTitle"> Question Title </label><br>
-            {{ qTitle }}
-        </div>
-        <div class="questionContent">
-            <label for="questionContent"> Question Content </label><br>
-            {{ qContent }}
-        </div>
+        <form class="qForm">
+            <div class="qFormGroup center-block">
+                <label for="questionTitle"><h5> Question Title </h5></label><br>
+                <input type="text" id="qTitle" class="form-control"
+                :value="this.qTitle" readonly="true"/>
+            </div>
+            <div class="qFormGroup center-block">
+                <label for="questionContent"><h5> Question Content </h5></label><br>
+                <input type="text" id="qContent" class="form-control"
+                :value="this.qContent" readonly="true"/>
+            </div>
+        </form>
         <form class="form-horizontal" role="form" @submit.prevent="write()">
-            <label for="form-horizontal"> My Answer </label>
-            <div class="form-group">
+            <div class="aFormGroup center-block">
+                <label for="answerContent"><h5> My Answer </h5></label>
                 <textarea id="content" v-model="content" class="form-control"
                 style="width: 100%" placeholder="답변 내용" rows="20"/>
             </div>
