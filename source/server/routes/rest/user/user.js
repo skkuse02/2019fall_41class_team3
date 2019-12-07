@@ -376,6 +376,38 @@ async function getAvailableTime(req, res){
   }
 }
 
+async function changePassword(req, res){
+  try{
+    const user = await models.user.findOne({
+      where: {
+        uid: req.session.user.uid,
+        password: sha256(req.body.current_pw)
+      }
+    });
+    if(!user){
+      throw new Error("Wrong password");
+    }
+    await models.user.update({
+      password: sha256(req.body.new_pw)
+    }, {
+      where: {
+        uid: req.session.user.uid
+      }
+    });
+
+    res.status(200).send({
+      result: true
+    });
+  } catch (err){
+    //bad request
+    console.log(err);
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
+
 module.exports = {
   getSession,
   searchUserId,
@@ -386,5 +418,6 @@ module.exports = {
   upsertUser,
   getMyQuestions,
   getMyAnswers,
-  getAvailableTime
+  getAvailableTime,
+  changePassword
 };

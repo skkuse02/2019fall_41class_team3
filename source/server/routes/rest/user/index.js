@@ -17,10 +17,12 @@ const {
     withdrawUserCredit,
     getMyQuestions,
     getMyAnswers,
-    getAvailableTime
+    getAvailableTime,
+    changePassword
 } = require('./user');
 
 router.get('/session', getSession);
+router.post('/password/change', auth, changePassword);
 router.post('/id', searchUserId);
 router.post('/password', findPassword);
 router.get('/credit', auth, getUserCredit);
