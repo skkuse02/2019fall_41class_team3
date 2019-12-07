@@ -1,6 +1,5 @@
 <template>
-  <div class="loginForm" style="margin:100px 40px 40px 40px">
-    <h2><p>Login</p></h2>
+  <div class="loginForm" style="padding-top:100px">
     <form class="form-horizontal" role="form" @submit.prevent="login()">
         <div class ="form-group">
             <label for="inputID" class="col-xs-4 control-label">ID</label>
@@ -16,7 +15,7 @@
         </div>
 
         <!-- Pressing login button will send form's info to server -->
-        <div id="buttonHolder" style="margin:10px">
+        <div id="loginButtonHolder" style="padding-top:10px">
             <b-button type="submit" variant="success" size="lg">로그인</b-button>
         </div>
     </form>
@@ -86,5 +85,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "../../assets/css/common/login.css";
+@import "../../assets/css/common/main.css";
 </style>
