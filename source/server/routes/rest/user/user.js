@@ -352,6 +352,29 @@ async function getMyAnswers(req, res){
   }
 }
 
+async function getAvailableTime(req, res){
+  try{
+    let times = await models.timeuser.findAll({
+      where:{
+        uid: req.session.user.uid
+      }
+    });
+
+    times = await times.map((t) => t.timeId);
+
+    res.status(200).send({
+      result: true,
+      available_times: times
+    });
+  } catch (err){
+    //bad request
+    console.log(err);
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
 
 module.exports = {
   getSession,
@@ -362,5 +385,6 @@ module.exports = {
   withdrawUserCredit,
   upsertUser,
   getMyQuestions,
-  getMyAnswers
+  getMyAnswers,
+  getAvailableTime
 };
