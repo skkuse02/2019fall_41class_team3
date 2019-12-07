@@ -46,21 +46,19 @@
           <li>Wait for mentee's evaluation and take your credit!</li>
         </ol>
       </div>
-    </div>
-    <div id="icons" style="float:right; margin-right:65px">
-      <div class="col-md-3" style="margin-top:80px; padding:20px">
+      <div class="col-md-3" style="display: inline-block">
          <img src="../../assets/datatables/images/flask.png" width="120px"
-         height="105px" v-on:click="moveQuestionList()" style="cursor:pointer"/>
+         height="120px" v-on:click="moveQuestionList()" style="cursor:pointer"/>
         <div class="caption" style="width:120px; text-align:center"><h3>Science</h3></div>
       </div>
-      <div class="col-md-3" style="padding:20px">
+      <div class="col-md-3" style="display: inline-block">
          <img src="../../assets/datatables/images/square-root.png" width="120px"
-         height="105px" v-on:click="moveQuestionList()" style="cursor:pointer"/>
+         height="120px" v-on:click="moveQuestionList()" style="cursor:pointer"/>
         <div class="caption" style="width:120px; text-align:center"><h3>Math</h3></div>
       </div>
-      <div class="col-md-3" style="padding:20px">
+      <div class="col-md-3" style="display: inline-block">
          <img src="../../assets/datatables/images/laptop-code.png" width="120px"
-         height="105px" v-on:click="moveQuestionList()" style="cursor:pointer"/>
+         height="120px" v-on:click="moveQuestionList()" style="cursor:pointer"/>
         <div class="caption" style="width:120px; text-align:center"><h3>Computer Science</h3></div>
       </div>
     </div>
