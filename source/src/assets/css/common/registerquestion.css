@@ -7,11 +7,11 @@ a {
 textarea {
     resize: none;
 }
-div.form-group {
+/* div.form-group {
     width: 80%;
     margin: 10px;
     margin-left: 40px;
-}
+} */
 #buttonHolder {
     text-align: right;
     align-items: right;

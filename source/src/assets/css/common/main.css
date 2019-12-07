@@ -7,13 +7,16 @@ a {
 ol {
     margin-left: 40px;
 }
-div.form-group {
-    width: 80%;
-    margin: 10px;
-    margin-left: 40px;
+.btn-lg {
+    width: 20%;
 }
 #buttonHolder {
     text-align: right;
     align-items: right;
     justify-content: right;
+}
+#loginButtonHolder {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
 }
