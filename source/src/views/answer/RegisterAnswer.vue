@@ -1,6 +1,5 @@
 <template>
     <div class="answerForm" style="margin:100px 40px 40px 40px">
-        <h2><p>RegisterAnswer</p></h2>
         <form class="qForm">
             <div class="qFormGroup center-block">
                 <label for="questionTitle"><h5> Question Title </h5></label><br>
