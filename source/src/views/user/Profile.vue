@@ -23,19 +23,52 @@
     <div v-if="mode=='view_info'">
       <!-- Show user info -->
       <div>
-        <div>uid: {{user.uid}}</div>
-        <div>type: {{user.type}}</div>
-        <div>name: {{user.name}}</div>
-        <div>nickname: {{user.nickname}}</div>
-        <div>email: {{user.email}}</div>
+        <b-card>
+          <b-card-body>
+            <div>
+              <div style="margin-bottom:20px;">
+                <div style="font-size:20px;margin:10px;">
+                  <b>Profile</b>
+                </div>
+              </div>
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <th style="width:200px;"> ID </th>
+                    <td> {{user.uid}} </td>
+                  </tr>
+                  <tr>
+                    <th> Type </th >
+                    <td> {{user.type}} </td>
+                  </tr>
+                  <tr>
+                    <th> Name </th>
+                    <td> {{user.name}} </td>
+                  </tr>
+                  <tr>
+                    <th> Nickname </th>
+                    <td> {{user.nickname}} </td>
+                  </tr>
+                  <tr>
+                    <th> Email </th>
+                    <td> {{user.email}} </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div style="float:right;margin:5px;">
+              <b-button @click="changeMode('edit_info')" class="btn btn-primary" type="button" variant="primary" size="lg">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+              </b-button>
+            </div>
+          </b-card-body>
+        </b-card>
       </div>
 
       <!-- Buttons -->
       <div>
         <!-- User info edit button -->
-        <button @click="changeMode('edit_info')" class="btn btn-primary" type="button" variant="primary" size="lg">
-          Edit
-        </button>
       </div>
     </div>
 

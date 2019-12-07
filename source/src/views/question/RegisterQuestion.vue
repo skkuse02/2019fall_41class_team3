@@ -1,74 +1,78 @@
 <template>
-    <div class="questionForm" style="margin:100px 40px 40px 40px">
-        <h2><p>RegisterQuestion</p></h2>
+    <div class="questionForm" style="margin-top:100px">
+        <h2><p style="margin-left:50px; margin-bottom:10px">RegisterQuestion</p></h2>
         <form class="form-horizontal" id="formInfo" @submit.prevent>
-            <div class="form-group">
+            <div class="qFormGroup center-block">
                 <input type="text" id="title" v-model="title" class="form-control" placeholder="제목"/>
             </div>
-            <div class="form-group">
+            <div class="qFormGroup center-block">
                 <textarea id="content" v-model="content" class="form-control" style="width: 100%" placeholder="내용" rows="10"/>
             </div>
-            <div class="form-group">
-                <input type="integer" id="reward" v-model="reward" class="form-control" placeholder="보상"/>
+            <div class="qFormGroup center-block">
+                <input type="integer" id="reward" v-model="reward" class="form-control"
+                :placeholder='"보상 (Minimum reward : " + this.types[typeIndex].minimum_point + " )"'/>
             </div>
-            <div class="form-group">
+            <div class="qFormGroup center-block">
                 <select id="selectType" v-model="typeIndex" class="form-control mb-3">
                     <option v-for="(option,index) in types" v-bind:key="index" v-bind:value="index">
                         {{ option.type }}
                     </option>
                 </select>
-                <span> Selected Answer Type : {{ this.types[typeIndex].type +
-                    ' (Minimum Reward : '  + this.types[typeIndex].minimum_point + ')'}} </span>
+                <!-- <span> Selected Answer Type : {{ this.types[typeIndex].type +
+                    ' (Minimum Reward : '  + this.types[typeIndex].minimum_point + ')'}} </span> -->
             </div>
-            <div class="form-group">
+            <div class="qFormGroup center-block">
                 <select id="selectField" v-model="fieldIndex" class="form-control mb-3">
                     <option v-for="(option,index) in flist" v-bind:key="index" v-bind:value="index">
                         {{ option.name }}
                     </option>
                 </select>
-                <span> Selected Question Field : {{ this.flist[fieldIndex].name }} </span>
+                <!-- <span> Selected Question Field : {{ this.flist[fieldIndex].name }} </span> -->
                 <!-- <input type="text" id="fields" v-model="fields" class="form-control" placeholder="분야"/> -->
             </div>
             <div class="form-vif" v-if="!answerType">
-                <p text-align: center>Selected Time Range : {{ selectedDay }} / {{ timeStart }} ~ {{ timeEnd }}</p>
-                <div>
+                <!-- <p text-align: center>Selected Time Range : {{ selectedDay }} / {{ timeStart }} ~ {{ timeEnd }}</p> -->
+                <p text-align: center>답변을 원하는 시간대를 선택해 주세요</p>
+                <div class="formElement">
                     <b-button-group size="lg" style="margin-bottom: 10px">
                         <b-button v-for="(day, idx) in days" :key="idx"
-                        :pressed.sync="day.state" variant="success">
+                        :pressed.sync="day.state" variant="success" @click=selectedDay>
                             {{ day.text }}
                         </b-button>
                     </b-button-group>
                 </div>
                 <div style="clear: both; margin-top: 10px"></div>
-                <timeselector class="form-control" displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
-                :displaySeconds="false" style="width:208px; float: left" :placeholder="'[From] HH:MM'"
-                returnFormat="HH:mm" @formatedTime="tStart">
-                    <template slot="hours">
-                        <span>Hours</span>
-                    </template>
-                    <template slot="minutes">
-                        <span>Minutes</span>
-                    </template>
-                </timeselector>
-                <timeselector class="form-control" displayFormat=" [To] HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
-                :displaySeconds="false" style="width:208px; float: left" :placeholder="'[To] HH:MM'"
-                returnFormat="HH:mm" @formatedTime="tEnd">
-                    <template slot="hours">
-                        <span>Hours</span>
-                    </template>
-                    <template slot="minutes">
-                        <span>Minutes</span>
-                    </template>
-                </timeselector>
-                <img src="../../assets/datatables/images/add_circle.png" v-on:click="addTime(timeFormat)" style="cursor:pointer">
-                <div style="clear: both; margin-top: 10px"></div>
-                <div class="timeChip">
-                    <vs-chip v-on:click="removeTime(time)" v-for="time in available_times"
-                    v-bind:key="time" style="width:40%; float:left" closable> {{ time }} </vs-chip>
+                <div class="formTimePicker" style="float:left">
+                    <timeselector class="timePicker form-control" displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
+                    :displaySeconds="false" style="width:208px" :placeholder="'[From] HH:MM'"
+                    returnFormat="HH:mm" @formatedTime="tStart">
+                        <template slot="hours">
+                            <span>Hours</span>
+                        </template>
+                        <template slot="minutes">
+                            <span>Minutes</span>
+                        </template>
+                    </timeselector>
+                    <timeselector class="timePicker form-control" displayFormat=" [To] HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
+                    :displaySeconds="false" style="width:208px" :placeholder="'[To] HH:MM'"
+                    returnFormat="HH:mm" @formatedTime="tEnd">
+                        <template slot="hours">
+                            <span>Hours</span>
+                        </template>
+                        <template slot="minutes">
+                            <span>Minutes</span>
+                        </template>
+                    </timeselector>
+                    <img src="../../assets/datatables/images/add_circle.png" v-on:click="addTime(timeFormat)" style="cursor:pointer">
                 </div>
+                <div style="clear: both; margin-top: 10px"></div>
+                <vs-chips class="center-block" color="rgb(145, 32, 159)" placeholder="Time Schedules"
+                style="width:80%; margin-top:20px" v-model="available_times" remove-icon="delete_forever">
+                    <vs-chip v-on:click="removeTime(time)" v-for="time in available_times"
+                    v-bind:key="time" closable> {{ time }} </vs-chip>
+                </vs-chips>
             </div>
             <div style="clear: both"></div>
-             <!-- Pressing register button will send form's info to server -->
         </form>
         <div id="buttonHolder" style="margin:10px">
             <b-button type="submit" form="formInfo" variant="success" size="sm"
@@ -184,6 +188,9 @@ export default {
                         + '최소 크레딧 : ' +  minPoint + '\n'
                         + '보상 크레딧의 양을 확인해 주세요!');
                 }
+                else if (this.available_times.length == 0){
+                    alert('답변을 원하는 시간대를 선택해 주세요!');
+                }
                 else {
                     if (this.formCheck() == true){
                         const res = await this.$http.post("/rest/question", { title, content, reward, type, fields, available_times});
@@ -231,12 +238,17 @@ export default {
             else {
                 this.timeFormat = this.selectedDays + '/' + this.timeStart + '~'  + this.timeEnd; 
                 console.log(this.timeFormat);
-                this.available_times.push(this.timeFormat)
+                this.available_times.push(this.timeFormat);
                 this.timeFormat = null;
+                console.log(this.available_times);
             }
         },
         removeTime (time) {
             this.available_times.splice(this.available_times.indexOf(time), 1)
+        },
+        resetTime () {
+            this.available_times = [];
+            console.log(this.available_times);
         },
         timeCheck () {
             if ((this.selectedDays.length == 0) || (this.timeStart == '') || (this.timeEnd == '')){
