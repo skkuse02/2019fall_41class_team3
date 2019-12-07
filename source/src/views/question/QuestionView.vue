@@ -18,7 +18,7 @@
                       <b>{{question.title}}</b>
                     </div>
                     <div style="display:inline;float:right;">
-                      <b-button type="button" variant="warning" v-on:click="star()">
+                      <b-button type="button" variant="warning" v-on:click="star()" :disabled="starDisabled">
                         <i class="fa fa-star" aria-hidden="true"></i> Star {{question.star}}
                       </b-button>
                     </div>
@@ -129,7 +129,8 @@ export default {
       hasPermission: false,
       isAnswered: false,
       answer: null,
-      user: null
+      user: null,
+      starDisabled: false
     };
   },
   mounted: async function () {
@@ -172,6 +173,7 @@ export default {
       const reqRes = await this.$http.post('/rest/question/star/' + this.$route.params.id);
       if(reqRes.data.result) {
         this.question.star = reqRes.data.stars;
+        this.starDisabled = true;
       }
     },
     async purchase() {
