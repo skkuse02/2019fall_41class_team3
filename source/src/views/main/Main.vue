@@ -8,13 +8,10 @@
         <b-dropdown variant="info" size="lg" :text="questionTable.filterText" style="width:100px;">
           <b-dropdown-item @click="questionTable.filterOn = ['title']; questionTable.filterText='Title'">Title</b-dropdown-item>
           <b-dropdown-item @click="questionTable.filterOn = ['uid']; questionTable.filterText='Author'">Author</b-dropdown-item>
-          <b-dropdown-item @click="questionTable.filterOn = ['fields']; questionTable.filterText='Author'">Field</b-dropdown-item>
+          <b-dropdown-item @click="questionTable.filterOn = ['fields']; questionTable.filterText='Field'">Field</b-dropdown-item>
         </b-dropdown>
-        <b-form-input
-          v-model="questionTable.filter"
-          type="search"
-          id="filterInput"
-          placeholder="Search..."
+        <b-form-input v-model="questionTable.filter" type="search" id="filterInput"
+          placeholder="Search..." style="width:300px"
         ></b-form-input>
         <b-input-group-append>
           <b-button :disabled="!questionTable.filter" @click="questionTable.filter = ''">Clear</b-button>
@@ -50,34 +47,35 @@
         </ol>
       </div>
     </div>
-    <div id="icons" class="text-center outline" style="float:right; text-align:center;">
-      <figure class="col-md-3" style="margin-top:80px; padding:20px; text-align:center">
-         <img src="../../assets/datatables/images/flask.png"
-         v-on:click="moveQuestionList()" style="cursor:pointer"/>
-        <figcaption class="caption"><h3>Science</h3></figcaption>
-      </figure>
-      <figure class="col-md-3" style="padding:20px; text-align:center">
-         <img src="../../assets/datatables/images/square-root.png"
-         v-on:click="moveQuestionList()" style="cursor:pointer"/>
-        <figcaption class="caption"><h3>Math</h3></figcaption>
-      </figure>
-      <figure class="col-md-3" style="padding:20px; text-align:center">
-         <img src="../../assets/datatables/images/laptop-code.png"
-         v-on:click="moveQuestionList()" style="cursor:pointer"/>
-        <figcaption class="caption"><h3>Computer Science</h3></figcaption>
-      </figure>
+    <div id="icons" style="float:right; margin-right:65px">
+      <div class="col-md-3" style="margin-top:80px; padding:20px">
+         <img src="../../assets/datatables/images/flask.png" width="120px"
+         height="105px" v-on:click="moveQuestionList()" style="cursor:pointer"/>
+        <div class="caption" style="width:120px; text-align:center"><h3>Science</h3></div>
+      </div>
+      <div class="col-md-3" style="padding:20px">
+         <img src="../../assets/datatables/images/square-root.png" width="120px"
+         height="105px" v-on:click="moveQuestionList()" style="cursor:pointer"/>
+        <div class="caption" style="width:120px; text-align:center"><h3>Math</h3></div>
+      </div>
+      <div class="col-md-3" style="padding:20px">
+         <img src="../../assets/datatables/images/laptop-code.png" width="120px"
+         height="105px" v-on:click="moveQuestionList()" style="cursor:pointer"/>
+        <div class="caption" style="width:120px; text-align:center"><h3>Computer Science</h3></div>
+      </div>
     </div>
     <div style="clear: both"></div>
     <div v-if="this.uid">
-      <div id="buttonholder" style="margin:10px">
-        <b-button type="submit" @click="moveRegisterQuestion()"
-        variant="success" size="sm">질문 등록하기</b-button>
-      </div>
-      <div id="buttonholder" style="margin:10px">
+      <div id="buttonholder" style="margin:10px; float:right">
         <b-button type="button" @click="moveQuestionList()"
         variant="success" size="sm">전체 게시물</b-button>
       </div>
+      <div id="buttonholder" style="margin:10px; float:right">
+        <b-button type="submit" @click="moveRegisterQuestion()"
+        variant="success" size="sm">질문 등록하기</b-button>
+      </div>
     </div>
+    <div style="clear: both"></div>
   </div>
 </template>
 
