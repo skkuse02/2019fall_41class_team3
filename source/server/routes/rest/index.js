@@ -91,10 +91,10 @@ async function checkPassword(req, res){
 
 async function logout(req, res){
     try{
-        await req.session.destroy(() => {
+        req.session.user = null;
+        await req.session.destroy(()=>{ 
+            req.session;
         });
-        req.session = undefined;
-
         res.status(200).send({
             result: true
         });

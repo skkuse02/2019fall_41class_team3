@@ -58,10 +58,9 @@ export default {
     };
   },
   created: async function(){
-    this.getSession();
   },
   mounted: async function(){
-
+    this.getSession();
   },
   methods: {
     getSession: async function(){

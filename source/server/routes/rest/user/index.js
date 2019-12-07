@@ -4,7 +4,10 @@ const express = require('express');
 const router = aa(express.Router());
 async function auth(req, res, next){
     if(req.session.user) return next();
-    else res.redirect('/login');
+    else res.status(401).send({
+        result: false,
+        msg: "Not authorized"
+    });
 }
 
 const {

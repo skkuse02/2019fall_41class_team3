@@ -156,7 +156,7 @@
     methods: {
       moveRegisterQuestion () {
         this.$router.push({
-            path: '/registerquestion'
+            path: '/question/register'
         });
       },
       moveQuestionList() {
