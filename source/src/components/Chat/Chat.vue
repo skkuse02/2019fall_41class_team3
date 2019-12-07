@@ -11,9 +11,11 @@
               (starts at {{time}})
           </div>
           <div class="card-body">
-              <div class="messages" v-for="(msg, index) in messages" :key="index">
-                  <p><span class="font-weight-bold">{{ msg.user }} </span>{{ msg.message }}</p>
-              </div>
+            <div class="overflow-auto" style="max-height:300px;">
+                <div class="messages" v-for="(msg, index) in messages" :key="index">
+                    <p><span class="font-weight-bold">{{ msg.user }} </span>{{ msg.message }}</p>
+                </div>
+            </div>
           </div>
       </div>
       <div class="card-footer">
@@ -23,7 +25,8 @@
                   <input type="text" v-model="message" class="form-control">
               </div>
           </form>
-          <button class="btn btn-success" v-on:click="evaluate()"> Finish</button>
+          
+    <button v-if="mentee" class="btn btn-success" style="margin-top: 20px;margin-bottom: 20px;" v-on:click="evaluate()"> Finish</button>
       </div>
   </div>
 </template>
@@ -42,7 +45,8 @@ export default {
                 title: '',
                 content: ''
             },
-            time : null
+            time : null,
+            mentee: false
         }
     },
     methods: {
@@ -59,8 +63,14 @@ export default {
         evaluate: async function(){
             try{
                 confirm("Are you sure your chat session is finished?");
+                this.socket.emit('CONNECTION', {
+                    user: this.user,
+                    message: `has left the room.`,
+                    room: this.$route.query.room
+                });
                 const res = await this.$http.post('/rest/answer/message/'+this.$route.query.qid, {messages: this.messages});
                 this.$router.push('/answer/evaluate/'+this.$route.query.qid);
+                
             } catch(e){
                 console.log(e);
                 alert("An error has occured");
@@ -71,6 +81,7 @@ export default {
         try{
             const user = await this.$http.get('/rest/user/session');
             this.user = user.data.user.uid;
+            this.mentee = user.data.user.type == 'Mentee';
             try{
                 const question = await this.$http.get('/rest/question/arranged/' + this.$route.query.qid, this.$route.query.room);
                 this.question.title = question.data.question.title;
@@ -95,7 +106,7 @@ export default {
                 });
                 this.socket.emit('CONNECTION', {
                     user: this.user,
-                    message: ` has entered the chat room.`,
+                    message: `has entered the chat room.`,
                     room: this.$route.query.room
                 });
             } catch(e){
