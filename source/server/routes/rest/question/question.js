@@ -245,6 +245,32 @@ async function getArrangement(req, res){
   }
 }
 
+async function deleteQuestion(req, res){
+  try{
+    const question = await models.question.findOne({
+      where: {
+        id: req.params.qid
+      }
+    });
+    if(req.session.user.uid == question.uid){
+      await models.question.destroy({
+        where: {
+          qid: req.params.qid
+        }
+      });
+      res.status(200).send({
+        result: true
+      });
+    } else{
+      throw new Error("Not your question");
+    }
+  } catch(err){
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
 
 module.exports = {
   getQuestionList,
@@ -253,5 +279,6 @@ module.exports = {
   getQuestion,
   getQuestionByTime,
   addStar,
-  getArrangement
+  getArrangement,
+  deleteQuestion
 };
