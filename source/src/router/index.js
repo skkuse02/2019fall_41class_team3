@@ -29,6 +29,7 @@ const EvaluateAnswer = () => import ('@/views/answer/EvaluateAnswer')
 
 // User
 const Profile = () => import('@/views/user/Profile')
+const ChangePw = () => import('@/views/user/ChangePw')
 const Credit = () => import('@/views/user/Credit')
 const MyQuestion  = () => import('@/views/user/MyQuestion')
 const Signup = () => import('@/views/user/Signup')
@@ -84,6 +85,11 @@ export default new Router({
                     path: '/profile',
                     name: 'Profile',
                     component: Profile
+                },
+                {
+                    path: '/changepw',
+                    name: 'ChangePw',
+                    component: ChangePw
                 },
                 {
                     path: '/myquestion',
