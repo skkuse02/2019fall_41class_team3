@@ -74,11 +74,9 @@ export default {
           this.credit = creditRes.data.credit;
           this.sessionExist = true;
         } else{
-          await this.$session.remove('user');
           this.sessionExist = false;
         }
       } catch(e){
-        await this.$session.remove('user');
         this.sessionExist = false;
       }
     },
@@ -88,7 +86,6 @@ export default {
         //if (res.data.result == true)
         //alert('로그아웃 되었습니다.')
         this.sessionExist = false;
-        await this.$session.remove('user');
         this.$router.push({
           path: '/'
         });

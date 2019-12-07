@@ -69,13 +69,11 @@ export default {
     };
   },
   created: async function(){
-    if(!this.$session.exists()){
-      this.$router.push({
-        path: '/'
-      });
-    }
-    else {
-      this.user = this.$session.get('user');
+    try{
+      const session = await this.$http.get('/rest/user/session');
+      this.user = session.data.user;
+    } catch(e) {
+      this.$router.push({path: '/login'});
     }
     
     const res = await this.$http.get("/rest/user/credit");
@@ -120,7 +118,6 @@ export default {
             const amount = this.amount;
             const reqRes = await this.$http.post("/rest/user/withdraw", {amount});
             if (reqRes.data.result == true) {
-              this.$session.get('user').credit =  reqRes.data.total;
                 alert('성공적으로 인출 되었습니다.');
                 this.$router.go('/credit');
             } 

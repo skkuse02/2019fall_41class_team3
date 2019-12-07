@@ -51,11 +51,15 @@ export default {
     }
   },
   created: async function(){
-    if(this.$session.has('user')){
-      this.$router.push({
-        path: '/'
-      });
-
+    try{
+      const session = await this.$http.get('/rest/user/session');
+      if(session.data.result){
+        this.$router.push({
+          path: '/'
+        });
+      }
+    } catch(err){
+      
     }
   },
   methods: {
@@ -69,11 +73,6 @@ export default {
         const res = await this.$http.post("/rest/login", {uid, password})
         if (res.data.result == true) {
           const session = await this.$http.get('/rest/user/session');
-          if(session.data.result == true){
-            this.$session.set('user',session.data.user);
-          } else{
-            this.$session.remove('user');
-          }
         } 
         this.$router.go(-1);
       } catch(err) {

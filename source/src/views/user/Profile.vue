@@ -140,13 +140,11 @@ export default {
     }
   },
   created: async function(){
-    if(!this.$session.exists()){
-      this.$router.push({
-        path: '/'
-      });
-    }
-    else {
-      this.user = this.$session.get('user');
+    try{
+      const session = await this.$http.get('/rest/user/session');
+      this.user = session.data.user;
+    } catch(e) {
+      this.$router.push({path: '/login'});
     }
   },
   methods: {

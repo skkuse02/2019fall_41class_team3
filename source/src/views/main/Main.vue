@@ -122,10 +122,13 @@
       }
     },
     mounted: async function() {
-      if (await this.$session.exists()){
-        const session = await this.$http.get('/rest/user/session')
-        this.uid = session.data.user.uid
+      
+        try{
+        const session = await this.$http.get('/rest/user/session');
+        this.uid = session.data.user.uid;
+      } catch(e) {
       }
+      
       const qlist = await this.$http.get('/rest/question/list');
       this.questionTable.questions = qlist.data.questions;
       this.questionTable.totalRows = this.questionTable.questions.length;
