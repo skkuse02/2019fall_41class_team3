@@ -7,13 +7,25 @@ a {
 textarea {
     resize: none;
 }
-/* div.form-group {
+div.qFormGroup {
     width: 80%;
-    margin: 10px;
-    margin-left: 40px;
-} */
+    text-align: center;
+    margin-top: 20px;
+}
 #buttonHolder {
     text-align: right;
     align-items: right;
     justify-content: right;
+}
+div.form-vif {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+div.formTimePicker {
+    width: 100%;
+    text-align: center;
+}
+div.timePicker, div.timeChip, div.formElement, timeselector, img, vs-chip {
+    display: inline-block;
 }
