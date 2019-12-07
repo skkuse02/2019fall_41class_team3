@@ -49,13 +49,17 @@
                   </table>
                   {{question.content}}
                 </div>
-                <div style="float:right;">
-                  <b-button type="button" variant="danger" v-on:click="showDeleteModal()" style="margin:5px;">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
-                  </b-button>
-                  <b-button to="/question/list" type="button" variant="secondary" style="margin:5px;">
-                    <i class="fa fa-undo" aria-hidden="true"></i> Back
-                  </b-button>
+                <div style="float:right;display:inline;">
+                  <div v-if="user.uid==question.uid" style="margin:5px;display:inline;">
+                    <b-button type="button" variant="danger" v-on:click="showDeleteModal()" style="margin:5px;">
+                      <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
+                    </b-button>
+                  </div>
+                  <div style="margin:5px;display:inline;">
+                    <b-button to="/question/list" type="button" variant="secondary">
+                      <i class="fa fa-undo" aria-hidden="true"></i> Back
+                    </b-button>
+                  </div>
                 </div>
               </b-card-body>
             </b-card>
@@ -221,8 +225,12 @@ export default {
     showDeleteModal() {
       this.$modal.show('confirm-delete');
     },
-    deleteQuestion() {
-      //
+    async deleteQuestion() {
+      const reqRes = await this.$http.post('/rest/question/delete/' + this.$route.params.id);
+      if(reqRes.data.result) {
+        alert("Question deleted successfully.");
+        this.$router.push({ path: '/question/list' });
+      }
     }
   }
 }
