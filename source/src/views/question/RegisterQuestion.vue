@@ -188,7 +188,7 @@ export default {
                         + '최소 크레딧 : ' +  minPoint + '\n'
                         + '보상 크레딧의 양을 확인해 주세요!');
                 }
-                else if (this.available_times.length == 0){
+                else if ((tIdx != 2) && (this.available_times.length == 0)){
                     alert('답변을 원하는 시간대를 선택해 주세요!');
                 }
                 else {
