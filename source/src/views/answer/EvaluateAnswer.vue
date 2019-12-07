@@ -1,27 +1,29 @@
 <template>
-    <div class="evaluateForm" style="margin:100px 40px 40px 40px">
-        <h2><p>EvaluateAnswer</p></h2>
-        <div class="answerContent">
-            <label for="answerContent"> Answer Content </label><br>
-            {{ aContent }}
-        </div>
-        <form class="form-horizontal" role="form" @submit.prevent="write()">
-            <div style="margin-top: 20px">
-                <h5><p>이 답변이 얼마나 유용했나요?</p></h5>
-                <star-rating :border-width="3" v-model="starValue"></star-rating>
+    <div class="evaluateForm" style="margin-top:100px">
+        <h2><p style="margin-left:50px; margin-bottom:10px">EvaluateAnswer</p></h2>
+        <form class="form-horizontal" id="evalInfo" role="form" @submit.prevent>
+            <div class="eaStarGroup center-block">
+                <h5><p text-align: center>이 답변이 얼마나 유용했나요?</p></h5>
+                <div class="star">
+                    <star-rating :border-width="2" v-model="starValue"></star-rating>
+                </div>
             </div>
-            <div style="margin-top: 20px">
-                <h5>멘토에게 피드백을 남겨주세요!</h5>
-                <input type="text" id="feedback" v-model="feedback" class="form-control" placeholder="피드백"/>
+            <div class="eaFormGroup center-block">
+                <h5 style="margin-top:20px">멘토에게 피드백을 남겨주세요!</h5>
+                <input type="text" id="feedback" v-model="feedback"
+                class="form-control" row="5" placeholder="피드백"/>
             </div>
-            <div style="margin-top: 20px">
-                <h5>답변이 정말로 유용했다면, 멘토에게 추가로 크레딧을 줄 수 있습니다!</h5>
-                <input type="integer" id="reward" v-model="reward" class="form-control" placeholder="추가 보상"/>
-            </div>
-            <div id="buttonHolder" style="margin:10px">
-                <b-button type="submit" variant="success" size="sm">평가 등록하기</b-button>
+            <div class="eaFormGroup center-block">
+                <h5 style="margin-top:20px"><p>답변이 정말로 유용했다면,</p></h5>
+                <h5><p>멘토에게 추가로 크레딧을 수여할 수 있습니다!</p></h5>
+                <input type="integer" id="reward" v-model="reward"
+                class="form-control" placeholder="추가 보상"/>
             </div>
         </form>
+        <div id="buttonHolder" style="margin:10px">
+            <b-button type="submit" form="evalInfo" variant="success" size="sm"
+            @click.prevent="write()">평가 등록하기</b-button>
+        </div>
     </div>
 </template>
 
@@ -51,9 +53,6 @@ export default {
             });
         }
         this.qid = this.$route.params.qid;
-        const answerInfo = await this.$http.get("/rest/answer/text/" + this.$route.params.qid);
-        console.log(answerInfo.data.answer);
-        this.aContent = answerInfo.data.answer.content;
     },
     methods: {
         async write () {

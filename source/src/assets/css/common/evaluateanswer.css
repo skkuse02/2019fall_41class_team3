@@ -4,17 +4,30 @@ h2 {
 a {
     color: #42b983;
 }
-.modal-backdrop
-{
-    display: none;
+div.evaluateForm {
+    width: 100%;
+    margin-top: 100px;
 }
-div.form-group {
-    width: 80%;
-    margin: 10px;
-    margin-left: 40px;
+div.eaFormGroup {
+    width: 60%;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+div.eaStarGroup {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+div.star{
+    display: inline-block;
 }
 #buttonHolder {
     text-align: right;
     align-items: right;
     justify-content: right;
+}
+star-rating {
+    display: inline-block;
 }
