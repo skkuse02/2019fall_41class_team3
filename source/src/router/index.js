@@ -61,12 +61,12 @@ export default new Router({
                     component: Login
                 },
                 {
-                    path: '/findid',
+                    path: '/find/id',
                     name: 'FindId',
                     component:FindId
                 },
                 {
-                    path: '/findpassword',
+                    path: '/find/password',
                     name: 'FindPassword',
                     component:FindPassword
                 },
@@ -101,7 +101,7 @@ export default new Router({
                     component: Credit
                 },
                 {
-                    path: '/registerquestion',
+                    path: '/question/register',
                     name: 'RegisterQuestion',
                     component: RegisterQuestion
                 },
