@@ -296,7 +296,7 @@ async function getQuestionTime(req, res){
       },
       attributes: ['timeId']
     });
-    times = await times.map((t) => t.timdId);
+    times = await times.map((t) => t.timeId);
     res.status(200).send({
       result: true,
       available_times: times
