@@ -25,10 +25,10 @@
         <router-link to='../signup'> Sign Up </router-link>
         <span>  |  </span>
         <!-- Pressing Find ID will redirect user to findid page -->
-        <router-link to='../findid'> Find ID </router-link>
+        <router-link to='../find/id'> Find ID </router-link>
         <span>  |  </span>
         <!-- Pressing Find PW will redirect user to findpw page -->
-        <router-link to='../findpassword'> Find PW </router-link>
+        <router-link to='../find/password'> Find PW </router-link>
     </div><p></p>
 
     <div class="text-center">
