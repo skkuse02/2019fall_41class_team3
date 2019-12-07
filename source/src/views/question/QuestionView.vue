@@ -38,6 +38,10 @@
                         <td> {{question.reward}} </td>
                       </tr>
                       <tr>
+                        <th> Answer Type </th>
+                        <td> {{question.type}} </td>
+                      </tr>
+                      <tr>
                         <th></th>
                         <td></td>
                       </tr>
