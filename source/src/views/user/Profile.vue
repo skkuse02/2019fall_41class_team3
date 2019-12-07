@@ -207,7 +207,8 @@ export default {
               this.nickname = this.user.nickname;
               this.email = this.user.email;
               alert('성공적으로 업데이트 되었습니다.');
-              this.$router.go({path: '/profile'});
+              //this.$router.go({path: '/profile'});
+               this.changeMode('view_info');
             } 
           }
           else {
