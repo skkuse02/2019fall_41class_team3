@@ -156,10 +156,26 @@ async function getQuestionByTime(req, res){
         attributes: ['qid']
       });
       qids = await qids.map(q => q.qid);
+      let unique = [...new Set(qids)];
+      let ans = await models.answer.findAll({
+        where: {
+          qid: unique
+        },
+        attributes: ['qid']
+      });
+
+      ans = await ans.map(q => q.qid);
+
+      const _qids = [];
+      for(let qid in qids){
+        if(!ans.includes(qid)){
+          _qids.push(qid);
+        }
+      }
 
       const questions = await models.question.findAll({
         where:{
-          id: qids
+          id: _qids
         }
       });
 
@@ -245,6 +261,53 @@ async function getArrangement(req, res){
   }
 }
 
+async function deleteQuestion(req, res){
+  try{
+    const question = await models.question.findOne({
+      where: {
+        id: req.params.qid
+      }
+    });
+    if(req.session.user.uid == question.uid){
+      await models.question.destroy({
+        where: {
+          id: req.params.qid
+        }
+      });
+      res.status(200).send({
+        result: true
+      });
+    } else{
+      throw new Error("Not your question");
+    }
+  } catch(err){
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
+
+async function getQuestionTime(req, res){
+  try{
+    let times = await models.questiontime.findAll({
+      where: {
+        qid: req.params.qid
+      },
+      attributes: ['timeId']
+    });
+    times = await times.map((t) => t.timdId);
+    res.status(200).send({
+      result: true,
+      available_times: times
+    });
+  } catch(err){
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
 
 module.exports = {
   getQuestionList,
@@ -253,5 +316,7 @@ module.exports = {
   getQuestion,
   getQuestionByTime,
   addStar,
-  getArrangement
+  getArrangement,
+  deleteQuestion,
+  getQuestionTime
 };

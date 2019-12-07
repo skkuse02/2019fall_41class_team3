@@ -38,6 +38,10 @@
                         <td> {{question.reward}} </td>
                       </tr>
                       <tr>
+                        <th> Answer Type </th>
+                        <td> {{question.type}} </td>
+                      </tr>
+                      <tr>
                         <th></th>
                         <td></td>
                       </tr>
@@ -46,7 +50,7 @@
                   {{question.content}}
                 </div>
                 <div style="float:right;">
-                  <b-button type="button" variant="danger" v-on:click="deleteModal = true" style="margin:5px;">
+                  <b-button type="button" variant="danger" v-on:click="showDeleteModal()" style="margin:5px;">
                     <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
                   </b-button>
                   <b-button to="/question/list" type="button" variant="secondary" style="margin:5px;">
@@ -101,9 +105,18 @@
         </transition>
       </b-col>
     </b-row>
-    <b-modal v-model="deleteModal" centered hide-header @ok="deleteQuestion()">
-      정말로 삭제하시겠습니까?
-    </b-modal>
+    <modal name="confirm-delete">
+      <div style="text-align:center;padding:60px;height:80%;font-size:25px;">
+        <div style="margin-bottom:30px;">
+          <b>Do you really want to delete the question?</b>
+        </div>
+        <div style="margin:20px;">
+          <b-button type="button" variant="danger" v-on:click="deleteQuestion">
+            <i class="fa fa-trash-o" aria-hidden="true"></i> Confirm
+          </b-button>
+        </div>
+      </div>
+    </modal>
     
     <modal name="not-enough-credit">
       <div>Not enough credits.</div>
@@ -204,6 +217,12 @@ export default {
     },
     gotoAnswer() {
       this.$router.push({path: '/answer/text/'+this.$route.params.id});
+    },
+    showDeleteModal() {
+      this.$modal.show('confirm-delete');
+    },
+    deleteQuestion() {
+      //
     }
   }
 }
