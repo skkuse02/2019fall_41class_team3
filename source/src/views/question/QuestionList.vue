@@ -42,7 +42,7 @@
           v-model="questionTable.filter"
           type="search"
           id="filterInput"
-          placeholder="Search..."
+          placeholder="Enter text..."
         ></b-form-input>
         <b-input-group-append>
           <b-button :disabled="!questionTable.filter" @click="questionTable.filter = ''">Clear</b-button>
