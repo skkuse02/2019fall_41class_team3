@@ -157,9 +157,25 @@ async function getQuestionByTime(req, res){
       });
       qids = await qids.map(q => q.qid);
 
+      let ans = await models.answer.findAll({
+        where: {
+          qid: qids
+        },
+        attributes: ['qid']
+      });
+
+      ans = await ans.map(q => q.qid);
+
+      const _qids = [];
+      for(let qid in qids){
+        if(!ans.includes(qid)){
+          _qids.push(qid);
+        }
+      }
+
       const questions = await models.question.findAll({
         where:{
-          id: qids
+          id: _qids
         }
       });
 
@@ -272,6 +288,27 @@ async function deleteQuestion(req, res){
   }
 }
 
+async function getQuestionTime(req, res){
+  try{
+    let times = await models.questiontime.findAll({
+      where: {
+        qid: req.params.qid
+      },
+      attributes: ['timeId']
+    });
+    times = await times.map((t) => t.timdId);
+    res.status(200).send({
+      result: true,
+      available_times: times
+    });
+  } catch(err){
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  }
+}
+
 module.exports = {
   getQuestionList,
   addQuestion,
@@ -280,5 +317,6 @@ module.exports = {
   getQuestionByTime,
   addStar,
   getArrangement,
-  deleteQuestion
+  deleteQuestion,
+  getQuestionTime
 };
