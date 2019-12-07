@@ -277,8 +277,9 @@ async function evaluateAnswer(req, res){
             to: mentor.email,       
             subject: '[QAHub] Your answer has been evaluated.',   // 제목
             text: `Hello ${mentor.name},
-            \n\nYour response for the question titled "${question.title}" has been evaluated by the mentee.
-            \n\nQuestion: "${question.content}"
+            \n\nYour response for a question has been evaluated by the mentee.
+            \n\nQuestion Title: "${question.title}"
+            \n\nContent: "${question.content}"
             \n\nYour Answer: "${answer.content}"
             \n\nRewarded points: ${req.body.reward}
             \n\nThank you for using QAHub.`
