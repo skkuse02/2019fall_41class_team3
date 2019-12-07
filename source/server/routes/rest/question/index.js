@@ -15,15 +15,19 @@ const {
     getResponseType,
     getQuestionByTime,
     getArrangement,
-    addStar
+    addStar,
+    deleteQuestion,
+    getQuestionTime
 } = require('./question');
 
 router.get('/list', auth, getQuestionList);
 router.get('/responseType', auth, getResponseType);
+router.get('/availableTime/:qid', auth, getQuestionTime);
 router.get('/listByTime', auth, getQuestionByTime);
 router.get('/arranged/:qid', auth, getArrangement);
 router.get('/:id', auth, getQuestion);
 
+router.post('/delete/:qid', auth, deleteQuestion);
 router.post('/star/:qid', auth, addStar);
 router.post('/', auth, addQuestion);
 
