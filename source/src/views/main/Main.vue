@@ -66,7 +66,7 @@
     </div>
     <div style="clear: both"></div>
     <div v-if="this.uid">
-      <div id="buttonholder" style="margin:10px; float:right">
+      <div id="buttonholder" style="margin:10px; margin-right:65px; float:right">
         <b-button type="button" @click="moveQuestionList()"
         variant="success" size="sm">전체 게시물</b-button>
       </div>

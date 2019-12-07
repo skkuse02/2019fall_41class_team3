@@ -22,8 +22,6 @@ import Timeselector from 'vue-timeselector';
 import { ButtonPlugin, ButtonGroupPlugin, ModalPlugin } from 'bootstrap-vue';
 import { vsButton, vsSelect, vsPopup, vsChip, vsIcon } from 'vuesax';
 import StarRating from 'vue-star-rating';
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import 'expose-loader?$!expose-loader?jQuery!jquery';
 import './assets/js/bootstrap.min.js';
