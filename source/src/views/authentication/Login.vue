@@ -16,7 +16,7 @@
 
         <!-- Pressing login button will send form's info to server -->
         <div id="loginButtonHolder" style="padding-top:10px">
-            <b-button type="submit" variant="success" size="lg">로그인</b-button>
+            <b-button type="submit" variant="success" size="lg" style="width: 20%">로그인</b-button>
         </div>
     </form>
 

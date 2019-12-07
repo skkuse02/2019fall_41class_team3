@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+    <div v-if="!isMentor" style="float:right;margin:30px;">
+      <b-button type="submit" @click="moveRegisterQuestion()"
+      variant="success" size="lg">
+        <i class="fa fa-plus" aria-hidden="true"></i> Add Question
+      </b-button>
+    </div>
     <div class="card" v-if="isMentor&&(recomendedTable.totalRows>0)">
       <h1 style="font-size:20px;margin:30px;">
         <b>Recommend Questions</b>
@@ -36,7 +42,7 @@
           v-model="questionTable.filter"
           type="search"
           id="filterInput"
-          placeholder="Search..."
+          placeholder="Enter text..."
         ></b-form-input>
         <b-input-group-append>
           <b-button :disabled="!questionTable.filter" @click="questionTable.filter = ''">Clear</b-button>
@@ -146,6 +152,11 @@ export default {
   methods: {
     viewQuestion: async function(item, index){
         this.$router.push({'path' : '/question/'+item.id});
+    },
+    moveRegisterQuestion () {
+      this.$router.push({
+          path: '/registerquestion'
+      });
     },
     checkSession: async function(){
       try{
