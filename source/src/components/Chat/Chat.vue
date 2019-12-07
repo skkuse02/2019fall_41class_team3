@@ -8,11 +8,11 @@
               <br><br>
               {{question.content}}
               <hr>
+              (starts at {{time}})
           </div>
           <div class="card-body">
-              (starts at {{time}})
               <div class="messages" v-for="(msg, index) in messages" :key="index">
-                  <p><span class="font-weight-bold">{{ msg.user }}: </span>{{ msg.message }}</p>
+                  <p><span class="font-weight-bold">{{ msg.user }} </span>{{ msg.message }}</p>
               </div>
           </div>
       </div>
@@ -22,8 +22,8 @@
                   <label for="message">Message:</label>
                   <input type="text" v-model="message" class="form-control">
               </div>
-              <button type="submit" class="btn btn-success">Send</button>
           </form>
+          <button class="btn btn-success" v-on:click="evaluate()"> Finish</button>
       </div>
   </div>
 </template>
@@ -55,6 +55,16 @@ export default {
                 room: this.$route.query.room
             });
             this.message = ''
+        },
+        evaluate: async function(){
+            try{
+                confirm("Are you sure your chat session is finished?");
+                const res = await this.$http.post('/rest/answer/message/'+this.$route.query.qid, {messages: this.messages});
+                this.$router.push('/answer/evaluate/'+this.$route.query.qid);
+            } catch(e){
+                console.log(e);
+                alert("An error has occured");
+            }
         }
     },
     mounted: async function (){
@@ -66,19 +76,26 @@ export default {
                 this.question.title = question.data.question.title;
                 this.question.content = question.data.question.content;
                 this.time = question.data.arranged;
+
+                const messages = await this.$http.get('/rest/answer/message/' + this.$route.query.qid);
+                this.messages = messages.data.messages;
+
                 this.socket.on('MESSAGE', (data) => {
                 if(data.room == this.$route.query.room){
-                    this.messages.push(data)
+                    data.user = data.user + ":";
+                    data.idx = this.messages.length;
+                    this.messages.push(data);
                 }
                 });
                 this.socket.on('ENTER', (data) => {
                 if(data.room == this.$route.query.room){
+                    data.idx = this.messages.length;
                     this.messages.push(data);
                 }
                 });
                 this.socket.emit('CONNECTION', {
                     user: this.user,
-                    message: `${this.user} has entered the chat room.`,
+                    message: ` has entered the chat room.`,
                     room: this.$route.query.room
                 });
             } catch(e){

@@ -14,11 +14,16 @@ const {
     getAnswer,
     evaluateAnswer,
     purchaseAnswer,
-    getURL
+    getURL,
+    getMessage,
+    saveMessage
 } = require('./answer');
 
 router.get('/text/:qid', auth, getAnswer);
 router.get('/arrange/:qid', auth, getURL);
+router.get('/message/:qid', auth, getMessage);
+
+router.post('/message/:qid', auth, saveMessage);
 router.post('/purchase/:qid', auth, purchaseAnswer);
 router.post('/evaluate/:qid', auth, evaluateAnswer);
 router.post('/text/:qid', auth, addTextAnswer);

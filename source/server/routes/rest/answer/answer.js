@@ -399,11 +399,58 @@ async function getURL(req, res){
     }
 }
 
+async function getMessage(req, res){
+    try{
+        const messages = await models.message.findAll({
+            where:{
+                qid: req.params.qid
+            },
+            order: ['order']
+        });
+
+        res.status(200).send({
+            result: true,
+            messages: messages
+        });
+    } catch(err){
+        console.log(err);
+        res.status(400).send({
+            result: false,
+            msg: err.toString()
+        });
+    }
+}
+
+async function saveMessage(req, res){
+    try{
+        await req.body.messages.forEach(m => {
+            models.message.create({
+                qid: req.params.qid,
+                message: m.message,
+                user: m.user,
+                order: m.idx
+            });
+        });
+
+        res.status(200).send({
+            result: true
+        });
+    } catch(err){
+        console.log(err);
+        res.status(400).send({
+            result: false,
+            msg: err.toString()
+        });
+    }
+}
+
 module.exports = {
     addTextAnswer,
     arrangeTime,
     getAnswer,
     evaluateAnswer,
     purchaseAnswer,
-    getURL
+    getURL,
+    getMessage,
+    saveMessage
 };

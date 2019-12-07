@@ -95,7 +95,9 @@ async function logout(req, res){
             req.session;
         });
 
-        res.redirect('/');
+        res.status(200).send({
+            result: true
+        });
     } catch(err){
         res.status(400).send({
             result: false,

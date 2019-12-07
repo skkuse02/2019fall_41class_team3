@@ -151,14 +151,14 @@ export default {
       try{
         const session = await this.$http.get('/rest/user/session');
         if(session.data.result == false){
-          this.$router.push({'path' : '/'});
+          this.$router.push({'path' : '/login'});
         }
         else {
           this.isMentor = (session.data.user.type == "Mentor");
         }
       } catch(e){
         //alert(e);
-        this.$router.push({'path' : '/'});
+        this.$router.push({'path' : '/login'});
       }
 
     },
