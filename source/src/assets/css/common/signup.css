@@ -1,51 +1,94 @@
 #register-form {
-    background-color: #ffffff;
-    margin: 100px auto;
-    padding: 40px;
-    width: 70%;
-    min-width: 300px;
-  }
+  background-color: #ffffff;
+  margin: 100px auto;
+  padding: 40px;
+  width: 70%;
+  min-width: 300px;
+}
 
-  #signup-checkbox {
-    margin: 10px;
-  }
+.credit-card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  width: 90%;
+  margin: 60px;
+}
 
-  .signup-card {
-    /* Add shadows to create the "card" effect */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    width: 300px;
-    margin: 40px;
-  }
+.credit-top {
+  width: 100%;
+  background-color: #333333;
+  padding: 40px;
+}
+
+.credit-top-text {
+  text-align: center;
+  color: white;
+  margin: auto;
+  font-size: 90px;
+}
+
+.credit-bottom-text {
+  text-align: center;
+  color: #999999;
+  margin: auto;
+  font-size: 40px;
+}
+
+.credit-button-container {
+  text-align: center;
+  margin: 30px;
+}
+
+.credit-button-container button {
+  margin: 20px;
+}
+
+.credit-form-button-container{
   
-  /* On mouse-over, add a deeper shadow */
-  .signup-card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  }
-  
-  /* Add some padding inside the card container */
-  .signup-container {
-    padding: 20px;
-  }
-  
-  .step {
-    height: 15px;
-    width: 15px;
-    margin: 0 2px;
-    background-color: #bbbbbb;
-    border: none;
-    border-radius: 50%;
-    display: inline-block;
-    opacity: 0.5;
-  }
-  
-  .step.active {
-    opacity: 1;
-  }
-  
-  .step.finish {
-    background-color: #4CAF50;
-  }
+}
+
+.credit-form-button-container button{
+  margin: 10px;
+}
+
+#signup-checkbox {
+  margin: 10px;
+}
+
+.signup-card {
+  /* Add shadows to create the "card" effect */
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 300px;
+  margin: 40px;
+}
+
+/* On mouse-over, add a deeper shadow */
+.signup-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+/* Add some padding inside the card container */
+.signup-container {
+  padding: 20px;
+}
+
+.step {
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbbbbb;
+  border: none;
+  border-radius: 50%;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+.step.active {
+  opacity: 1;
+}
+
+.step.finish {
+  background-color: #4CAF50;
+}
 
 html,
 body {

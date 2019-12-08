@@ -2,59 +2,72 @@
   <div>
 
     <!-- Mode: View Credit Info -->
-    <div v-if="mode=='view_credit'">
+    <div class="credit-card">
       <!-- Show user info -->
-      <div>
-        <div>Current credit: {{currentCredit}}</div>
+      <div class="credit-top">
+        <div class="credit-top-text">
+          <b>{{currentCredit}} P</b>
+          <div class="credit-bottom-text">
+            <i class="fa fa-krw" aria-hidden="true"></i> {{currentCredit * 0.9}}
+              <i class="fa fa-info-circle" aria-hidden="true" style="color:#dddddd;font-size:30px;"
+              data-toggle="tooltip" title="If withdrawed"></i>
+          </div>
+        </div>
+        <!-- Buttons -->
+        <div class="credit-button-container">
+          <!-- Credit purchase -->
+          <button @click="changeMode('purchase_credit')" class="btn btn-primary" type="button" variant="primary" size="lg">
+            <i class="fa fa-shopping-cart" aria-hidden="true"></i> Purchase Credit
+          </button>
+          <!-- Credit withdraw -->
+          <button @click="changeMode('withdraw_credit')" class="btn btn-primary" type="button" variant="primary" size="lg">
+            <i class="fa fa-money" aria-hidden="true"></i> Withdraw Credit
+          </button>
+        </div>
+
+        <!-- Mode: Purchase Credit -->
+        <div v-if="mode=='purchase_credit'">
+          <form class="layout-form" @submit.prevent="confirmPurchase()" autocomplete="nope">
+            <h2>
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i> Purchase Credit
+            </h2>
+            <div class="form-group">
+              <div class="label">Amount</div>
+              <div class="content"><input type="number" class="form-control" v-model="amount" min="1000" step="1000"></div>
+            </div>
+            <div class="credit-form-button-container">
+              <button @click="changeMode('view_credit')" class="btn btn-danger" type="button" size="lg">
+                <i class="fa fa-ban" aria-hidden="true"></i> Cancel
+              </button>
+              <button class="btn btn-success" type="submit" variant="primary" size="lg">
+                <i class="fa fa-check" aria-hidden="true"></i></i>Confirm
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Mode: Withdraw Credit -->
+        <div v-if="mode=='withdraw_credit'">
+          <form class="layout-form" @submit.prevent="confirmWithdraw()" autocomplete="nope">
+            <h2>
+              <i class="fa fa-money" aria-hidden="true"></i> Withdraw credit
+            </h2>
+            <div class="form-group">
+              <div class="label">Amount</div>
+              <div class="content"><input type="number" class="form-control" v-model="amount" min="1000" step="1000"></div>
+            </div>
+            <div class="credit-form-button-container">
+              <button @click="changeMode('view_credit')" class="btn btn-danger" type="button" size="lg">
+                <i class="fa fa-ban" aria-hidden="true"></i> Cancel
+              </button>
+              <button class="btn btn-success" type="submit" variant="primary" size="lg">
+                <i class="fa fa-check" aria-hidden="true"></i></i>Confirm
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-
-      <!-- Buttons -->
-      <div>
-        <!-- Credit purchase -->
-        <button @click="changeMode('purchase_credit')" class="btn btn-primary" type="button" variant="primary" size="lg">
-          Purchase Credit
-        </button>
-        <!-- Credit withdraw -->
-        <button @click="changeMode('withdraw_credit')" class="btn btn-primary" type="button" variant="primary" size="lg">
-          Withdraw Credit
-        </button>
-      </div>
     </div>
-
-    <!-- Mode: Purchase Credit -->
-    <div v-if="mode=='purchase_credit'">
-      <form class="layout-form" @submit.prevent="confirmPurchase()" autocomplete="nope">
-        <div class="form-group">
-          <div class="label">Current credit: {{currentCredit}}</div>
-        </div>
-        <div class="form-group">
-          <div class="label">Amount</div>
-          <div class="content"><input type="number" class="form-control" v-model="amount" min="1000" step="1000"></div>
-        </div>
-        <button @click="changeMode('view_credit')" class="btn btn-primary" type="button" variant="primary" size="lg">
-          Cancel
-        </button>
-        <button class="btn btn-primary" type="submit" variant="primary" size="lg">Confirm</button>
-      </form>
-    </div>
-
-    <!-- Mode: Withdraw Credit -->
-    <div v-if="mode=='withdraw_credit'">
-      <form class="layout-form" @submit.prevent="confirmWithdraw()" autocomplete="nope">
-        <div class="form-group">
-          <div class="label">Current credit: {{currentCredit}}</div>
-        </div>
-        <div class="form-group">
-          <div class="label">Amount</div>
-          <div class="content"><input type="number" class="form-control" v-model="amount" min="1000" step="1000"></div>
-        </div>
-        <button @click="changeMode('view_credit')" class="btn btn-primary" type="button" variant="primary" size="lg">
-          Cancel
-        </button>
-        <button class="btn btn-primary" type="submit" variant="primary" size="lg">Confirm</button>
-      </form>
-    </div>
-  
   </div>
 </template>
 
