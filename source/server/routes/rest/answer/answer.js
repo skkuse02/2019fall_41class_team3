@@ -272,6 +272,7 @@ async function evaluateAnswer(req, res){
             }
         });
 
+        const anscontent = question.type == 'Text Response' ? answer.content : question.type;
 
         const mailOptions = {
             from: 'qahub.no.reply@gmail.com',    
@@ -281,7 +282,7 @@ async function evaluateAnswer(req, res){
             \n\nYour response for a question has been evaluated by the mentee.
             \n\nQuestion Title: "${question.title}"
             \n\nContent: "${question.content}"
-            \n\nYour Answer: "${answer.content}"
+            \n\nYour Answer: "${anscontent}"
             \n\nRewarded points: ${req.body.reward}
             \n\nThank you for using QAHub.`
         };
