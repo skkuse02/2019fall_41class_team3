@@ -90,7 +90,7 @@
                     </b-card-body>
                   </div>
                   <div v-else>
-                    This question has answered! See the answer using credit. 
+                    This question has been answered! See the answer using credit. 
                     <b-button type="button" variant="warning" v-on:click="purchase()">
                       <i class="fa fa-shopping-cart" aria-hidden="true"></i> Purchase {{question.reward/5}}
                     </b-button>
@@ -98,10 +98,16 @@
               </b-card>
             </div>
             <div v-else-if="user.type=='Mentor'">
-              <b-card>
-                This question is not answered yet.
+              <b-card v-if="question.type=='Text Response'">
+                This question has not been answered yet.<br>
                 <b-button type="button" variant="danger" v-on:click="gotoAnswer()">
                   <i class="fa fa-pencil" aria-hidden="true"></i> Add Answer
+                </b-button>
+              </b-card>
+              <b-card v-else>
+                This question has not been arranged to be answered.<br><br>
+                <b-button type="button" variant="danger" v-on:click="gotoAnswer()">
+                  <i class="fa fa-pencil" aria-hidden="true"></i> Arrange
                 </b-button>
               </b-card>
             </div>
@@ -141,7 +147,8 @@ export default {
         uid: '',
         createdAt: '',
         content: '',
-        star: 0
+        star: 0,
+        type: ''
       },
       hasPermission: false,
       isAnswered: false,
@@ -220,7 +227,11 @@ export default {
       this.$router.go({path: '/question/'+this.$route.params.id});
     },
     gotoAnswer() {
-      this.$router.push({path: '/answer/text/'+this.$route.params.id});
+      if(this.question.type == 'Text Response'){
+        this.$router.push({path: '/answer/text/'+this.$route.params.id});
+      } else{
+        this.$router.push({path: '/question/arrangetime/'+this.$route.params.id});
+      }
     },
     showDeleteModal() {
       this.$modal.show('confirm-delete');
