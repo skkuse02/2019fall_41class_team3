@@ -20,13 +20,15 @@ const {
     getArrangement,
     addStar,
     deleteQuestion,
-    getQuestionTime
+    getQuestionTime,
+    getQuestionByField
 } = require('./question');
 
 router.get('/list', auth, getQuestionList);
 router.get('/responseType', auth, getResponseType);
 router.get('/availableTime/:qid', auth, getQuestionTime);
 router.get('/listByTime', auth, getQuestionByTime);
+router.get('/listByField', auth, getQuestionByField);
 router.get('/arranged/:qid', auth, getArrangement);
 router.get('/:id', auth, getQuestion);
 

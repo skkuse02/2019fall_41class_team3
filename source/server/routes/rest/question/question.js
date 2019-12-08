@@ -28,6 +28,36 @@ async function getQuestionList(req, res){
   } 
 }
 
+async function getQuestionByField(req, res){
+  try{
+    let fields = await models.fieldquestion.findAll({
+      where:{
+        field: req.query.fields
+      },
+      attributes: ['qid']
+    });
+
+    fields = await fields.map(f => f.qid);
+    
+    const questions = await models.question.findAll({
+      where:{
+        id: fields
+      }
+    });
+
+    res.status(200).send({
+      result: true,
+      questions: questions
+    });
+    
+  } catch(err){
+    res.status(400).send({
+      result: false,
+      msg: err.toString()
+    });
+  } 
+}
+
 async function addQuestion(req, res){
   try{
     console.log(req.body);
@@ -318,5 +348,6 @@ module.exports = {
   addStar,
   getArrangement,
   deleteQuestion,
-  getQuestionTime
+  getQuestionTime,
+  getQuestionByField
 };
