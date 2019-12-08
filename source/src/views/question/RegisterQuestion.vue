@@ -76,7 +76,7 @@
             <div style="clear: both"></div>
             <div id="buttonHolder" style="margin-top:20px;margin-bottom:20px; width:80%;margin-left:auto; margin-right:auto;">
                 <b-button type="submit" form="formInfo" variant="success" size="sm"
-                @click.prevent="write()">등록하기</b-button>
+                @click.prevent="write()">Register Question</b-button>
             </div>
         </form>
     </div>
@@ -174,52 +174,52 @@ export default {
                 available_times = this.timeFormatTransform();
                 console.log(available_times);
                 if ((reward % 100) != 0) {
-                    alert('수여할 크레딧 : ' + reward + '\n'
-                        + 'Reward는 100의 배수여야 합니다!');
+                    alert('Credit (Reward)  : ' + reward + '\n'
+                        + 'Reward must be multiple of 100!');
                 }
                 else if (betCredit < reward) {
-                    alert('소유한 크레딧 : ' + betCredit + '\n'
-                        + '수여할 크레딧 : ' + reward + '\n'
-                        + '최소 크레딧 : ' +  minPoint + '\n'
-                        + '보상 크레딧의 양을 확인해 주세요!');
+                    alert('Credit (Own)     : ' + betCredit + '\n'
+                        + 'Credit (Reward)  : ' + reward + '\n'
+                        + 'Credit (Minimum) : ' + minPoint + '\n'
+                        + 'Please check the amount of reward again!');
                 }
                 else if (reward < minPoint) {
-                    alert('수여할 크레딧 : ' + reward + '\n'
-                        + '최소 크레딧 : ' +  minPoint + '\n'
-                        + '보상 크레딧의 양을 확인해 주세요!');
+                    alert('Credit (Reward)  : ' + reward + '\n'
+                        + 'Credit (Minimum) : ' +  minPoint + '\n'
+                        + 'Reward must be bigger than minimum reward!');
                 }
                 else if ((tIdx != 2) && (this.available_times.length == 0)){
-                    alert('답변을 원하는 시간대를 선택해 주세요!');
+                    alert('Please choose your available time schedule!');
                 }
                 else {
                     if (this.formCheck() == true){
                         const res = await this.$http.post("/rest/question", { title, content, reward, type, fields, available_times});
                         if (res.data.result == true) {
-                            alert('질문이 등록되었습니다!');
+                            alert('Your question is registered!');
                             this.$router.push({
-                                path: '/'
+                                path: '/question/list'
                             });
                             // 추후에 MyQuestion 페이지로 리디렉션하게 수정
                         }
                     }
                 }        
             } catch(err) {
-                alert(err.toString() + '\n잠시 후 다시 시도해주세요!');
+                alert(err.toString() + '\nPlease try again in a few seconds!');
             }
         },
         formCheck () {
             if(this.title == '') {
-                alert("제목을 입력해 주세요.");
+                alert("Title must not be empty!");
                 title.focus();
                 return false;
             }
             else if(this.content == '') {
-                alert("내용을 입력해 주세요.");
+                alert("Content must not be empty!");
                 content.focus();
                 return false;
             }
             else if(this.type == '') {
-                alert("원하는 답변 방식을 선택해 주세요.");
+                alert("Please choose answer type you want!");
                 type.focus();
                 return false;
             }
@@ -233,7 +233,7 @@ export default {
         },
         addTime (timeFormat) {
             if (this.timeCheck() == false) {
-                alert('요일과 시간을 다시 한 번 확인해 주세요!');
+                alert('Please check your time schedule again!');
             }
             else {
                 this.timeFormat = this.selectedDays + '/' + this.timeStart + '~'  + this.timeEnd; 
