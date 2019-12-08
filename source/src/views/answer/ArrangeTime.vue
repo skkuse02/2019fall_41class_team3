@@ -1,7 +1,9 @@
 <template>
     <div class="arrangeTime" style="margin-top:100px">
         <h2><p style="margin-left:50px; margin-bottom:10px">ArrangeTime</p></h2>
-        <div class="menteeSchedule">
+        <div class="menteeSchedule center-block text-center">
+            <b-table class="scheduleTable text-center mb-0 table-outline" style="text-align: center"
+            hover :items="schedules" head-variant="light"></b-table>
         </div>
         <div class="formTime">
             <h5><p text-align: center>You can arrange time, based on mentee's schedule </p></h5>
@@ -66,6 +68,15 @@ export default {
                 { text: 'Sat', value: 'Saturday' },   // val = 1440
                 { text: 'Sun', value: 'Sunday' }      // val = 1728                
             ],
+            schedules: [
+                { days_of_week: 'Monday', time_schedule_of_mentee: [] },
+                { days_of_week: 'Tuesday', time_schedule_of_mentee: [] },
+                { days_of_week: 'Wednesday', time_schedule_of_mentee: [] },
+                { days_of_week: 'Thursday', time_schedule_of_mentee: [] },
+                { days_of_week: 'Friday', time_schedule_of_mentee: [] },
+                { days_of_week: 'Saturday', time_schedule_of_mentee: [] },
+                { days_of_week: 'Sunday', time_schedule_of_mentee: [] }
+            ]
         }
     },
     created: async function () {
@@ -73,6 +84,23 @@ export default {
         console.log(scheduleInfo);
         console.log(scheduleInfo.data.available_times);
         this.available_times = scheduleInfo.data.available_times;
+        this.parsedAD = this.dayParse(this.available_times);
+        this.parsedAT = this.timeParse(this.parsedAD);
+        console.log(this.parsedAD);
+        console.log(this.parsedAT);
+        var list = [];
+        for(var i = 0; i < 7; i++){
+            list = this.parsedAT[i];
+            if (list.length == 0){
+                this.schedules[i].time_schedule_of_mentee = "None";
+                continue;
+            }
+            else{
+                for (var j = 0; j < list.length; j++){
+                    this.schedules[i].time_schedule_of_mentee.push(list[j]);
+                }
+            }
+        }
     },
     methods: {
         async submitTime () {
@@ -164,7 +192,7 @@ export default {
         numToTime(num) {
             var hour = parseInt(((num % 288) - 1) / 12);
             var min = parseInt(((num % 288) - 1) / 24);
-            return (hour + ":" + min);
+            return (("00" + hour).slice(-2) + ":" + ("00" + min).slice(-2));
         },
         dayParse (numArr) {
             const arr = numArr;

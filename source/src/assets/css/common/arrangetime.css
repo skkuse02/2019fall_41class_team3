@@ -1,6 +1,11 @@
 h2 {
     font-weight: normal;
 }
+div.menteeSchedule {
+    width: 80%;
+    text-align: center;
+    margin-top: 20px;
+}
 div.formTime {
     width: 100%;
     text-align: center;
@@ -10,7 +15,7 @@ div.formTimePicker {
     width: 100%;
     text-align: center;
 }
-div.daySelect, div.timeSelect, timeselector, img{
+div.daySelect, div.timeSelect, div.scheduleTable, timeselector, b-table, img{
     display: inline-block;
 }
 div.formTimePicker {
