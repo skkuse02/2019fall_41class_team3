@@ -10,7 +10,7 @@
           <div class="credit-bottom-text">
             <i class="fa fa-krw" aria-hidden="true"></i> {{currentCredit * 0.9}}
               <i class="fa fa-info-circle" aria-hidden="true" style="color:#dddddd;font-size:30px;"
-              data-toggle="tooltip" title="If withdrawed"></i>
+              data-toggle="tooltip" title="Fee applied"></i>
           </div>
         </div>
         <!-- Buttons -->
