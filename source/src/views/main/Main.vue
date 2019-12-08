@@ -38,7 +38,7 @@
             v-on:click="moveAllSubject()" style="cursor:pointer"/>
             <ul class="science-ss">
               <li class="sub-subject">
-                    <a style="text-align:center;margin:10px;"><h5>All Subject</h5></a>
+                    <a style="text-align:center;margin:10px;"><h5>All Fields</h5></a>
               </li>
             </ul>
           </li>
