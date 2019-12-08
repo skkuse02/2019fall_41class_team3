@@ -46,34 +46,69 @@
           <li>Wait for mentee's evaluation and take your credit!</li>
         </ol>
       </div>
-      <div class="col-md-3" style="display: inline-block">
-         <img src="../../assets/datatables/images/flask.png" width="120px"
-         height="120px" v-on:click="moveQuestionList()" style="cursor:pointer"/>
-        <div class="caption" style="width:120px; text-align:center"><h3>Science</h3></div>
-      </div>
-      <div class="col-md-3" style="display: inline-block">
-         <img src="../../assets/datatables/images/square-root.png" width="120px"
-         height="120px" v-on:click="moveQuestionList()" style="cursor:pointer"/>
-        <div class="caption" style="width:120px; text-align:center"><h3>Math</h3></div>
-      </div>
-      <div class="col-md-3" style="display: inline-block">
-         <img src="../../assets/datatables/images/laptop-code.png" width="120px"
-         height="120px" v-on:click="moveQuestionList()" style="cursor:pointer"/>
-        <div class="caption" style="width:120px; text-align:center"><h3>Computer Science</h3></div>
-      </div>
     </div>
     <div style="clear: both"></div>
-    <div v-if="this.uid">
-      <div id="buttonholder" style="margin:10px; margin-right:65px; float:right">
-        <b-button type="button" @click="moveQuestionList()"
-        variant="success" size="sm">전체 게시물</b-button>
+    <div class="max-width-container" style="width:100%">
+      <div v-if="this.uid">
+        <div id="buttonholder" style="margin:10px; margin-right:65px; float:right">
+          <b-button type="button" @click="moveQuestionList()"
+          variant="success" size="sm">전체 게시물</b-button>
+        </div>
+        <div id="buttonholder" style="margin:10px; float:right">
+          <b-button type="submit" @click="moveRegisterQuestion()"
+          variant="success" size="sm">질문 등록하기</b-button>
+        </div>
       </div>
-      <div id="buttonholder" style="margin:10px; float:right">
-        <b-button type="submit" @click="moveRegisterQuestion()"
-        variant="success" size="sm">질문 등록하기</b-button>
+    </div>  
+    <div style="clear: both"></div>
+    <div class="max-width-container" style="width:100%">
+      <div class="subject-container">
+        <div class="arrow left icon-chevron"></div>
+        <div class="arrow right icon-chevron"></div>  
+        <ul class="subjects text-center" style="transform: translateX(0px);">
+          <li class="col-xs-3 text-center">
+            <img src="../../assets/datatables/images/list-all.png"
+            v-on:click="moveQuestionList()" style="cursor:pointer"/>
+            <ul class="science-ss">
+              <li class="sub-subject">
+                    <a style="text-align:center cursor:pointer"
+                    @click="moveQuestionList()"><h5>All Subject</h5></a>
+              </li>
+            </ul>
+          </li>
+          <li class="col-xs-3 text-center">
+            <img src="../../assets/datatables/images/flask.png"
+            v-on:click="moveQuestionList()" style="cursor:pointer"/>
+            <ul class="science-ss text-center">
+              <li class="sub-subject">
+                    <a style="text-align:center cursor:pointer"
+                    @click="moveQuestionList()"> <h5>Science</h5></a>
+              </li>
+            </ul>
+          </li>
+          <li class="col-xs-3 text-center">
+            <img src="../../assets/datatables/images/square-root.png" 
+            v-on:click="moveQuestionList()" style="cursor:pointer"/>
+            <ul class="science-ss">
+              <li class="sub-subject">
+                    <a style="text-align:center cursor:pointer"
+                    @click="moveQuestionList()" ><h5>Math</h5></a>
+              </li>
+            </ul>
+          </li>
+          <li class="col-xs-3 text-center">
+            <img src="../../assets/datatables/images/laptop-code.png"
+            v-on:click="moveQuestionList()" style="cursor:pointer"/>
+            <ul class="science-ss">
+              <li class="sub-subject">
+                    <a style="text-align:center cursor:pointer"
+                    @click="moveQuestionList()"><h5>Computer Science</h5></a>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
-    <div style="clear: both"></div>
   </div>
 </template>
 
