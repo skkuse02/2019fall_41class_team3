@@ -17,3 +17,21 @@ ol {
     align-items: center;
     justify-content: center;
 }
+
+.search-field {
+    padding: 100px;
+    width: 100%;
+    background-color: #555555;
+    color: white;
+}
+
+.search-bar-container {
+    margin: auto;
+}
+
+.add-question {
+    color: white;
+    font-size: 20px;
+    margin: 30px;
+    margin-left: 100px;
+}
