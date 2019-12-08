@@ -30,6 +30,7 @@
     </div>
 
     <div style="margin:30px;">
+      <h2>{{fieldText}}</h2>
       <b-input-group size="lg">
         <div style="float:left;margin-right:30px;font-weight:bold;font-size:20px;line-height:40px;">
           Search
@@ -119,7 +120,9 @@ export default {
         currentPage: 1,
         perPage: 5,
         totalRows: 0,
-      }
+      },
+      field: '',
+      fieldText: null
     };
 
   },
@@ -152,6 +155,15 @@ export default {
         else if(this.$route.query.type=='title') {
           this.questionTable.filterText = 'Title';
         }
+      }
+
+      if(this.$route.query.field) {
+        this.field = this.$route.query.field;
+        this.fieldText = this.field;
+      }
+
+      if(!this.fieldText) {
+        this.fieldText = "All Fields"
       }
   },
   methods: {
