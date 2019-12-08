@@ -1,8 +1,10 @@
 <template lang="v-html">
-  <div id="procedure">
+<div>
+  <!-- Search bar -->
   <div class="search-field">
     <div class="search-bar-container">
       <form @submit.prevent="search()" style="margin:10px;">
+        <h1>Welcome!</h1>
         <b-input-group size="lg">
           <div style="float:left;margin-right:30px;font-weight:bold;font-size:20px;line-height:40px;">
             Search
@@ -22,50 +24,10 @@
       <router-link class="add-question" :to="{ path: '/question/register'}"><i class="fa fa-plus-square" aria-hidden="true"></i> Add new question</router-link>
     </div>
   </div>
-    <div style="margin:30px; float:left;">
-      <strong><h1>Welcome!</h1></strong>
-      <h2><p>What is QAHub?</p></h2>
-      QAHub is web-based online flatform that mediates mentee and mentor.<br>
-      If you need some answers for certain question<br>
-      or you want to share your knowledge, sign up and join us!<br><br>
-      <div id="scriptMentee">
-        <h3>For Mentee</h3>
-        <ol id="processMentee" type="1">
-          <li>Prepare your question.</li>
-          <li>Choose your preferred option about answers. You can choose...</li>
-            <ul id="answerOption">
-              <li>Text only</li>
-              <li>Live chatting</li>
-              <li>Live chatting with screen sharing</li>
-            </ul>
-          <li>Register your question and wait for answers.</li>
-          <li>Check mentor's answer and evaluate how much it is useful,
-            before give credit to mentor!</li>
-        </ol>
-      </div><br>
-      <div id="scriptMentor">
-        <h3>For Mentor</h3>
-        <ol id="processMentor" type="1">
-          <li>Find some questions that you want to answer, based on your interest.</li>
-          <li>Check answer option and give your answer in specified method.</li>
-          <li>Wait for mentee's evaluation and take your credit!</li>
-        </ol>
-      </div>
-    </div>
-    <div style="clear: both"></div>
-    <div class="max-width-container" style="width:100%">
-      <div v-if="this.uid">
-        <div id="buttonholder" style="margin:10px; margin-right:65px; float:right">
-          <b-button type="button" @click="moveQuestionList()"
-          variant="success" size="sm">전체 게시물</b-button>
-        </div>
-        <div id="buttonholder" style="margin:10px; float:right">
-          <b-button type="submit" @click="moveRegisterQuestion()"
-          variant="success" size="sm">질문 등록하기</b-button>
-        </div>
-      </div>
-    </div>  
-    <div style="clear: both"></div>
+
+  <div style="margin:50px;">
+  
+    <!-- Fields -->
     <div class="max-width-container" style="width:100%">
       <div class="subject-container">
         <div class="arrow left icon-chevron"></div>
@@ -110,7 +72,51 @@
         </ul>
       </div>
     </div>
+
+    <!-- Cards -->
+    <div style="margin-top:50px;">
+      <div class="card border-dark mb-3">
+        <div class="card-header">What is QAHub?</div>
+        <div class="card-body text-dark">
+          <p class="card-text">
+            QAHub is web-based online flatform that mediates mentee and mentor.<br>
+            If you need some answers for certain question<br>
+            or you want to share your knowledge, sign up and join us!
+          </p>
+        </div>
+      </div>
+      
+      <div class="card border-dark mb-3">
+        <div class="card-header">For Mentee</div>
+        <div class="card-body text-dark">
+          <p class="card-text">
+            <li>Prepare your question.</li>
+            <li>Choose your preferred option about answers. You can choose...</li>
+              <ul id="answerOption">
+                <li>Text only</li>
+                <li>Live chatting</li>
+                <li>Live chatting with screen sharing</li>
+              </ul>
+            <li>Register your question and wait for answers.</li>
+            <li>Check mentor's answer and evaluate how much it is useful,
+              before give credit to mentor!</li>
+          </p>
+        </div>
+      </div>
+      
+      <div class="card border-dark mb-3">
+        <div class="card-header">For Mentor</div>
+        <div class="card-body text-dark">
+          <p class="card-text">
+            <li>Find some questions that you want to answer, based on your interest.</li>
+            <li>Check answer option and give your answer in specified method.</li>
+            <li>Wait for mentee's evaluation and take your credit!</li>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 </template>
 
 <script>

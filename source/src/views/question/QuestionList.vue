@@ -128,9 +128,6 @@ export default {
   },
   mounted: async function(){
       this.checkSession();
-      const qlist = await this.$http.get('/rest/question/list');
-      this.questionTable.questions = qlist.data.questions;
-      this.questionTable.totalRows = this.questionTable.questions.length;
       if(this.isMentor)
       {
         try {
@@ -160,11 +157,21 @@ export default {
       if(this.$route.query.field) {
         this.field = this.$route.query.field;
         this.fieldText = this.field;
+        
+        const qlist = await this.$http.get('/rest/question/listByField?fields='+this.field);
+        this.questionTable.questions = qlist.data.questions;
+        this.questionTable.totalRows = this.questionTable.questions.length;
+      }
+      else {
+        const qlist = await this.$http.get('/rest/question/list');
+        this.questionTable.questions = qlist.data.questions;
+        this.questionTable.totalRows = this.questionTable.questions.length;
+
+        if(!this.fieldText) {
+          this.fieldText = "All Fields"
+        }
       }
 
-      if(!this.fieldText) {
-        this.fieldText = "All Fields"
-      }
   },
   methods: {
     viewQuestion: async function(item, index){
