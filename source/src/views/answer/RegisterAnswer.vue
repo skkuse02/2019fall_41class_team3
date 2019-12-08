@@ -16,13 +16,12 @@
             <div class="aFormGroup center-block">
                 <label for="answerContent"><h5> My Answer </h5></label>
                 <textarea id="content" v-model="content" class="form-control"
-                style="width: 100%" placeholder="답변 내용" rows="20"/>
+                style="width: 100%" placeholder="Contents of your answer" rows="20"/>
                 <div id="buttonHolder" style="margin-top:20px">
-                    <b-button type="submit" variant="success" size="sm">답변 등록하기</b-button>
+                    <b-button type="submit" variant="success" size="sm">Register Answer</b-button>
                 </div>
             </div>
             <!-- Pressing register button will send form's info to server -->
-            
         </form>
     </div>
 </template>    
@@ -59,13 +58,13 @@ export default {
                 var content = this.content;
                 const res = await this.$http.post("/rest/answer/text/" + this.$route.params.qid, { content });
                 if (res.data.result == true) {
-                    alert('답변이 등록되었습니다!');
+                    alert('Your answer is registered!');
                     this.$router.push({
                         path: '/'
                     });
                 }        
             } catch(err) {
-                alert(err.toString() + '\n잠시 후 다시 시도해주세요!');
+                alert(err.toString() + '\nPlease try again in a few seconds!');
             }
         },
     }

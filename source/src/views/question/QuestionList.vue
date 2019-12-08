@@ -139,14 +139,19 @@ export default {
           alert(e);
         }
       }
-       // alert(this.$route.query.search);
+      
       if(this.$route.query.search) {
         this.questionTable.filter = this.$route.query.search;
-        //alert(this.$route.query.search);
       }
-
-      if(this.route.query.field) {
-
+      
+      if(this.$route.query.type) {
+        this.questionTable.filterOn = [this.$route.query.type];
+        if(this.$route.query.type=='uid') {
+          this.questionTable.filterText = 'Author';
+        }
+        else if(this.$route.query.type=='title') {
+          this.questionTable.filterText = 'Title';
+        }
       }
   },
   methods: {

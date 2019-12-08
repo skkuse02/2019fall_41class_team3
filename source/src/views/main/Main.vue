@@ -1,23 +1,28 @@
 <template lang="v-html">
   <div id="procedure">
+  <div class="search-field">
+    <div class="search-bar-container">
+      <form @submit.prevent="search()" style="margin:10px;">
+        <b-input-group size="lg">
+          <div style="float:left;margin-right:30px;font-weight:bold;font-size:20px;line-height:40px;">
+            Search
+          </div>
+          <b-dropdown variant="info" size="lg" :text="ddText" style="width:100px;">
+            <b-dropdown-item @click="ddText='Title';searchType='title'">Title</b-dropdown-item>
+            <b-dropdown-item @click="ddText='Author';searchType='uid'">Author</b-dropdown-item>
+          </b-dropdown>
+          <b-form-input v-model="searchText" type="search" id="filterInput"
+            placeholder="Search..." style="width:300px"
+          ></b-form-input>
+          <b-input-group-append>
+            <b-button :disabled="!searchText" @click="searchText = ''">Clear</b-button>
+          </b-input-group-append>
+        </b-input-group>
+      </form>
+      <router-link class="add-question" :to="{ path: '/question/register'}"><i class="fa fa-plus-square" aria-hidden="true"></i> Add new question</router-link>
+    </div>
+  </div>
     <div style="margin:30px; float:left;">
-      <b-input-group size="lg">
-        <div style="float:left;margin-right:30px;font-weight:bold;font-size:20px;line-height:40px;">
-          Search
-        </div>
-        <b-dropdown variant="info" size="lg" :text="questionTable.filterText" style="width:100px;">
-          <b-dropdown-item @click="questionTable.filterOn = ['title']; questionTable.filterText='Title'">Title</b-dropdown-item>
-          <b-dropdown-item @click="questionTable.filterOn = ['uid']; questionTable.filterText='Author'">Author</b-dropdown-item>
-          <b-dropdown-item @click="questionTable.filterOn = ['fields']; questionTable.filterText='Field'">Field</b-dropdown-item>
-        </b-dropdown>
-        <b-form-input v-model="questionTable.filter" type="search" id="filterInput"
-          placeholder="Search..." style="width:300px"
-        ></b-form-input>
-        <b-input-group-append>
-          <b-button :disabled="!questionTable.filter" @click="questionTable.filter = ''">Clear</b-button>
-        </b-input-group-append>
-      </b-input-group>
-
       <strong><h1>Welcome!</h1></strong>
       <h2><p>What is QAHub?</p></h2>
       QAHub is web-based online flatform that mediates mentee and mentor.<br>
@@ -117,71 +122,16 @@
     data() {
       return {
         uid: '',
-        questionTable: {
-          questions: [],
-          fields: [ 
-            { key: 'id', label: '번호', sortable: true},
-            { key: 'title', label: '제목', sortable: true },
-            { key: 'uid', label: '등록자', sortable: true},
-            { key: 'createdAt', label: '등록 날짜', sortable: true},
-            { key: 'star', label: '추천', sortable: true}
-          ],
-          sortBy: 'id',
-          sortDesc: true,
-          currentPage: 1,
-          perPage: 10,
-          totalRows: 0,
-          filter: null,
-          filterOn: ['title'],
-          filterText: 'Title'
-        },
-        recomendedTable: {
-          questions: [],
-          fields: [ 
-            { key: 'id', label: '번호', sortable: true},
-            { key: 'title', label: '제목', sortable: true },
-            { key: 'uid', label: '등록자', sortable: true},
-            { key: 'createdAt', label: '등록 날짜', sortable: true},
-            { key: 'star', label: '추천', sortable: true}
-          ],
-          sortBy: 'id',
-          sortDesc: true,
-          currentPage: 1,
-          perPage: 5,
-          totalRows: 0,
-        }
+        searchType: 'title',
+        searchText: '',
+        ddText: 'Title'
       }
     },
     mounted: async function() {
-      
         try{
         const session = await this.$http.get('/rest/user/session');
         this.uid = session.data.user.uid;
       } catch(e) {
-      }
-      
-      const qlist = await this.$http.get('/rest/question/list');
-      this.questionTable.questions = qlist.data.questions;
-      this.questionTable.totalRows = this.questionTable.questions.length;
-      if(this.isMentor)
-      {
-        try {
-          const rlist = await this.$http.get('/rest/question/listByTime');
-          this.recomendedTable.questions = rlist.data.questions;
-          this.recomendedTable.totalRows = this.recomendedTable.questions.length;
-        }
-        catch(e) {
-          alert(e);
-        }
-      }
-       // alert(this.$route.query.search);
-      if(this.$route.query.search) {
-        this.questionTable.filter = this.$route.query.search;
-        //alert(this.$route.query.search);
-      }
-
-      if(this.route.query.field) {
-
       }
     },
     methods: {
@@ -206,6 +156,11 @@
       },
       moveComputerScience() {
         alert('Search field: computer science...');
+      },
+      search() {
+        this.$router.push({
+            path: '/question/list?type='+this.searchType+"&search="+this.searchText
+        });
       }
     }
   };
