@@ -29,7 +29,7 @@
   
     <!-- Fields -->
     <div class="max-width-container" style="width:100%">
-      <div class="subject-container">
+      <div class="subject-container" style="height:120px;">
         <div class="arrow left icon-chevron"></div>
         <div class="arrow right icon-chevron"></div>  
         <ul class="subjects text-center" style="transform: translateX(0px);">
@@ -38,7 +38,7 @@
             v-on:click="moveAllSubject()" style="cursor:pointer"/>
             <ul class="science-ss">
               <li class="sub-subject">
-                    <a style="text-align:center"><h5>All Subject</h5></a>
+                    <a style="text-align:center;margin:10px;"><h5>All Fields</h5></a>
               </li>
             </ul>
           </li>
@@ -47,7 +47,7 @@
             v-on:click="moveScience()" style="cursor:pointer"/>
             <ul class="science-ss text-center">
               <li class="sub-subject">
-                    <a style="text-align:center"> <h5>Science</h5></a>
+                    <a style="text-align:center;margin:10px;"> <h5>Science</h5></a>
               </li>
             </ul>
           </li>
@@ -56,7 +56,7 @@
             v-on:click="moveMath()" style="cursor:pointer"/>
             <ul class="science-ss">
               <li class="sub-subject">
-                    <a style="text-align:center" ><h5>Math</h5></a>
+                    <a style="text-align:center;margin:10px;" ><h5>Math</h5></a>
               </li>
             </ul>
           </li>
@@ -65,7 +65,7 @@
             v-on:click="moveComputerScience()" style="cursor:pointer"/>
             <ul class="science-ss">
               <li class="sub-subject">
-                    <a style="text-align:center"><h5>Computer Science</h5></a>
+                    <a style="text-align:center;margin:10px;"><h5>Computer Science</h5></a>
               </li>
             </ul>
           </li>
