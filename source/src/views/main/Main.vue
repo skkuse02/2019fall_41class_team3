@@ -146,16 +146,24 @@
         });
       },
       moveAllSubject() {
-        alert('Search field: all subject...');
+        this.$router.push({
+            path: '/question/list'
+        });
       },
       moveScience() {
-        alert('Search field: science...');
+        this.$router.push({
+            path: '/question/list?field=Science'
+        });
       },
       moveMath() {
-        alert('Search field: math...');
+        this.$router.push({
+            path: '/question/list?field=Math'
+        });
       },
       moveComputerScience() {
-        alert('Search field: computer science...');
+        this.$router.push({
+            path: '/question/list?field=Computer Science'
+        });
       },
       search() {
         this.$router.push({
