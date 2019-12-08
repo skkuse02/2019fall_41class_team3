@@ -2,18 +2,27 @@
   <div>
   <div>
     <div class="layout-form" autocomplete="nope">
+      <div v-show="currentStep>0">
       <h1>Sign Up</h1>
+      </div>
 
       <!-- Step 1: Select user type -->
       <div class="form-group" v-show="currentStep==0">
-        <div class="label">* Type</div>
-        <div class="content">
-          <label>
-            <input type="radio" v-model="type" value="Mentor"/>Mentor
-          </label>
-          <label>
-            <input type="radio" v-model="type" value="Mentee"/>Mentee
-          </label>
+        <div style="margin:auto;text-align:center;display:inherit;">
+          <div class="signup-card">
+            <a><img src="/assets/img/mentor.png" @click="selectType('Mentor')" style="width:200px;margin-left:50px;margin-top:20px;"></a>
+            <div class="signup-container">
+              <h4><b>Mentor</b></h4>
+              <p>...</p>
+            </div>
+          </div>
+          <div class="signup-card">
+            <a><img src="/assets/img/mentee.png" @click="selectType('Mentee')" style="width:200px;margin-left:50px;margin-top:20px;"></a>
+            <div class="signup-container">
+              <h4><b>Mentee</b></h4>
+              <p>...</p>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -107,7 +116,7 @@
         </div>
       </div>
 
-      <div style="height:30px;margin:50px;">
+      <div style="height:30px;margin:50px;" v-if="isPrevBtnShow||isNextBtnShow||isSubmitBtnShow">
         <div style="float:left;">
             <button class="btn btn-primary" v-if="isPrevBtnShow" type="button" @click="setStepDiff(-1)">&lt; Prev</button>
         </div>
@@ -138,7 +147,7 @@ export default {
     return {
         currentStep: 0,
         isPrevBtnShow: false,
-        isNextBtnShow: true,
+        isNextBtnShow: false,
         isSubmitBtnShow: false,
 
         // uid, type, password, name, nickname, email, fields, available_times
@@ -218,29 +227,38 @@ export default {
   methods: {
     async setStepDiff(diff) {
 
-      // 스텝별 validation 확인
-      var res;
-      switch(this.currentStep) {
-        case 0:
-          res = await this.$validate('type');
-          break;
-        case 1:
-          res = await this.$validate('uid', 'password');
-          break;
-        case 2:
-          res = await this.$validate('name', 'nickname', 'email');
-          break;
-        case 3:
-          break;
-      }
-
-      // 유효한 입력이면 다음 스텝으로
-      if(res) {
+      if(diff<0) {
         this.setStep(this.currentStep + diff);
       }
       else {
-        alert('안돼 돌아가');
+        // 스텝별 validation 확인
+        var res;
+        switch(this.currentStep) {
+          case 0:
+            res = await this.$validate('type');
+            break;
+          case 1:
+            res = await this.$validate('uid', 'password');
+            break;
+          case 2:
+            res = await this.$validate('name', 'nickname', 'email');
+            break;
+          case 3:
+            break;
+        }
+
+        // 유효한 입력이면 다음 스텝으로
+        if(res) {
+          this.setStep(this.currentStep + diff);
+        }
+        else {
+          alert('안돼 돌아가');
+        }
       }
+    },
+    selectType(type) {
+      this.type = type;
+      this.setStepDiff(1);
     },
     setStep(step) {
       this.currentStep = step;
@@ -250,6 +268,7 @@ export default {
       // 버튼 표시 변수 계산
       if(step == 0) {
         this.isPrevBtnShow = false;
+        this.isNextBtnShow = false;
       }
       else if(step == 3) {
         this.isNextBtnShow = false;
