@@ -180,7 +180,7 @@ export default {
         const ansRes = await this.$http.get('/rest/answer/text/'+this.$route.params.id);
         this.hasPermission = ansRes.data.result;
         if(this.hasPermission) this.answer = ansRes.data.answer;
-        this.isAnswered = true;
+        this.isAnswered = (this.question.type == "Text Response");
       }
       catch(e) {
         this.isAnswered = false;
