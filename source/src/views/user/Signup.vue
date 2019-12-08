@@ -165,13 +165,13 @@ export default {
         timeEnd: '',
         selectedDays: [],
         days: [
-            { text: 'Mon', state: false, value: 'Monday' }, // val = 0
-            { text: 'Tue', state: false, value: 'Tuesday' }, // val = 288
-            { text: 'Wed', state: false, value: 'Wednesday' }, // val = 576
-            { text: 'Thu', state: false, value: 'Thursday' }, // val = 864
-            { text: 'Fri', state: false, value: 'Friday' }, // val = 1152
-            { text: 'Sat', state: false, value: 'Saturday' }, // val = 1440
-            { text: 'Sun', state: false, value: 'Sunday' } // val = 1728                
+            { text: 'Mon', state: false, value: 'Mon' }, // val = 0
+            { text: 'Tue', state: false, value: 'Tue' }, // val = 288
+            { text: 'Wed', state: false, value: 'Wed' }, // val = 576
+            { text: 'Thu', state: false, value: 'Thu' }, // val = 864
+            { text: 'Fri', state: false, value: 'Fri' }, // val = 1152
+            { text: 'Sat', state: false, value: 'Sat' }, // val = 1440
+            { text: 'Sun', state: false, value: 'Sun' } // val = 1728                
         ]
     };
   },
@@ -377,25 +377,25 @@ export default {
         return resultArr.reduce(function(a,b){if(a.indexOf(b)<0)a.push(b);return a;},[]);
     },
     dayToNum (day) {
-        if (day == "Monday") {
+        if (day == "Mon") {
             return 0;
         }
-        else if (day == "Tuesday") {
+        else if (day == "Tue") {
             return 288;
         }
-        else if (day == "Wednesday") {
+        else if (day == "Wed") {
             return 576;
         }
-        else if (day == "Thursday") {
+        else if (day == "Thu") {
             return 864;
         }
-        else if (day == "Friday") {
+        else if (day == "Fri") {
             return 1152;
         }
-        else if (day == "Saturday") {
+        else if (day == "Sat") {
             return 1440;
         }
-        else if (day == "Sunday") {
+        else if (day == "Sun") {
             return 1728;
         }
         else return -1;
