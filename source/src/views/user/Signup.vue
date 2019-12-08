@@ -74,32 +74,35 @@
                   </b-button-group>
               </div>
               <div style="clear: both; margin-top: 10px"></div>
-              <timeselector class="form-control" displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
-              :displaySeconds="false" style="width:208px; float: left" :placeholder="'[From] HH:MM'"
-              returnFormat="HH:mm" @formatedTime="tStart">
-                  <template slot="hours">
-                      <span>Hours</span>
-                  </template>
-                  <template slot="minutes">
-                      <span>Minutes</span>
-                  </template>
-              </timeselector>
-              <timeselector class="form-control" displayFormat=" [To] HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
-              :displaySeconds="false" style="width:208px; float: left" :placeholder="'[To] HH:MM'"
-              returnFormat="HH:mm" @formatedTime="tEnd">
-                  <template slot="hours">
-                      <span>Hours</span>
-                  </template>
-                  <template slot="minutes">
-                      <span>Minutes</span>
-                  </template>
-              </timeselector>
-              <img src="../../assets/datatables/images/add_circle.png" v-on:click="addTime(timeFormat)" style="cursor:pointer">
-              <div style="clear: both; margin-top: 10px"></div>
-              <div class="timeChip">
-                  <vs-chip v-on:click="removeTime(time)" v-for="time in available_times"
-                  v-bind:key="time" style="width:40%; float:left" closable> {{ time }} </vs-chip>
+              <div class="formTimePicker" style="float:left">
+                  <timeselector class="timePicker form-control" displayFormat=" [From] HH : mm" :id="timeStart" :interval="{h:1, m:5}"
+                  :displaySeconds="false" style="width:208px" :placeholder="'[From] HH:MM'"
+                  returnFormat="HH:mm" @formatedTime="tStart">
+                      <template slot="hours">
+                          <span>Hours</span>
+                      </template>
+                      <template slot="minutes">
+                          <span>Minutes</span>
+                      </template>
+                  </timeselector>
+                  <timeselector class="timePicker form-control" displayFormat=" [To] HH : mm" :id="timeEnd" :interval="{h:1, m:5}"
+                  :displaySeconds="false" style="width:208px" :placeholder="'[To] HH:MM'"
+                  returnFormat="HH:mm" @formatedTime="tEnd">
+                      <template slot="hours">
+                          <span>Hours</span>
+                      </template>
+                      <template slot="minutes">
+                          <span>Minutes</span>
+                      </template>
+                  </timeselector>
+                  <img src="../../assets/datatables/images/add_circle.png" v-on:click="addTime(timeFormat)" style="cursor:pointer">
               </div>
+              <div style="clear: both; margin-top: 10px"></div>
+              <vs-chips class="center-block" color="rgb(145, 32, 159)" placeholder="Time Schedules"
+              style="width:80%; margin-top:20px" v-model="available_times" remove-icon="delete_forever">
+                  <vs-chip v-on:click="removeTime(time)" v-for="time in available_times"
+                  v-bind:key="time" closable> {{ time }} </vs-chip>
+              </vs-chips> 
           </div>
       </div>
 

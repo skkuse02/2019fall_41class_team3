@@ -69,10 +69,8 @@
                 style="width:80%; margin-top:20px" v-model="available_times" remove-icon="delete_forever">
                     <vs-chip v-on:click="removeTime(time)" v-for="time in available_times"
                     v-bind:key="time" closable> {{ time }} </vs-chip>
-                </vs-chips>
-                
+                </vs-chips>  
             </div>
-    
             <div style="clear: both"></div>
             <div id="buttonHolder" style="margin-top:20px;margin-bottom:20px; width:80%;margin-left:auto; margin-right:auto;">
                 <b-button type="submit" form="formInfo" variant="success" size="sm"
