@@ -197,7 +197,7 @@ export default {
                         if (res.data.result == true) {
                             alert('Your question is registered!');
                             this.$router.push({
-                                path: '/question/list'
+                                path: '/myquestion'
                             });
                             // 추후에 MyQuestion 페이지로 리디렉션하게 수정
                         }
