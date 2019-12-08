@@ -21,7 +21,7 @@
           </b-input-group-append>
         </b-input-group>
       </form>
-      <router-link class="add-question" :to="{ path: '/question/register'}"><i class="fa fa-plus-square" aria-hidden="true"></i> Add new question</router-link>
+      <router-link v-if="type=='Mentee'" class="add-question" :to="{ path: '/question/register'}"><i class="fa fa-plus-square" aria-hidden="true"></i> Add new question</router-link>
     </div>
   </div>
 
@@ -128,6 +128,7 @@
     data() {
       return {
         uid: '',
+        type: '',
         searchType: 'title',
         searchText: '',
         ddText: 'Title'
@@ -137,6 +138,7 @@
         try{
         const session = await this.$http.get('/rest/user/session');
         this.uid = session.data.user.uid;
+        this.type = session.data.user.type;
       } catch(e) {
       }
     },
