@@ -68,41 +68,37 @@
         <ul class="subjects text-center" style="transform: translateX(0px);">
           <li class="col-xs-3 text-center">
             <img src="../../assets/datatables/images/list-all.png"
-            v-on:click="moveQuestionList()" style="cursor:pointer"/>
+            v-on:click="moveAllSubject()" style="cursor:pointer"/>
             <ul class="science-ss">
               <li class="sub-subject">
-                    <a style="text-align:center cursor:pointer"
-                    @click="moveQuestionList()"><h5>All Subject</h5></a>
+                    <a style="text-align:center"><h5>All Subject</h5></a>
               </li>
             </ul>
           </li>
           <li class="col-xs-3 text-center">
             <img src="../../assets/datatables/images/flask.png"
-            v-on:click="moveQuestionList()" style="cursor:pointer"/>
+            v-on:click="moveScience()" style="cursor:pointer"/>
             <ul class="science-ss text-center">
               <li class="sub-subject">
-                    <a style="text-align:center cursor:pointer"
-                    @click="moveQuestionList()"> <h5>Science</h5></a>
+                    <a style="text-align:center"> <h5>Science</h5></a>
               </li>
             </ul>
           </li>
           <li class="col-xs-3 text-center">
             <img src="../../assets/datatables/images/square-root.png" 
-            v-on:click="moveQuestionList()" style="cursor:pointer"/>
+            v-on:click="moveMath()" style="cursor:pointer"/>
             <ul class="science-ss">
               <li class="sub-subject">
-                    <a style="text-align:center cursor:pointer"
-                    @click="moveQuestionList()" ><h5>Math</h5></a>
+                    <a style="text-align:center" ><h5>Math</h5></a>
               </li>
             </ul>
           </li>
           <li class="col-xs-3 text-center">
             <img src="../../assets/datatables/images/laptop-code.png"
-            v-on:click="moveQuestionList()" style="cursor:pointer"/>
+            v-on:click="moveComputerScience()" style="cursor:pointer"/>
             <ul class="science-ss">
               <li class="sub-subject">
-                    <a style="text-align:center cursor:pointer"
-                    @click="moveQuestionList()"><h5>Computer Science</h5></a>
+                    <a style="text-align:center"><h5>Computer Science</h5></a>
               </li>
             </ul>
           </li>
@@ -198,6 +194,18 @@
         this.$router.push({
             path: '/question/list'
         });
+      },
+      moveAllSubject() {
+        alert('Search field: all subject...');
+      },
+      moveScience() {
+        alert('Search field: science...');
+      },
+      moveMath() {
+        alert('Search field: math...');
+      },
+      moveComputerScience() {
+        alert('Search field: computer science...');
       }
     }
   };
