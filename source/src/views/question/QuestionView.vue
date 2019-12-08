@@ -67,7 +67,7 @@
             <div v-if="isAnswered">
               <b-card>
                   <div v-if="hasPermission">
-                    <b-card-body>
+                    <b-card-body v-if="question.type == 'Text Response'">
                       <div>
                         <table class="table">
                           <tbody>
@@ -86,6 +86,13 @@
                           </tbody>
                         </table>
                         {{answer.content}}
+                      </div>
+                    </b-card-body>
+                    <b-card-body v-else>
+                      <div>
+                        <b-button type="button" variant="danger" v-on:click="gotoChat()">
+                          Go to {{question.type}}
+                        </b-button>
                       </div>
                     </b-card-body>
                   </div>
@@ -231,6 +238,15 @@ export default {
         this.$router.push({path: '/answer/text/'+this.$route.params.id});
       } else{
         this.$router.push({path: '/question/arrangetime/'+this.$route.params.id});
+      }
+    },
+    async gotoChat() {
+      try{
+        const url = await this.$http.get('/rest/answer/arrange/'+this.$route.params.id);
+        window.location.href = url.data.url;
+      } catch(e){
+        console.log(e);
+        alert(e);
       }
     },
     showDeleteModal() {
