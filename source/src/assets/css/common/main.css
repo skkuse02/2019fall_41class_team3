@@ -19,7 +19,10 @@ ol {
 }
 
 .search-field {
-    padding: 100px;
+    padding-top: 50px;
+    padding-right: 100px;
+    padding-left: 100px;
+    padding-bottom: 100px;
     width: 100%;
     background-color: #555555;
     color: white;

@@ -138,6 +138,10 @@ export default {
     created: async function () {
         try{
         const session = await this.$http.get('/rest/user/session');
+        if(session.data.user.type == 'Mentor'){
+            alert("Only mentee users can ask questions");
+            this.$router.go(-1);
+        }
         } catch(e) {
         this.$router.push({path: '/login'});
         }

@@ -2,9 +2,10 @@
 <div>
   <!-- Search bar -->
   <div class="search-field">
+      <h1>Welcome!</h1>
+      <br>
     <div class="search-bar-container">
       <form @submit.prevent="search()" style="margin:10px;">
-        <h1>Welcome!</h1>
         <b-input-group size="lg">
           <div style="float:left;margin-right:30px;font-weight:bold;font-size:20px;line-height:40px;">
             Search
@@ -14,10 +15,10 @@
             <b-dropdown-item @click="ddText='Author';searchType='uid'">Author</b-dropdown-item>
           </b-dropdown>
           <b-form-input v-model="searchText" type="search" id="filterInput"
-            placeholder="Search..." style="width:300px"
+            placeholder="Search questions that you are interested in" style="width:300px"
           ></b-form-input>
           <b-input-group-append>
-            <b-button :disabled="!searchText" @click="searchText = ''">Clear</b-button>
+            <b-button :disabled="!searchText" @click="searchText = ''">Search</b-button>
           </b-input-group-append>
         </b-input-group>
       </form>
