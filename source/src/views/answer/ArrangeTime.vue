@@ -5,10 +5,10 @@
             hover :items="schedules" head-variant="light"></b-table>
         </div>
         <div class="formTime">
-            <h5><p text-align: center>You can arrange time, based on mentee's schedule </p></h5>
-            <h5><p text-align: center>Choose time schedule you want to answer </p></h5>
+            <h5><p text-align: center>You can arrange time, based on mentee's schedule. </p></h5>
+            <h5><p text-align: center>Choose time schedule you want to answer. </p></h5>
             <h5><p text-align: center>Notice : You must press "+" button to set your time schedule! </p></h5>
-            <h5><p text-align: center>Selected Time : {{ selectedDay }} / {{ selectedTime }} </p></h5>
+            <h5><p text-align: center>Selected Time : [ {{ selectedDay }} / {{ selectedTime }} ] </p></h5>
             <div class="daySelect">
                 <b-form-group style="margin-bottom: 10px">
                     <b-form-radio-group v-model="selectedDay" :options="days"
@@ -66,13 +66,13 @@ export default {
                 { text: 'Sun', value: 'Sunday' }      // val = 1728                
             ],
             schedules: [
-                { days_of_week: 'Monday', time_schedule_of_mentee: [] },
-                { days_of_week: 'Tuesday', time_schedule_of_mentee: [] },
-                { days_of_week: 'Wednesday', time_schedule_of_mentee: [] },
-                { days_of_week: 'Thursday', time_schedule_of_mentee: [] },
-                { days_of_week: 'Friday', time_schedule_of_mentee: [] },
-                { days_of_week: 'Saturday', time_schedule_of_mentee: [] },
-                { days_of_week: 'Sunday', time_schedule_of_mentee: [] }
+                { days_of_week: 'Monday', available_time_schedule_of_mentee: [] },
+                { days_of_week: 'Tuesday', available_time_schedule_of_mentee: [] },
+                { days_of_week: 'Wednesday', available_time_schedule_of_mentee: [] },
+                { days_of_week: 'Thursday', available_time_schedule_of_mentee: [] },
+                { days_of_week: 'Friday', available_time_schedule_of_mentee: [] },
+                { days_of_week: 'Saturday', available_time_schedule_of_mentee: [] },
+                { days_of_week: 'Sunday', available_time_schedule_of_mentee: [] }
             ]
         }
     },
@@ -91,12 +91,12 @@ export default {
             for(var i = 0; i < 7; i++){
                 list = this.parsedAT[i];
                 if (list.length == 0){
-                    this.schedules[i].time_schedule_of_mentee = "None";
+                    this.schedules[i].available_time_schedule_of_mentee = "None";
                     continue;
                 }
                 else{
                     for (var j = 0; j < list.length; j++){
-                        this.schedules[i].time_schedule_of_mentee.push(list[j]);
+                        this.schedules[i].available_time_schedule_of_mentee.push(list[j]);
                     }
                 }
             }
