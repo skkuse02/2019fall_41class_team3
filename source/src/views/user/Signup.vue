@@ -105,14 +105,12 @@
 
       <!--  -->
       <div class="form-group" v-show="currentStep==3">
-        <div class="label">Field</div>
-        <div>
-          <input type="checkbox" id="math" value="Math" v-model="fields" />
-          <label for="math">Math</label>
-          <input type="checkbox" id="cs" value="Computer Science" v-model="fields" />
-          <label for="cs">Computer Science</label>
-          <input type="checkbox" id="science" value="Science" v-model="fields" />
-          <label for="science">Science</label>
+        <div class="label">Interests</div>
+        <div class="custom-control custom-checkbox">
+          <div v-for="item in fieldItems" id="signup-checkbox">
+            <input type="checkbox" :value="item.name" :id="'field'+item.name" v-model="fields" class="custom-control-input"/>
+            <label class="custom-control-label" :for="'field'+item.name">{{item.name}}</label>
+          </div>
         </div>
       </div>
 
@@ -179,7 +177,8 @@ export default {
             { text: 'Fri', state: false, value: 'Fri' }, // val = 1152
             { text: 'Sat', state: false, value: 'Sat' }, // val = 1440
             { text: 'Sun', state: false, value: 'Sun' } // val = 1728                
-        ]
+        ],
+        fieldItems: []
     };
   },
   computed: {
@@ -230,6 +229,20 @@ export default {
     email: function (value) {
       return this.$validator.value(value).required().email();
     }
+  },
+  created: async function(){
+    try{
+      const session = await this.$http.get('/rest/user/session');
+      if(session.data.result){
+        this.$router.push({
+          path: '/'
+        });
+      }
+    } catch(err){
+      
+    }
+    const fieldRes = await this.$http.get('/rest/field/list');
+    this.fieldItems = fieldRes.data;
   },
   methods: {
     async setStepDiff(diff) {
