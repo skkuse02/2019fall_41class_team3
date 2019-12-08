@@ -1,20 +1,29 @@
 <template>
-  <div class="findpassword">
-    <form id="infoSubmit" @submit.prevent="findpassword(uid, name, email)">
-      <div class="input">
-        <b-form-group label="ID">
-        <b-form-input type="text" v-model="uid" placeholder="Fill in blank."></b-form-input>
-        </b-form-group>
-        <b-form-group label="Name">
-        <b-form-input type="text" v-model="name" placeholder="Fill in blank"></b-form-input>
-        </b-form-group>
-        <b-form-group label="E-mail">
-        <b-form-input type="text" v-model="email" placeholder="Fill in blank"></b-form-input>
-        </b-form-group>
-      </div>
-      <div class="find">
-        <b-button type="submit" variant="success" size="lg">Find Password</b-button>
-      </div>
+  <div class="findpassword" style = "margin-top: 100px;"> 
+    <form class="form-horizontal" role="form" @submit.prevent="findpassword(uid, name, email)">
+      <div class ="form-group">
+            <label for="inputID" class="col-xs-4 control-label">ID</label>
+            <div class="col-xs-4 center-block">
+                <input type="text" v-model="uid" class="form-control" placeholder="ID">
+            </div>
+        </div>
+        <div class ="form-group">
+            <label for="inputID" class="col-xs-4 control-label">Name</label>
+            <div class="col-xs-4 center-block">
+                <input type="text" v-model="name" class="form-control" placeholder="Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPW" class="col-xs-4 control-label">Email</label>
+            <div class="col-xs-4 center-block">
+                <input type="text" v-model="email" class="form-control" placeholder="Email">
+            </div>
+        </div>
+
+        <!-- Pressing login button will send form's info to server -->
+        <div id="loginButtonHolder" style="padding-top:10px">
+            <b-button type="submit" variant="success" size="lg" style="width: 20%">Find Password</b-button>
+        </div>
     </form>
   </div>
 </template>
@@ -48,5 +57,6 @@ export default {
 
 </script>
 
-<style>
+<style lang="scss" scoped>
+@import "../../assets/css/common/main.css";
 </style>

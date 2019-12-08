@@ -1,17 +1,23 @@
 <template>
-  <div class="findid">
-    <form @submit.prevent="findid(name, email)">
-      <div class="input">
-        <b-form-group label="Name">
-        <b-form-input type="text" v-model="name" placeholder="name"></b-form-input>
-        </b-form-group>
-        <b-form-group label="E-mail">
-        <b-form-input type="text" v-model="email" placeholder="email"></b-form-input>
-      </b-form-group>
-      </div>
-      <div class="find">
-        <b-button type="submit" variant="success" size="lg">Find ID</b-button>
-      </div>
+  <div class="findid" style = "margin-top: 100px;"> 
+    <form class="form-horizontal" role="form" @submit.prevent="findid(name, email)">
+        <div class ="form-group">
+            <label for="inputID" class="col-xs-4 control-label">Name</label>
+            <div class="col-xs-4 center-block">
+                <input type="text" v-model="name" class="form-control" placeholder="Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPW" class="col-xs-4 control-label">Email</label>
+            <div class="col-xs-4 center-block">
+                <input type="text" v-model="email" class="form-control" placeholder="Email">
+            </div>
+        </div>
+
+        <!-- Pressing login button will send form's info to server -->
+        <div id="loginButtonHolder" style="padding-top:10px">
+            <b-button type="submit" variant="success" size="lg" style="width: 20%">Find ID</b-button>
+        </div>
     </form>
   </div>
 </template>
@@ -45,6 +51,6 @@ export default {
 
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+@import "../../assets/css/common/main.css";
 </style>
