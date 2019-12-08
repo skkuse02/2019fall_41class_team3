@@ -1,6 +1,5 @@
 <template>
     <div class="arrangeTime" style="margin-top:100px">
-        <h2><p style="margin-left:50px; margin-bottom:10px">ArrangeTime</p></h2>
         <div class="menteeSchedule center-block text-center">
             <b-table class="scheduleTable text-center mb-0 table-outline" style="text-align: center"
             hover :items="schedules" head-variant="light"></b-table>
@@ -78,26 +77,31 @@ export default {
         }
     },
     created: async function () {
-        const scheduleInfo = await this.$http.get('/rest/question/availableTime/'+this.$route.params.qid);
-        console.log(scheduleInfo);
-        console.log(scheduleInfo.data.available_times);
-        this.available_times = scheduleInfo.data.available_times;
-        this.parsedAD = this.dayParse(this.available_times);
-        this.parsedAT = this.timeParse(this.parsedAD);
-        console.log(this.parsedAD);
-        console.log(this.parsedAT);
-        var list = [];
-        for(var i = 0; i < 7; i++){
-            list = this.parsedAT[i];
-            if (list.length == 0){
-                this.schedules[i].time_schedule_of_mentee = "None";
-                continue;
-            }
-            else{
-                for (var j = 0; j < list.length; j++){
-                    this.schedules[i].time_schedule_of_mentee.push(list[j]);
+        try{
+            const session = await this.$http.get('/rest/user/session');
+            const scheduleInfo = await this.$http.get('/rest/question/availableTime/'+this.$route.params.qid);
+            console.log(scheduleInfo);
+            console.log(scheduleInfo.data.available_times);
+            this.available_times = scheduleInfo.data.available_times;
+            this.parsedAD = this.dayParse(this.available_times);
+            this.parsedAT = this.timeParse(this.parsedAD);
+            console.log(this.parsedAD);
+            console.log(this.parsedAT);
+            var list = [];
+            for(var i = 0; i < 7; i++){
+                list = this.parsedAT[i];
+                if (list.length == 0){
+                    this.schedules[i].time_schedule_of_mentee = "None";
+                    continue;
+                }
+                else{
+                    for (var j = 0; j < list.length; j++){
+                        this.schedules[i].time_schedule_of_mentee.push(list[j]);
+                    }
                 }
             }
+        } catch(e) {
+            this.$router.push({path: '/login'});
         }
     },
     methods: {
@@ -186,12 +190,13 @@ export default {
             var hmArr = time.split(":");
             hmArr[0] = Number(hmArr[0]);
             hmArr[1] = Number(hmArr[1]);
-            return ((hmArr[0] * 12) + (hmArr[1] / 5));
+            return ((hmArr[0] * 12) + (hmArr[1] / 5) + 1);
         },
         numToTime(num) {
-            var hour = parseInt(((num % 288) - 1) / 12);
-            var min = parseInt(((num % 288) - 1) / 24);
-            return (("00" + hour).slice(-2) + "~" + ("00" + min).slice(-2));
+            num--;
+            var hour = parseInt((num % 288) / 12);
+            var min = (parseInt((num % 288) % 12)) * 5 ;
+            return (("00" + hour).slice(-2) + ":" + ("00" + min).slice(-2));
         },
         dayParse (numArr) {
             const arr = numArr;
@@ -237,13 +242,21 @@ export default {
             }
             for (var i = 0; i < 7; i++){
                 for (var j = 0; j < arr[i].length; j++){
-                    if (count == 0){
+                    if ((count == 0) && (timeStart == 0)){
                         timeStart = arr[i][j];
                         next = timeStart + 1;
                         count++;
                     }
-                    else if ((next != arr[i][j]) || (j == arr[i].length - 1)) {
-                        day[i].push(this.numToTime(timeStart) + " : " + this.numToTime(timeStart + count));
+                    else if (j == (arr[i].length - 1)) {
+                        day[i].push(this.numToTime(timeStart) + " ~ " + this.numToTime(arr[i][j]));
+                        console.log(this.numToTime(timeStart));
+                        console.log(this.numToTime(arr[i][j]));
+                        timeStart = 0;
+                        count = 0;
+                    }
+                    else if (next != arr[i][j]){
+                        day[i].push(this.numToTime(timeStart) + " ~ " + this.numToTime(timeStart + count));
+                        timeStart = arr[i][j];
                         count = 0;
                     }
                     else {
