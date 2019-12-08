@@ -10,14 +10,14 @@
       <div class="form-group" v-show="currentStep==0">
         <div style="margin:auto;text-align:center;display:inherit;">
           <div class="signup-card">
-            <a><img src="/assets/img/mentor.png" @click="selectType('Mentor')" style="width:200px;margin-left:50px;margin-top:20px;"></a>
+            <a><img src="/assets/img/mentor.png" @click="selectType('Mentor')" style="width:200px;margin-top:20px;"></a>
             <div class="signup-container">
               <h4><b>Mentor</b></h4>
               <p>...</p>
             </div>
           </div>
           <div class="signup-card">
-            <a><img src="/assets/img/mentee.png" @click="selectType('Mentee')" style="width:200px;margin-left:50px;margin-top:20px;"></a>
+            <a><img src="/assets/img/mentee.png" @click="selectType('Mentee')" style="width:200px;margin-top:20px;"></a>
             <div class="signup-container">
               <h4><b>Mentee</b></h4>
               <p>...</p>
@@ -127,9 +127,16 @@
         </div>
       </div>
     </div>
-    <modal name="welcome-user">
-      <div>Welcome, {{ uid }} !</div>
-      <button type="button" @click="gotoLogin">Go to Login</button>
+    <modal name="welcome-user" height="auto">
+      <div style="text-align:center;padding:60px;height:80%;font-size:25px;">
+        <img src="/assets/img/check.png">
+        <div style="margin:40px;">
+          <b>Welcome, {{ uid }} !</b>
+        </div>
+        <div>
+          <button class="btn btn-primary" type="button" @click="gotoLogin" size="lg">Go to Login</button>
+        </div>
+      </div>
     </modal>
   </div>
   </div>
