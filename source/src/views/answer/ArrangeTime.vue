@@ -8,6 +8,7 @@
         <div class="formTime">
             <h5><p text-align: center>You can arrange time, based on mentee's schedule </p></h5>
             <h5><p text-align: center>Choose time schedule you want to answer </p></h5>
+            <h5><p text-align: center>Notice : You must press "+" button to set your time schedule! </p></h5>
             <h5><p text-align: center>Selected Time : {{ selectedDay }} / {{ selectedTime }} </p></h5>
             <div class="daySelect">
                 <b-form-group style="margin-bottom: 10px">
@@ -31,12 +32,9 @@
                 <img src="../../assets/datatables/images/add_circle.png" v-on:click="setTime(timeFormat)" style="cursor:pointer">
             </div>
         </div>
-        <div id="buttonHolder" style="margin:10px">
-            <b-button type="submit" variant="success" size="sm" @click.prevent="getTime()">Get Schedule</b-button>
-        </div>
         <div style="clear: both"></div>
         <div id="buttonHolder" style="margin:10px">
-            <b-button type="submit" variant="success" size="sm" @click.prevent="submitTime()">Submit Schedule</b-button>
+            <b-button type="submit" variant="success" size="sm" @click.prevent="submitTime()">Submit Time Schedule</b-button>
         </div>
     </div>
 </template>
@@ -106,29 +104,33 @@ export default {
         async submitTime () {
             try{
                 var time = this.timeFormatTransform();
-                const res = await this.$http.post("/rest/answer/arrange/" + this.$route.params.qid, { time });
-                if (res.data.result == true) {
-                    alert('시간이 제출되었습니다!');
-                    this.$router.push({
-                        path: '/'
-                    });
-                }        
+                if (this.timeCheck() == false){
+                    alert('Please check your time schedule again!');
+                }
+                else if (this.available_times.indexOf(time) == -1) {
+                    console.log(this.available_times);
+                    console.log(time);
+                    alert('Please select time schedule in schedule of mentee!');
+                }
+                else{
+                    const res = await this.$http.post("/rest/answer/arrange/" + this.$route.params.qid, { time });
+                    if (res.data.result == true) {
+                        alert('Your time schedule is submitted!');
+                        this.$router.push({
+                            path: '/'
+                        });
+                    }  
+                }          
             } catch(err) {
-                alert(err.toString() + '\n잠시 후 다시 시도해주세요!');
+                alert(err.toString() + '\nPlease try again in a few seconds!');
             }
         },
         tSelected (e) {
             this.selectedTime = e;
         },
-        getTime () {
-            this.parsedAD = this.dayParse(this.available_times);
-            this.parsedAT = this.timeParse(this.parsedAD);
-            console.log(this.parsedAD);
-            console.log(this.parsedAT);
-        },
         setTime (timeFormat) {
             if (this.timeCheck() == false) {
-                alert('요일과 시간을 다시 한 번 확인해 주세요!');
+                alert('Please check your day and time again!');
             }
             else {
                 this.timeFormat = this.selectedDay + '/' + this.selectedTime; 
@@ -139,10 +141,7 @@ export default {
             }
         },
         timeCheck () {
-            if ((this.selectedDay == '') || (this.selectedTime == '') || (this.timeEnd == '')){
-                return false;
-            }
-            else if (this.timeStart >= this.timeEnd) {
+            if ((this.selectedDay == '') || (this.selectedTime == '')) {
                 return false;
             }
             else return true;
@@ -192,7 +191,7 @@ export default {
         numToTime(num) {
             var hour = parseInt(((num % 288) - 1) / 12);
             var min = parseInt(((num % 288) - 1) / 24);
-            return (("00" + hour).slice(-2) + ":" + ("00" + min).slice(-2));
+            return (("00" + hour).slice(-2) + "~" + ("00" + min).slice(-2));
         },
         dayParse (numArr) {
             const arr = numArr;
